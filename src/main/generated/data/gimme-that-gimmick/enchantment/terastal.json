@@ -1,0 +1,24 @@
+{
+  "anvil_cost": 7,
+  "description": {
+    "translate": "enchantment.gimme-that-gimmick.terastal"
+  },
+  "effects": {
+    "gimme-that-gimmick:tera_orb": {}
+  },
+  "exclusive_set": "#gimme-that-gimmick:key_item",
+  "max_cost": {
+    "base": 30,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 30,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "any"
+  ],
+  "supported_items": "#gimme-that-gimmick:enchantable/gimmick",
+  "weight": 1
+}

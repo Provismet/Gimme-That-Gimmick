@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#gimme-that-gimmick:typed_z-crystal",
+      "required": false
+    },
+    {
+      "id": "#gimme-that-gimmick:species_z-crystal",
+      "required": false
+    }
+  ]
+}

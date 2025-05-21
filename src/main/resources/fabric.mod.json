@@ -1,0 +1,48 @@
+{
+	"schemaVersion": 1,
+	"id": "gimme-that-gimmick",
+	"version": "${version}",
+	"name": "Gimme That Gimmick",
+	"description": "Adds generational battle gimmicks and Showdown customisation to Cobblemon.",
+	"authors": [
+		"Provismet"
+	],
+	"contributors": [
+		"YajatKaul"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/gimme-that-gimmick/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.provismet.cobblemon.gimmick.GimmeThatGimmickMain"
+		],
+		"server": [
+			"com.provismet.cobblemon.gimmick.GimmeThatGimmickServer"
+		],
+		"client": [
+			"com.provismet.cobblemon.gimmick.GimmeThatGimmickClient"
+		],
+		"fabric-datagen": [
+            "com.provismet.cobblemon.gimmick.datagen.GimmeThatGimmickDataGenerator"
+		]
+	},
+	"mixins": [
+		"gimme-that-gimmick.mixins.json",
+		{
+			"config": "gimme-that-gimmick.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+		"cobblemon": "*"
+	}
+}

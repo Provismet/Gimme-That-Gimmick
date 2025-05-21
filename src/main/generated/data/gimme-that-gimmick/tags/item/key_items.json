@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "#gimme-that-gimmick:key_stones",
+      "required": false
+    },
+    {
+      "id": "#gimme-that-gimmick:z-rings",
+      "required": false
+    },
+    {
+      "id": "#gimme-that-gimmick:dynamax_bands",
+      "required": false
+    },
+    {
+      "id": "#gimme-that-gimmick:tera_orbs",
+      "required": false
+    }
+  ]
+}

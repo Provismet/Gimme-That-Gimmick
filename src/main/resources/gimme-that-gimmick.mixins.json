@@ -1,0 +1,18 @@
+{
+    "required": true,
+    "package": "com.provismet.cobblemon.gimmick.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "server": [
+        "CobblemonNetworkMixin",
+        "EndInstructionMixin",
+        "MoveActionResponseMixin",
+        "PokemonBattleMixin",
+        "ShowdownActionRequestMixin",
+        "ShowdownSpeciesMixin",
+        "ShowdownThreadMixin",
+        "StartInstructionMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
