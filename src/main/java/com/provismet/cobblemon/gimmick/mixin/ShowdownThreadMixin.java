@@ -32,11 +32,11 @@ public abstract class ShowdownThreadMixin extends Thread {
                 Files.createDirectories(showdown_sim);
                 Files.createDirectories(showdown_data);
 
-                yoink("/showdown_scripts/moves.js", showdown_data.resolve("moves.js"));
                 yoink("/showdown_scripts/battle-actions.js", showdown_sim.resolve("battle-actions.js"));
                 yoink("/showdown_scripts/pokemon.js", showdown_sim.resolve("pokemon.js"));
                 yoink("/showdown_scripts/conditions.js", showdown_sim.resolve("conditions.js"));
                 yoink("/showdown_scripts/index.js", showdown_dir.resolve("index.js"));
+                yoink("/showdown_scripts/side.js", showdown_sim.resolve("side.js"));
 
                 GimmeThatGimmickMain.LOGGER.info("All files are ready!");
             } catch (IOException e) {
