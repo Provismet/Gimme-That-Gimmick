@@ -64,7 +64,7 @@ public abstract class CobblemonEventHandler {
             if (hasZRing) data.getKeyItems().add(Gimmicks.Z_RING);
             else data.getKeyItems().remove(Gimmicks.Z_RING);
 
-            if (hasDynamax && !hasZRing) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
+            if (hasDynamax && !hasTeraOrb) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
             else data.getKeyItems().remove(Gimmicks.DYNAMAX_BAND);
 
             if (hasTeraOrb) data.getKeyItems().add(Gimmicks.TERA_ORB);
