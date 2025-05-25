@@ -11,10 +11,10 @@
 		"YajatKaul"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/Provismet/Gimme-That-Gimmick",
+		"sources": "https://github.com/Provismet/Gimme-That-Gimmick"
 	},
-	"license": "MIT",
+	"license": "CC BY-NC-SA 4.0",
 	"icon": "assets/gimme-that-gimmick/icon.png",
 	"environment": "*",
 	"entrypoints": {
@@ -32,11 +32,7 @@
 		]
 	},
 	"mixins": [
-		"gimme-that-gimmick.mixins.json",
-		{
-			"config": "gimme-that-gimmick.client.mixins.json",
-			"environment": "client"
-		}
+		"gimme-that-gimmick.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.15.0",
