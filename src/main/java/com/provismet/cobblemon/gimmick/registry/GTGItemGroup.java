@@ -13,6 +13,7 @@ public abstract class GTGItemGroup {
             // Key Items
             entries.add(GTGItems.MEGA_BRACELET);
             entries.add(GTGItems.Z_RING);
+            entries.add(GTGItems.DYNAMAX_BAND);
             entries.add(GTGItems.TERA_ORB);
 
             // Mega Stones
