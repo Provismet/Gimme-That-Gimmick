@@ -1,6 +1,6 @@
 package com.provismet.cobblemon.gimmick.mixin;
 
-import com.cobblemon.mod.common.battles.ShowdownThread;
+import com.cobblemon.mod.common.battles.runner.graal.GraalShowdownUnbundler;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.config.ShowdownMod;
@@ -19,9 +19,9 @@ import java.nio.file.StandardCopyOption;
 /**
  * Code adapted from to YajatKaul @ MegaShowdown.
  */
-@Mixin(ShowdownThread.class)
-public abstract class ShowdownThreadMixin extends Thread {
-    @Inject(method = "run", at = @At("HEAD"), remap = false)
+@Mixin(GraalShowdownUnbundler.class)
+public abstract class GraalShowdownUnbundlerMixin {
+    @Inject(method = "attemptUnbundle", at = @At("TAIL"), remap = false)
     private void replaceScripts (CallbackInfo info) {
         if (Options.shouldOverrideShowdown()) {
             Path showdown_sim = Path.of("./showdown/sim");

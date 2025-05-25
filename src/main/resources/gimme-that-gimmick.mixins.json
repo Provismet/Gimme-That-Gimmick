@@ -9,7 +9,7 @@
         "PokemonBattleMixin",
         "ShowdownActionRequestMixin",
         "ShowdownSpeciesMixin",
-        "ShowdownThreadMixin",
+        "GraalShowdownUnbundlerMixin",
         "StartInstructionMixin"
     ],
     "injectors": {
