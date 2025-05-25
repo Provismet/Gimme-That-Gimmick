@@ -10,6 +10,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class GimmeThatGimmickClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient () {
+		// Used purely to enable data generation.
 		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
 			GTGItems.init();
 			GTGItemDataComponents.init();
