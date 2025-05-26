@@ -67,7 +67,7 @@ public abstract class Options {
         }
         catch (Exception e) {
             GimmeThatGimmickMain.LOGGER.info("Could not find Gimme That Gimmick config, constructing default.");
-            save();
         }
+        save();
     }
 }
