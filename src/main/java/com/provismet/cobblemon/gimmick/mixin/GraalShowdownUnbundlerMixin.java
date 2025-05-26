@@ -3,7 +3,6 @@ package com.provismet.cobblemon.gimmick.mixin;
 import com.cobblemon.mod.common.battles.runner.graal.GraalShowdownUnbundler;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.config.Options;
-import com.provismet.cobblemon.gimmick.config.ShowdownMod;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -47,7 +46,6 @@ public abstract class GraalShowdownUnbundlerMixin {
                     GimmeThatGimmickMain.LOGGER.error("Failed to prepare required files: {}", e.getMessage());
                 }
             }
-            ShowdownMod.apply();
         }
     }
 

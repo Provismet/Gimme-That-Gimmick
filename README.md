@@ -22,8 +22,3 @@ Dependent mods can mixin into these classes to apply custom functionality as req
 
 ### Tera Shards
 Tera shards are used in groups of 50 and change the tera type of a Pokemon. The type can be checked by using a Tera Orb on the Pokemon.
-
-## Showdown Customisation
-GTG helps to simplify the process for server owners to apply custom Showdown mod scripts (addons to Showdown itself).
-
-Add the scripts to the top-level `./showdown_addons` folder, and they will be copied to the correct location on the next server start.
