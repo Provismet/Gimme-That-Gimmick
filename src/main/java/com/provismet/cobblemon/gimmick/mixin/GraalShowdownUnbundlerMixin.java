@@ -21,7 +21,7 @@ import java.nio.file.StandardCopyOption;
  */
 @Mixin(GraalShowdownUnbundler.class)
 public abstract class GraalShowdownUnbundlerMixin {
-    private boolean loaded = false;
+    @Unique private boolean loaded = false;
 
     @Inject(method = "attemptUnbundle", at = @At("TAIL"), remap = false)
     private void replaceScripts (CallbackInfo info) {
