@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
+import com.provismet.cobblemon.gimmick.registry.GTGBlocks;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -17,7 +18,7 @@ public class ModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels (BlockStateModelGenerator blockStateModelGenerator) {
-
+        blockStateModelGenerator.registerSimpleCubeAll(GTGBlocks.POWER_SPOT);
     }
 
     @Override

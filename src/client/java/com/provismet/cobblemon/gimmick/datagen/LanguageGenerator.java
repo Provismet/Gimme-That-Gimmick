@@ -1,6 +1,7 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
 import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
+import com.provismet.cobblemon.gimmick.registry.GTGBlocks;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantments;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
@@ -55,6 +56,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.Z_RING, "Z-Ring", "Hold this in your hand to gain access to Z-Moves.");
         addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_BAND, "Dynamax Band", "Hold this in your hand to gain access to Dynamax.");
         addItemWithTooltip(translationBuilder, GTGItems.TERA_ORB, "Tera Orb", "Hold this in your hand to gain access to Terastallization.");
+        translationBuilder.add(GTGBlocks.POWER_SPOT, "Power Spot");
 
         this.addEnchantment(translationBuilder, GTGEnchantments.KEY_STONE, "Key Stone", "Grants access to Mega Evolution.");
         this.addEnchantment(translationBuilder, GTGEnchantments.Z_RING, "Z-Power", "Grants access to Z-Moves.");

@@ -12,9 +12,11 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		pack.addProvider(EnchantmentGenerator::new);
 		pack.addProvider(ItemTagGenerator::new);
+		pack.addProvider(BlockTagGenerator::new);
 		pack.addProvider(EnchantmentTagGenerator::new);
 		pack.addProvider(LanguageGenerator::new);
 		pack.addProvider(ModelGenerator::new);
+		pack.addProvider(BlockLootTableGenerator::new);
 	}
 
 	@Override

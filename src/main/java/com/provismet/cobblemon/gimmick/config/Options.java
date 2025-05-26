@@ -38,8 +38,8 @@ public abstract class Options {
     public static void save () {
         JsonObject json = new JsonObject();
         json.addProperty("override_showdown", overrideShowdown);
-        json.addProperty("power_spot_range", powerSpotRange);
-        json.addProperty("power_spot_required", powerSpotRequired);
+        json.addProperty("dynamax_power_spot_range", powerSpotRange);
+        json.addProperty("dynamax_power_spot_required", powerSpotRequired);
 
         try (FileWriter writer = new FileWriter(FILE)) {
             Files.createDirectories(Path.of("./config"));
@@ -57,10 +57,10 @@ public abstract class Options {
                 if (json.has("override_showdown")) {
                     overrideShowdown = json.getAsJsonPrimitive("override_showdown").getAsBoolean();
                 }
-                if (json.has("power_spot_range")) {
+                if (json.has("dynamax_power_spot_range")) {
                     powerSpotRange = json.getAsJsonPrimitive("power_spot_range").getAsInt();
                 }
-                if (json.has("power_spot_required")) {
+                if (json.has("dynamax_power_spot_required")) {
                     powerSpotRequired = json.getAsJsonPrimitive("power_spot_required").getAsBoolean();
                 }
             }

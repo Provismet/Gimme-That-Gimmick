@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "gimme-that-gimmick:block/power_spot"
+  }
+}

@@ -26,6 +26,7 @@ import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
+import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import kotlin.Unit;
 import net.minecraft.block.Block;
@@ -70,7 +71,7 @@ public abstract class CobblemonEventHandler {
             else data.getKeyItems().remove(Gimmicks.Z_RING);
 
             //TODO Change block that is gonna be used
-            boolean powerSpotPossible = !Options.isPowerSpotRequired() || isBlockNearby(player, Blocks.DIRT, Options.getPowerSpotRange());
+            boolean powerSpotPossible = !Options.isPowerSpotRequired() || isBlockNearby(player, Options.getPowerSpotRange());
             if (hasDynamax && !hasTeraOrb && powerSpotPossible) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
             else data.getKeyItems().remove(Gimmicks.DYNAMAX_BAND);
 
@@ -81,7 +82,7 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static boolean isBlockNearby(ServerPlayerEntity player, Block targetBlock, int radius) {
+    private static boolean isBlockNearby(ServerPlayerEntity player, int radius) {
         BlockPos playerPos = player.getBlockPos();
         ServerWorld world = player.getServerWorld();
 
@@ -89,7 +90,7 @@ public abstract class CobblemonEventHandler {
             for (int dy = -radius; dy <= radius; dy++) {
                 for (int dz = -radius; dz <= radius; dz++) {
                     BlockPos checkPos = playerPos.add(dx, dy, dz);
-                    if (world.getBlockState(checkPos).isOf(targetBlock)) {
+                    if (world.getBlockState(checkPos).isIn(GTGBlockTags.POWER_SPOTS)) {
                         return true;
                     }
                 }

@@ -15,6 +15,7 @@ public abstract class GTGItemGroup {
             entries.add(GTGItems.Z_RING);
             entries.add(GTGItems.DYNAMAX_BAND);
             entries.add(GTGItems.TERA_ORB);
+            entries.add(GTGItems.POWER_SPOT);
 
             // Mega Stones
             entries.add(GTGItems.ABOMASITE);

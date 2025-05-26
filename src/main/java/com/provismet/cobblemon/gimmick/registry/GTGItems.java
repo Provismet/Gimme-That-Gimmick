@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.api.types.tera.TeraType;
 import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.pokemon.helditem.CobblemonHeldItemManager;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.cobblemon.gimmick.item.PolymerBlockItemTextured;
 import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
 import com.provismet.cobblemon.gimmick.item.mega.MegaStoneItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraOrbItem;
@@ -14,6 +15,7 @@ import com.provismet.cobblemon.gimmick.item.zmove.SpeciesZCrystalItem;
 import com.provismet.cobblemon.gimmick.item.zmove.TypedZCrystalItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -28,6 +30,8 @@ public abstract class GTGItems {
     public static final PolymerHeldItem Z_RING = register("z-ring", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.Z_RING, Unit.INSTANCE), item, modelData, 1));
     public static final PolymerHeldItem DYNAMAX_BAND = register("dynamax_band", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.DYNAMAX_BAND, Unit.INSTANCE), item, modelData, 1));
     public static final TeraOrbItem TERA_ORB = register("tera_orb", (settings, item, modelData) -> new TeraOrbItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.TERA_ORB, Unit.INSTANCE), item, modelData));
+
+    public static final PolymerBlockItemTextured POWER_SPOT = register("power_spot", Items.IRON_INGOT, GTGBlocks.POWER_SPOT, PolymerBlockItemTextured::new);
 
     // Mega Stones
     public static final MegaStoneItem ABOMASITE = registerMegaStone("abomasite");
@@ -173,10 +177,21 @@ public abstract class GTGItems {
         return Registry.register(Registries.ITEM, itemId, itemConstructor.get(settings, baseItem, model));
     }
 
+    private static <T extends PolymerBlockItemTextured> T register (String name, Item baseItem, Block block, BlockItemConstructor<T> blockItemConstructor) {
+        Identifier itemId = GimmeThatGimmickMain.identifier(name);
+        PolymerModelData model = PolymerResourcePackUtils.requestModel(baseItem, itemId.withPrefixedPath("item/"));
+        return Registry.register(Registries.ITEM, itemId, blockItemConstructor.get(block, new Item.Settings().maxCount(64), baseItem, model));
+    }
+
     public static void init () {}
 
     @FunctionalInterface
     public interface ItemConstructor<T extends PolymerHeldItem> {
-        T get(Item.Settings settings, Item vanillaBaseItem, PolymerModelData modelData);
+        T get (Item.Settings settings, Item vanillaBaseItem, PolymerModelData modelData);
+    }
+
+    @FunctionalInterface
+    public interface BlockItemConstructor<T extends PolymerBlockItemTextured> {
+        T get (Block block, Item.Settings settings, Item virtualItem, PolymerModelData model);
     }
 }
