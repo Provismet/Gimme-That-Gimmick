@@ -22,13 +22,18 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import kotlin.Unit;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
 
 public abstract class CobblemonEventHandler {
     public static void register () {
@@ -64,7 +69,9 @@ public abstract class CobblemonEventHandler {
             if (hasZRing) data.getKeyItems().add(Gimmicks.Z_RING);
             else data.getKeyItems().remove(Gimmicks.Z_RING);
 
-            if (hasDynamax && !hasTeraOrb) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
+            //TODO Change block that is gonna be used
+            boolean powerSpotPossible = Options.isPowerSpotRequired() && isBlockNearby(player, Blocks.DIRT, Options.getPowerSpotRange());
+            if (hasDynamax && !hasTeraOrb && powerSpotPossible) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
             else data.getKeyItems().remove(Gimmicks.DYNAMAX_BAND);
 
             if (hasTeraOrb) data.getKeyItems().add(Gimmicks.TERA_ORB);
@@ -72,6 +79,24 @@ public abstract class CobblemonEventHandler {
         }
 
         return Unit.INSTANCE;
+    }
+
+    private static boolean isBlockNearby(ServerPlayerEntity player, Block targetBlock, int radius) {
+        BlockPos playerPos = player.getBlockPos();
+        ServerWorld world = player.getServerWorld();
+
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                for (int dz = -radius; dz <= radius; dz++) {
+                    BlockPos checkPos = playerPos.add(dx, dy, dz);
+                    if (world.getBlockState(checkPos).isOf(targetBlock)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false; // Not found
     }
 
     public static Unit postBattleVictory (BattleVictoryEvent battleVictoryEvent) {

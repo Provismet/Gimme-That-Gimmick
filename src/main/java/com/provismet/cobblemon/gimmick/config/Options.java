@@ -16,6 +16,8 @@ public abstract class Options {
     private static final String FILE = "./config/gimme-that-gimmick.json";
 
     private static boolean overrideShowdown = true;
+    private static boolean powerSpotRequired = true;
+    private static int powerSpotRange = 30;
 
     static {
         load();
@@ -25,9 +27,19 @@ public abstract class Options {
         return overrideShowdown;
     }
 
+    public static int getPowerSpotRange () {
+        return powerSpotRange;
+    }
+
+    public static boolean isPowerSpotRequired () {
+        return powerSpotRequired;
+    }
+
     public static void save () {
         JsonObject json = new JsonObject();
         json.addProperty("override_showdown", overrideShowdown);
+        json.addProperty("power_spot_range", powerSpotRange);
+        json.addProperty("power_spot_required", powerSpotRequired);
 
         try (FileWriter writer = new FileWriter(FILE)) {
             Files.createDirectories(Path.of("./config"));
@@ -44,6 +56,12 @@ public abstract class Options {
             if (element instanceof JsonObject json) {
                 if (json.has("override_showdown")) {
                     overrideShowdown = json.getAsJsonPrimitive("override_showdown").getAsBoolean();
+                }
+                if (json.has("power_spot_range")) {
+                    powerSpotRange = json.getAsJsonPrimitive("power_spot_range").getAsInt();
+                }
+                if (json.has("power_spot_required")) {
+                    powerSpotRequired = json.getAsJsonPrimitive("power_spot_required").getAsBoolean();
                 }
             }
         }
