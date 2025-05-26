@@ -70,7 +70,7 @@ public abstract class CobblemonEventHandler {
             else data.getKeyItems().remove(Gimmicks.Z_RING);
 
             //TODO Change block that is gonna be used
-            boolean powerSpotPossible = Options.isPowerSpotRequired() && isBlockNearby(player, Blocks.DIRT, Options.getPowerSpotRange());
+            boolean powerSpotPossible = !Options.isPowerSpotRequired() || isBlockNearby(player, Blocks.DIRT, Options.getPowerSpotRange());
             if (hasDynamax && !hasTeraOrb && powerSpotPossible) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
             else data.getKeyItems().remove(Gimmicks.DYNAMAX_BAND);
 
