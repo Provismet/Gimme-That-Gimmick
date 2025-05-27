@@ -27,6 +27,7 @@ public class ModelGenerator extends FabricModelProvider {
         this.createKeyItems(register);
         this.createMegaStones(register);
         this.createZCrystals(register);
+        this.createDynamax(register);
         this.createTeraShards(register);
     }
 
@@ -124,6 +125,12 @@ public class ModelGenerator extends FabricModelProvider {
         register.accept(GTGItems.ROCKIUM_Z);
         register.accept(GTGItems.STEELIUM_Z);
         register.accept(GTGItems.WATERIUM_Z);
+    }
+
+    private void createDynamax (Consumer<Item> register) {
+        register.accept(GTGItems.DYNAMAX_CANDY);
+        register.accept(GTGItems.MAX_SOUP);
+        register.accept(GTGItems.MAX_MUSHROOM);
     }
 
     private void createTeraShards (Consumer<Item> register) {

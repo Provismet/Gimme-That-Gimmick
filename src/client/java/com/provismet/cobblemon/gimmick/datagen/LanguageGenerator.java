@@ -21,6 +21,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         keyItems(translationBuilder);
         megaStones(translationBuilder);
         zCrystals(translationBuilder);
+        dynamax(translationBuilder);
         teraShards(translationBuilder);
 
         translationBuilder.add(GTGItemTags.GIMMICK_KEY_ITEMS, "Gimmick Key Items");
@@ -36,6 +37,10 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add(GTGItemTags.Z_CRYSTAL_SPECIES, "Exclusive Z-Crystals");
         translationBuilder.add(GTGItemTags.TERA_SHARDS, "Tera Shards");
         translationBuilder.add(GTGItemTags.GIMMICK_ENCHANTABLE, "Gimmick Enchantable");
+
+        translationBuilder.add("message.overlay.gimmethatgimmick.dynamax", "DMax Level: %1$s, GMax: %2$s");
+        translationBuilder.add("message.overlay.gimmethatgimmick.yes", "Yes");
+        translationBuilder.add("message.overlay.gimmethatgimmick.no", "No");
 
         translationBuilder.add("gimmethatgimmick.itemGroup.name", "Gimme That Gimmick");
         translationBuilder.add("message.overlay.gimmethatgimmick.tera", "Tera Type: %1$s");
@@ -151,6 +156,12 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.ROCKIUM_Z, "Rockium-Z", zCrystalTooltip("Rock"));
         addItemWithTooltip(translationBuilder, GTGItems.STEELIUM_Z, "Steelium-Z", zCrystalTooltip("Steel"));
         addItemWithTooltip(translationBuilder, GTGItems.WATERIUM_Z, "Waterium-Z", zCrystalTooltip("Water"));
+    }
+
+    private void dynamax (TranslationBuilder translationBuilder) {
+        addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_CANDY, "Dynamax Candy", "A candy that is packed with energy. If consumed, it raises the Dynamax Level of a Pokémon by one.", "A higher level means higher HP when Dynamaxed. ");
+        addItemWithTooltip(translationBuilder, GTGItems.MAX_SOUP, "Max Soup", "Grants the Gigantamax factor to eligible Pokemon or removes it if already present.");
+        translationBuilder.add(GTGItems.MAX_MUSHROOM, "Max Mushroom");
     }
 
     private void teraShards (TranslationBuilder translationBuilder) {

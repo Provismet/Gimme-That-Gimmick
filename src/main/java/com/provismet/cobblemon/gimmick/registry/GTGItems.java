@@ -8,6 +8,9 @@ import com.cobblemon.mod.common.pokemon.helditem.CobblemonHeldItemManager;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.item.PolymerBlockItemTextured;
 import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
+import com.provismet.cobblemon.gimmick.item.dynamax.DMaxCandyItem;
+import com.provismet.cobblemon.gimmick.item.dynamax.DynamaxBandItem;
+import com.provismet.cobblemon.gimmick.item.dynamax.MaxSoupItem;
 import com.provismet.cobblemon.gimmick.item.mega.MegaStoneItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraOrbItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraShardItem;
@@ -28,7 +31,7 @@ public abstract class GTGItems {
     // Key Items
     public static final PolymerHeldItem MEGA_BRACELET = register("mega_bracelet", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.KEY_STONE, Unit.INSTANCE), item, modelData, 1));
     public static final PolymerHeldItem Z_RING = register("z-ring", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.Z_RING, Unit.INSTANCE), item, modelData, 1));
-    public static final PolymerHeldItem DYNAMAX_BAND = register("dynamax_band", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.DYNAMAX_BAND, Unit.INSTANCE), item, modelData, 1));
+    public static final PolymerHeldItem DYNAMAX_BAND = register("dynamax_band", (settings, item, modelData) -> new DynamaxBandItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.DYNAMAX_BAND, Unit.INSTANCE), item, modelData));
     public static final TeraOrbItem TERA_ORB = register("tera_orb", (settings, item, modelData) -> new TeraOrbItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.TERA_ORB, Unit.INSTANCE), item, modelData));
 
     public static final PolymerBlockItemTextured POWER_SPOT = register("power_spot", Items.IRON_INGOT, GTGBlocks.POWER_SPOT, PolymerBlockItemTextured::new);
@@ -119,6 +122,11 @@ public abstract class GTGItems {
     public static final TypedZCrystalItem ROCKIUM_Z = registerZCrystal("rockiumz", ElementalTypes.INSTANCE.getROCK());
     public static final TypedZCrystalItem STEELIUM_Z = registerZCrystal("steeliumz", ElementalTypes.INSTANCE.getSTEEL());
     public static final TypedZCrystalItem WATERIUM_Z = registerZCrystal("wateriumz", ElementalTypes.INSTANCE.getWATER());
+
+    // Dynamax
+    public static final DMaxCandyItem DYNAMAX_CANDY = register("dynamax_candy", DMaxCandyItem::new);
+    public static final MaxSoupItem MAX_SOUP = register("max_soup", MaxSoupItem::new);
+    public static final PolymerHeldItem MAX_MUSHROOM = register("max_mushroom", PolymerHeldItem::new);
 
     // Tera Shards
     public static final TeraShardItem BUG_TERA_SHARD = registerTeraShard("bug", TeraTypes.getBUG());

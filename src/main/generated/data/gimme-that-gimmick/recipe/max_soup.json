@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cobblemon",
+  "ingredients": [
+    {
+      "item": "gimme-that-gimmick:max_mushroom"
+    },
+    {
+      "item": "gimme-that-gimmick:max_mushroom"
+    },
+    {
+      "item": "gimme-that-gimmick:max_mushroom"
+    },
+    {
+      "item": "minecraft:bowl"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "gimme-that-gimmick:max_soup"
+  }
+}

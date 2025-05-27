@@ -17,6 +17,7 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(LanguageGenerator::new);
 		pack.addProvider(ModelGenerator::new);
 		pack.addProvider(BlockLootTableGenerator::new);
+		pack.addProvider(RecipeGenerator::new);
 	}
 
 	@Override

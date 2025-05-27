@@ -103,6 +103,11 @@ public abstract class GTGItemGroup {
             entries.add(GTGItems.STEELIUM_Z);
             entries.add(GTGItems.WATERIUM_Z);
 
+            // Dynamax
+            entries.add(GTGItems.DYNAMAX_CANDY);
+            entries.add(GTGItems.MAX_SOUP);
+            entries.add(GTGItems.MAX_MUSHROOM);
+
             // Tera Shards
             entries.add(GTGItems.BUG_TERA_SHARD);
             entries.add(GTGItems.DARK_TERA_SHARD);
