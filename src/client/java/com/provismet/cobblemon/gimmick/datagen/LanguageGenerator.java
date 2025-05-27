@@ -38,15 +38,10 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add(GTGItemTags.TERA_SHARDS, "Tera Shards");
         translationBuilder.add(GTGItemTags.GIMMICK_ENCHANTABLE, "Gimmick Enchantable");
 
-        translationBuilder.add("message.overlay.gimmethatgimmick.dynamax", "DMax Level: %1$s, GMax: %2$s");
         translationBuilder.add("message.overlay.gimmethatgimmick.yes", "Yes");
         translationBuilder.add("message.overlay.gimmethatgimmick.no", "No");
 
         translationBuilder.add("gimmethatgimmick.itemGroup.name", "Gimme That Gimmick");
-        translationBuilder.add("message.overlay.gimmethatgimmick.tera", "Tera Type: %1$s");
-        translationBuilder.add("message.overlay.gimmethatgimmick.tera.already_has", "%1$s already has this Tera type");
-        translationBuilder.add("message.overlay.gimmethatgimmick.tera.set", "Set the Tera type of %1$s to %2$s");
-        translationBuilder.add("message.overlay.gimmethatgimmick.tera.no_shards", "You need 50 shards to change the Tera type");
     }
 
     private static void addItemWithTooltip (TranslationBuilder translationBuilder, PolymerHeldItem item, String name, String... tooltip) {
@@ -162,6 +157,11 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_CANDY, "Dynamax Candy", "A candy that is packed with energy. If consumed, it raises the Dynamax Level of a Pokémon by one.", "A higher level means higher HP when Dynamaxed. ");
         addItemWithTooltip(translationBuilder, GTGItems.MAX_SOUP, "Max Soup", "Grants the Gigantamax factor to eligible Pokemon or removes it if already present.");
         translationBuilder.add(GTGItems.MAX_MUSHROOM, "Max Mushroom");
+
+        translationBuilder.add("message.overlay.gimmethatgimmick.dynamax", "DMax Level: %1$s, GMax: %2$s");
+        translationBuilder.add("message.overlay.gimmethatgimmick.dynamax.candy", "%1$s has reached Dynamax Level: %2$s");
+        translationBuilder.add("message.overlay.gimmethatgimmick.dynamax.soup.yes", "%1$s can now Gigantamax");
+        translationBuilder.add("message.overlay.gimmethatgimmick.dynamax.soup.no", "%1$s can no longer Gigantamax");
     }
 
     private void teraShards (TranslationBuilder translationBuilder) {
@@ -184,6 +184,11 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add(GTGItems.STEEL_TERA_SHARD, "Steel Tera Shard");
         translationBuilder.add(GTGItems.WATER_TERA_SHARD, "Water Tera Shard");
         translationBuilder.add(GTGItems.STELLAR_TERA_SHARD, "Stellar Tera Shard");
+
+        translationBuilder.add("message.overlay.gimmethatgimmick.tera", "Tera Type: %1$s");
+        translationBuilder.add("message.overlay.gimmethatgimmick.tera.already_has", "%1$s already has this Tera type");
+        translationBuilder.add("message.overlay.gimmethatgimmick.tera.set", "Set the Tera type of %1$s to %2$s");
+        translationBuilder.add("message.overlay.gimmethatgimmick.tera.no_shards", "You need 50 shards to change the Tera type");
     }
 
     private static String[] zCrystalTooltip (String type) {
