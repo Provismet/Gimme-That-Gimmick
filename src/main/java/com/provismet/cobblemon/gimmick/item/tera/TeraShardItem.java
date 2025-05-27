@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick.item.tera;
 
+import com.cobblemon.mod.common.CobblemonSounds;
 import com.cobblemon.mod.common.api.types.tera.TeraType;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
@@ -42,10 +43,11 @@ public class TeraShardItem extends PolymerPokemonSelectingItem {
                     player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.already_has", pokemon.getDisplayName()).formatted(Formatting.RED), true);
                     return TypedActionResult.fail(itemStack);
                 }
-                itemStack.decrement(50);
+                itemStack.decrementUnlessCreative(50, player);
                 pokemon.setTeraType(this.type);
+                pokemon.getEntity().playSound(CobblemonSounds.MEDICINE_PILLS_USE, 1f, 1f);
                 pokemon.updateAspects();
-                player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.set", pokemon.getDisplayName(), this.type.getDisplayName()).formatted(Formatting.GREEN), true);
+                player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.set", pokemon.getDisplayName(), this.type.getDisplayName()), true);
                 return TypedActionResult.success(itemStack);
             }
             else {
