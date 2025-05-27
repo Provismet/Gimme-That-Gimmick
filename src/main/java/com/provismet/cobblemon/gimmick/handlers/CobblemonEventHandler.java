@@ -70,7 +70,6 @@ public abstract class CobblemonEventHandler {
             if (hasZRing) data.getKeyItems().add(Gimmicks.Z_RING);
             else data.getKeyItems().remove(Gimmicks.Z_RING);
 
-            //TODO Change block that is gonna be used
             boolean powerSpotPossible = !Options.isPowerSpotRequired() || isBlockNearby(player, Options.getPowerSpotRange());
             if (hasDynamax && !hasTeraOrb && powerSpotPossible) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
             else data.getKeyItems().remove(Gimmicks.DYNAMAX_BAND);
@@ -191,6 +190,10 @@ public abstract class CobblemonEventHandler {
             pokemon.getPersistentData().remove("prism_fusion");
         }
 
+        if (pokemon.getAspects().contains("gmax")) {
+            pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("dynamax_form"));
+        }
+
         if (pokemon.getAspects().contains("stellar-form") || pokemon.getAspects().contains("terastal-form")) {
             new StringSpeciesFeature("tera_form", "normal").apply(pokemon);
         }
@@ -199,9 +202,6 @@ public abstract class CobblemonEventHandler {
         pokemon.updateAspects();
     }
 
-    /**
-     *
-     */
     public static void updatePokemonPackets (PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
         if (abilities) {
             battle.sendUpdate(new AbilityUpdatePacket(battlePokemon::getEffectedPokemon, battlePokemon.getEffectedPokemon().getAbility().getTemplate()));
