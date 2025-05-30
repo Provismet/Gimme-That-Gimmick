@@ -2,6 +2,7 @@ package com.provismet.cobblemon.gimmick;
 
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
+import com.provismet.cobblemon.gimmick.handlers.UltraBurstEventHandler;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantmentComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemGroup;
@@ -21,6 +22,7 @@ public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
         GTGItemGroup.register();
 
         CobblemonEventHandler.register();
+        UltraBurstEventHandler.register();
         DynamaxEventHandler.register();
     }
 }

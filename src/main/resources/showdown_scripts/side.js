@@ -503,6 +503,12 @@ ${sideUpdate}`);
         return status;
       }
     }
+
+    // Ultra Burst button doesn't exist, hijack the mega button instead.
+    if (event === "mega" && pokemon.canUltraBurst) {
+      event = "ultra";
+    }
+
     const mega = event === "mega";
     if (mega && !pokemon.canMegaEvo) {
       return this.emitChoiceError(`Can't move: ${pokemon.name} can't mega evolve`);

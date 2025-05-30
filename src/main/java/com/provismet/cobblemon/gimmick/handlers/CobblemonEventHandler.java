@@ -9,7 +9,6 @@ import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.MegaEvolutionEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.TerastallizationEvent;
-import com.cobblemon.mod.common.api.events.battles.instruction.ZMoveUsedEvent;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonCapturedEvent;
 import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeature;
 import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
@@ -23,7 +22,6 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokem
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.config.Options;
-import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
@@ -37,7 +35,6 @@ import net.minecraft.util.math.BlockPos;
 public abstract class CobblemonEventHandler {
     public static void register () {
         CobblemonEvents.MEGA_EVOLUTION.subscribe(Priority.NORMAL, CobblemonEventHandler::megaEvolutionUsed);
-        CobblemonEvents.ZPOWER_USED.subscribe(Priority.NORMAL, CobblemonEventHandler::zMoveUsed);
         CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, CobblemonEventHandler::terrastallizationUsed);
 
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::battleStarted);
@@ -123,22 +120,6 @@ public abstract class CobblemonEventHandler {
         megaEvent.getPokemon().sendUpdate();
 
         updatePokemonPackets(megaEvent.getBattle(), megaEvent.getPokemon(), true);
-        return Unit.INSTANCE;
-    }
-
-    private static Unit zMoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
-        Pokemon pokemon = zMoveUsedEvent.getPokemon().getEffectedPokemon();
-
-        if (pokemon.getSpecies().getName().equals("Necrozma") && pokemon.getHeldItem$common().isOf(GTGItems.ULTRANECROZIUM_Z)) {
-            if (pokemon.getAspects().contains("dusk-fusion") || pokemon.getAspects().contains("dawn-fusion")) {
-                if (pokemon.getFeature("prism_fusion") instanceof StringSpeciesFeature feature) {
-                    pokemon.getPersistentData().putString("prism_fusion", feature.getValue());
-                    new StringSpeciesFeature("prism_fusion", "ultra").apply(pokemon);
-                    updatePokemonPackets(zMoveUsedEvent.getBattle(), zMoveUsedEvent.getPokemon(), true);
-                }
-            }
-        }
-
         return Unit.INSTANCE;
     }
 

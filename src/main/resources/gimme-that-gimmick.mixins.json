@@ -5,11 +5,12 @@
     "server": [
         "CobblemonNetworkMixin",
         "EndInstructionMixin",
+        "GraalShowdownUnbundlerMixin",
         "MoveActionResponseMixin",
         "PokemonBattleMixin",
         "ShowdownActionRequestMixin",
+        "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",
-        "GraalShowdownUnbundlerMixin",
         "StartInstructionMixin"
     ],
     "injectors": {

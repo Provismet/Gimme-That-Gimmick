@@ -30,10 +30,17 @@ public class ShowdownActionRequestMixin {
             boolean hasBand = data.getKeyItems().contains(Gimmicks.DYNAMAX_BAND);
 
             if (player.getUuid().equals(battleActor.getUuid())) {
-                if (!hasBand && this.active != null) {
+                if (this.active != null) {
                     for (ShowdownMoveset moveset : this.active) {
-                        moveset.blockGimmick(ShowdownMoveset.Gimmick.DYNAMAX);
-                        moveset.setMaxMoves(null);
+                        if (moveset.getCanUltraBurst()) {
+                            moveset.blockGimmick(ShowdownMoveset.Gimmick.ULTRA_BURST);
+                            moveset.setCanMegaEvo(true);
+                        }
+
+                        if (!hasBand) {
+                            moveset.blockGimmick(ShowdownMoveset.Gimmick.DYNAMAX);
+                            moveset.setMaxMoves(null);
+                        }
                     }
                 }
             }

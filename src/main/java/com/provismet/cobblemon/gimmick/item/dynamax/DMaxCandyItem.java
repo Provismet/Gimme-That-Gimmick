@@ -21,11 +21,10 @@ public class DMaxCandyItem extends PolymerPokemonSelectingItem {
     @Nullable
     @Override
     public TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull Pokemon pokemon) {
-        if (pokemon.getEntity() == null || pokemon.getEntity().getWorld().isClient || pokemon.getEntity().isBattling() || !this.canUseOnPokemon(pokemon)) {
-            return TypedActionResult.pass(itemStack);
-        }
+        if (!this.canUseOnPokemon(pokemon)) return TypedActionResult.fail(itemStack);
+        if (pokemon.getEntity() != null) pokemon.getEntity().playSound(CobblemonSounds.MEDICINE_CANDY_USE, 1f, 1f);
+
         pokemon.setDmaxLevel(pokemon.getDmaxLevel() + 1);
-        pokemon.getEntity().playSound(CobblemonSounds.MEDICINE_CANDY_USE, 1f, 1f);
         player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.candy", pokemon.getDisplayName(), pokemon.getDmaxLevel()), true);
         itemStack.decrementUnlessCreative(1, player);
         pokemon.updateAspects();

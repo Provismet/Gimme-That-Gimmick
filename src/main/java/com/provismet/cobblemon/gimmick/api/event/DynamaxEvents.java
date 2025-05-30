@@ -5,8 +5,8 @@ import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 
-public class DynamaxEvents {
-    public static final Event<DynamaxStart> DYNAMAX_START = EventFactory.createArrayBacked(
+public interface DynamaxEvents {
+    Event<DynamaxStart> DYNAMAX_START = EventFactory.createArrayBacked(
         DynamaxStart.class,
         listeners -> (battle, pokemon, gigantamax) -> {
             for (DynamaxStart listener : listeners) {
@@ -15,7 +15,7 @@ public class DynamaxEvents {
         }
     );
 
-    public static final Event<DynamaxEnd> DYNAMAX_END = EventFactory.createArrayBacked(
+    Event<DynamaxEnd> DYNAMAX_END = EventFactory.createArrayBacked(
         DynamaxEnd.class,
         listeners -> (battle, pokemon) -> {
             for (DynamaxEnd listener : listeners) {
@@ -24,11 +24,13 @@ public class DynamaxEvents {
         }
     );
 
-    public interface DynamaxStart {
+    @FunctionalInterface
+    interface DynamaxStart {
         void onDynamaxStart (PokemonBattle battle, BattlePokemon pokemon, boolean gigantamax);
     }
 
-    public interface DynamaxEnd {
+    @FunctionalInterface
+    interface DynamaxEnd {
         void onDynamaxEnd (PokemonBattle battle, BattlePokemon pokemon);
     }
 }
