@@ -16,6 +16,7 @@ import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.player.GeneralPlayerData;
 import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.battles.ActiveBattlePokemon;
+import com.cobblemon.mod.common.battles.dispatch.UntilDispatch;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
@@ -107,19 +108,23 @@ public abstract class CobblemonEventHandler {
     private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
         Pokemon pokemon = megaEvent.getPokemon().getEffectedPokemon();
         ItemStack megaStone = pokemon.heldItem();
-        if (megaStone.isIn(GTGItemTags.MEGA_STONES_X)) {
-            new StringSpeciesFeature("mega_evolution", "mega_x").apply(pokemon);
-        }
-        else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
-            new StringSpeciesFeature("mega_evolution", "mega_y").apply(pokemon);
-        }
-        else {
-            new StringSpeciesFeature("mega_evolution", "mega").apply(pokemon);
-        }
 
-        megaEvent.getPokemon().sendUpdate();
+        // Allows sidemods to dispatch animations before the transformation triggers.
+        megaEvent.getBattle().dispatchToFront(() -> {
+            if (megaStone.isIn(GTGItemTags.MEGA_STONES_X)) {
+                new StringSpeciesFeature("mega_evolution", "mega_x").apply(pokemon);
+            }
+            else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
+                new StringSpeciesFeature("mega_evolution", "mega_y").apply(pokemon);
+            }
+            else {
+                new StringSpeciesFeature("mega_evolution", "mega").apply(pokemon);
+            }
+            megaEvent.getPokemon().sendUpdate();
+            updatePokemonPackets(megaEvent.getBattle(), megaEvent.getPokemon(), true);
 
-        updatePokemonPackets(megaEvent.getBattle(), megaEvent.getPokemon(), true);
+            return new UntilDispatch(() -> true);
+        });
         return Unit.INSTANCE;
     }
 
@@ -127,13 +132,19 @@ public abstract class CobblemonEventHandler {
         Pokemon pokemon = terastallizationEvent.getPokemon().getEffectedPokemon();
 
         if (pokemon.getSpecies().getName().equals("Terapagos")) {
-            new StringSpeciesFeature("tera_form", "stellar").apply(pokemon);
-            updatePokemonPackets(terastallizationEvent.getBattle(), terastallizationEvent.getPokemon(), false);
+            terastallizationEvent.getBattle().dispatchToFront(() -> {
+                new StringSpeciesFeature("tera_form", "stellar").apply(pokemon);
+                updatePokemonPackets(terastallizationEvent.getBattle(), terastallizationEvent.getPokemon(), false);
+                return new UntilDispatch(() -> true);
+            });
         }
 
         if (pokemon.getSpecies().getName().equals("Ogerpon")) {
-            new FlagSpeciesFeature("embody_aspect", true).apply(pokemon);
-            updatePokemonPackets(terastallizationEvent.getBattle(), terastallizationEvent.getPokemon(), false);
+            terastallizationEvent.getBattle().dispatchToFront(() -> {
+                new FlagSpeciesFeature("embody_aspect", true).apply(pokemon);
+                updatePokemonPackets(terastallizationEvent.getBattle(), terastallizationEvent.getPokemon(), false);
+                return new UntilDispatch(() -> true);
+            });
         }
 
         return Unit.INSTANCE;
