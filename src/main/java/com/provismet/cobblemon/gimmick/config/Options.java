@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -58,15 +59,18 @@ public abstract class Options {
                     overrideShowdown = json.getAsJsonPrimitive("override_showdown").getAsBoolean();
                 }
                 if (json.has("dynamax_power_spot_range")) {
-                    powerSpotRange = json.getAsJsonPrimitive("power_spot_range").getAsInt();
+                    powerSpotRange = json.getAsJsonPrimitive("dynamax_power_spot_range").getAsInt();
                 }
                 if (json.has("dynamax_power_spot_required")) {
-                    powerSpotRequired = json.getAsJsonPrimitive("power_spot_required").getAsBoolean();
+                    powerSpotRequired = json.getAsJsonPrimitive("dynamax_power_spot_required").getAsBoolean();
                 }
             }
         }
-        catch (Exception e) {
+        catch (FileNotFoundException e) {
             GimmeThatGimmickMain.LOGGER.info("Could not find Gimme That Gimmick config, constructing default.");
+        }
+        catch (Exception e) {
+            GimmeThatGimmickMain.LOGGER.error("Could read Gimme That Gimmick config due to error:", e);
         }
         save();
     }
