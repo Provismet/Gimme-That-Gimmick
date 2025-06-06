@@ -24,7 +24,6 @@ public class StartInstructionMixin  {
 
     @Inject(method = "invoke", at = @At("HEAD"), remap = false)
     private void injectBeforeInvoke(PokemonBattle battle, CallbackInfo info) {
-        BattleMessage message = ((StartInstructionAccessor) this).getMessage();
         String raw = message.getRawMessage();
 
         String[] parts = raw.split("\\|");

@@ -12,9 +12,7 @@
         "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",
         "StartInstructionMixin",
-        "instructions.EndInstructionAccessor",
         "instructions.EndInstructionMixin",
-        "instructions.StartInstructionAccessor",
         "instructions.StartInstructionMixin"
     ],
     "injectors": {
