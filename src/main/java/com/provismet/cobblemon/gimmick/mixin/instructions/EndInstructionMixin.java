@@ -24,17 +24,10 @@ import java.util.List;
 public class EndInstructionMixin {
     @Shadow @Final private BattleMessage message;
 
-<<<<<<< HEAD:src/main/java/com/provismet/cobblemon/gimmick/mixin/instructions/EndInstructionMixin.java
     @Inject(method = "invoke", at = @At("HEAD"), remap = false)
-    private void injectBeforeInvoke(PokemonBattle battle, CallbackInfo info) {
+    private void injectBeforeInvoke(PokemonBattle battle, CallbackInfo ci) {
         BattleMessage message = ((EndInstructionAccessor) this).getMessage();
         String raw = message.getRawMessage();
-=======
-    @Inject(method = "invoke", at = @At("TAIL"), remap = false)
-    private void injectBeforeInvoke (PokemonBattle battle, CallbackInfo info) {
-        List<String> logs = battle.getShowdownMessages();
-        if (logs.isEmpty()) return; // Nothing to check
->>>>>>> e207f9ae242cd387574d2f3a68c7aca1511d0a23:src/main/java/com/provismet/cobblemon/gimmick/mixin/EndInstructionMixin.java
 
         String[] parts = raw.split("\\|");
         boolean containsDynamax = Arrays.stream(parts).anyMatch(part -> part.contains("Dynamax"));
