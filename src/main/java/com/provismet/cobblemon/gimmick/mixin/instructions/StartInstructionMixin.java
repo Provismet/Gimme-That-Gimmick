@@ -1,10 +1,8 @@
-package com.provismet.cobblemon.gimmick.mixin;
-
+package com.provismet.cobblemon.gimmick.mixin.instructions;
 
 import com.cobblemon.mod.common.api.battles.interpreter.BattleMessage;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
-import com.cobblemon.mod.common.battles.dispatch.UntilDispatch;
-import com.cobblemon.mod.common.battles.interpreter.instructions.EndInstruction;
+import com.cobblemon.mod.common.battles.interpreter.instructions.StartInstruction;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.provismet.cobblemon.gimmick.api.event.DynamaxEvents;
 import org.spongepowered.asm.mixin.Final;
@@ -20,26 +18,22 @@ import java.util.List;
 /**
  * Code adapted from to YajatKaul @ MegaShowdown.
  */
-@Mixin(value = EndInstruction.class, remap = false)
-public class EndInstructionMixin {
+@Mixin(value = StartInstruction.class, remap = false)
+public class StartInstructionMixin  {
     @Shadow @Final private BattleMessage message;
 
-    @Inject(method = "invoke", at = @At("TAIL"), remap = false)
-    private void injectBeforeInvoke (PokemonBattle battle, CallbackInfo info) {
-        List<String> logs = battle.getShowdownMessages();
-        if (logs.isEmpty()) return; // Nothing to check
+    @Inject(method = "invoke", at = @At("HEAD"), remap = false)
+    private void injectBeforeInvoke(PokemonBattle battle, CallbackInfo info) {
+        BattleMessage message = ((StartInstructionAccessor) this).getMessage();
+        String raw = message.getRawMessage();
 
-        String battleLog = logs.getLast(); // Get the last message
-
-        String[] parts = battleLog.split("\\|");
+        String[] parts = raw.split("\\|");
         boolean containsDynamax = Arrays.stream(parts).anyMatch(part -> part.contains("Dynamax"));
+        boolean containsGmax = Arrays.stream(parts).anyMatch(part -> part.contains("Gmax"));
 
         if (containsDynamax) {
             BattlePokemon pokemon = this.message.battlePokemon(0, battle);
-            battle.dispatch(pokemonBattle -> {
-                DynamaxEvents.DYNAMAX_END.invoker().onDynamaxEnd(battle, pokemon);
-                return new UntilDispatch(() -> true);
-            });
+            DynamaxEvents.DYNAMAX_START.invoker().onDynamaxStart(battle, pokemon, containsGmax);
         }
     }
 }

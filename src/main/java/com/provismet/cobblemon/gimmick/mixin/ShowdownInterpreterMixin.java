@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Iterator;
 import java.util.Map;
 
-@Mixin(ShowdownInterpreter.class)
+@Mixin(value = ShowdownInterpreter.class, remap = false)
 public abstract class ShowdownInterpreterMixin {
     @Shadow @Final
     private static Map<String, Function4<PokemonBattle, InstructionSet, BattleMessage, Iterator<BattleMessage>, InterpreterInstruction>> updateInstructionParser;

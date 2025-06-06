@@ -11,7 +11,11 @@
         "ShowdownActionRequestMixin",
         "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",
-        "StartInstructionMixin"
+        "StartInstructionMixin",
+        "instructions.EndInstructionAccessor",
+        "instructions.EndInstructionMixin",
+        "instructions.StartInstructionAccessor",
+        "instructions.StartInstructionMixin"
     ],
     "injectors": {
         "defaultRequire": 1
