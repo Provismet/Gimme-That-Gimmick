@@ -3,7 +3,7 @@
 	"id": "gimme-that-gimmick",
 	"version": "${version}",
 	"name": "Gimme That Gimmick",
-	"description": "Adds generational battle gimmicks and Showdown customisation to Cobblemon.",
+	"description": "Adds generational battle gimmicks and items to Cobblemon.",
 	"authors": [
 		"Provismet"
 	],
