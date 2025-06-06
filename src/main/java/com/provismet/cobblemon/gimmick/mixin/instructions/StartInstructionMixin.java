@@ -1,4 +1,4 @@
-package com.provismet.cobblemon.gimmick.mixin;
+package com.provismet.cobblemon.gimmick.mixin.instructions;
 
 import com.cobblemon.mod.common.api.battles.interpreter.BattleMessage;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
@@ -24,12 +24,10 @@ public class StartInstructionMixin  {
 
     @Inject(method = "invoke", at = @At("HEAD"), remap = false)
     private void injectBeforeInvoke(PokemonBattle battle, CallbackInfo info) {
-        List<String> logs = battle.getShowdownMessages();
-        if (logs.isEmpty()) return; // Nothing to check
+        BattleMessage message = ((StartInstructionAccessor) this).getMessage();
+        String raw = message.getRawMessage();
 
-        String battleLog = logs.getLast(); // Get the last message
-
-        String[] parts = battleLog.split("\\|");
+        String[] parts = raw.split("\\|");
         boolean containsDynamax = Arrays.stream(parts).anyMatch(part -> part.contains("Dynamax"));
         boolean containsGmax = Arrays.stream(parts).anyMatch(part -> part.contains("Gmax"));
 
