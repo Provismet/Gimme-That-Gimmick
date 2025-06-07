@@ -12,8 +12,9 @@ Please support the original as Gimme That Gimmick would not exist without their 
 
 ### Resource Authors from Mega Showdown
 - YajatKaul
-  - Showdown scripts
   - Mixins
+- Treynami
+  - Showdown scripts
 - Sanji
   - Mega Stones assets
   - Z-Crystal assets
