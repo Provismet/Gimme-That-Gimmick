@@ -10,6 +10,24 @@ where necessary. If playing on single-player, a smaller private server, or on Ne
 Gimme That Gimmick relies on art assets, Showdown scripts, and mixins provided by [Mega Showdown](https://github.com/yajatkaul/Mega_Showdown).  
 Please support the original as Gimme That Gimmick would not exist without their efforts.
 
+### Resource Authors from Mega Showdown
+- YajatKaul
+  - Showdown scripts
+  - Mixins
+- Sanji
+  - Mega Stones assets
+  - Z-Crystal assets
+  - Tera Shard assets
+  - Dynamax Band asset
+  - Max Candy asset
+- Blue
+  - Mega Bracelet asset
+  - Z-Ring asset
+  - Tera Orb asset
+  - Max Mushroom asset
+- Beibeihulis
+  - Max Soup asset 
+
 ## Items
 ### Key Items
 - Mega Bracelets, Z-Rings, Dynamax Bands, and Tera Orbs are added as polymer items.
