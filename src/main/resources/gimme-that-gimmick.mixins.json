@@ -4,14 +4,12 @@
     "compatibilityLevel": "JAVA_21",
     "server": [
         "CobblemonNetworkMixin",
-        "EndInstructionMixin",
         "GraalShowdownUnbundlerMixin",
         "MoveActionResponseMixin",
         "PokemonBattleMixin",
         "ShowdownActionRequestMixin",
         "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",
-        "StartInstructionMixin",
         "instructions.EndInstructionMixin",
         "instructions.StartInstructionMixin"
     ],
