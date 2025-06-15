@@ -1,4 +1,12 @@
+<div align="center">
+
 # Gimme That Gimmick
+[![](https://img.shields.io/jitpack/version/com.github.Provismet/gimme-that-gimmick?style=flat-square&logo=jitpack&color=F6F6F6)](https://jitpack.io/#Provismet/gimme-that-gimmick)
+[![](https://img.shields.io/modrinth/dt/GsFuo2CX?style=flat-square&logo=modrinth&color=F6F6F6)](https://modrinth.com/mod/gimme-that-gimmick)
+[![](https://img.shields.io/curseforge/dt/1282018?style=flat-square&logo=curseforge&color=F6F6F6)](https://www.curseforge.com/minecraft/mc-mods/gimme-that-gimmick)
+
+</div>
+
 Gimme That Gimmick is a fully server-sided mod that implements generational gimmicks and related items for Cobblemon.  
 Note that the items are only implemented, GTG does not make any items obtainable through gameplay nor does it create the associated visuals.
 
