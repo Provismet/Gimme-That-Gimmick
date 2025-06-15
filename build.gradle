@@ -150,6 +150,7 @@ publishMods {
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
+			version = project.mod_version + "-mc" + project.minecraft_version
 			artifactId = project.archives_base_name
 			from components.java
 		}
