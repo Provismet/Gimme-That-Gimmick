@@ -12,7 +12,7 @@ import net.fabricmc.api.DedicatedServerModInitializer;
 
 public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
     @Override
-    public void onInitializeServer () {
+    public void onInitializeServer() {
         PolymerResourcePackUtils.markAsRequired();
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 

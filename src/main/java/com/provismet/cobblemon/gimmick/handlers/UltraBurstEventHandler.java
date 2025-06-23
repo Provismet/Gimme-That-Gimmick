@@ -9,11 +9,11 @@ import com.provismet.cobblemon.gimmick.api.event.UltraBurstEvents;
 import net.fabricmc.fabric.api.event.Event;
 
 public abstract class UltraBurstEventHandler {
-    public static void register () {
+    public static void register() {
         UltraBurstEvents.ULTRA_BURST.register(Event.DEFAULT_PHASE, UltraBurstEventHandler::onUltra);
     }
 
-    private static void onUltra (PokemonBattle battle, BattlePokemon battlePokemon) {
+    private static void onUltra(PokemonBattle battle, BattlePokemon battlePokemon) {
         Pokemon pokemon = battlePokemon.getEffectedPokemon();
 
         if (pokemon.getSpecies().getName().equals("Necrozma")) {

@@ -8,7 +8,7 @@ import net.minecraft.registry.tag.TagKey;
 public abstract class GTGBlockTags {
     public static final TagKey<Block> POWER_SPOTS = GTGBlockTags.of("power_spots");
 
-    private static TagKey<Block> of (String name) {
+    private static TagKey<Block> of(String name) {
         return TagKey.of(RegistryKeys.BLOCK, GimmeThatGimmickMain.identifier(name));
     }
 }

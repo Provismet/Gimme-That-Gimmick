@@ -13,13 +13,9 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.scoreboard.ServerScoreboard;
-import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Formatting;
 
 import java.util.*;
 
@@ -28,7 +24,7 @@ public abstract class DynamaxEventHandler {
     private static final WeakHashMap<UUID, LivingEntity> entityCache = new WeakHashMap<>();
     private static MinecraftServer server;
 
-    public static void register () {
+    public static void register() {
         DynamaxEvents.DYNAMAX_START.register(Event.DEFAULT_PHASE, DynamaxEventHandler::startDynamax);
         DynamaxEvents.DYNAMAX_END.register(Event.DEFAULT_PHASE, DynamaxEventHandler::endDynamax);
         ServerTickEvents.END_SERVER_TICK.register(serverInstance -> {
@@ -37,7 +33,7 @@ public abstract class DynamaxEventHandler {
         });
     }
 
-    private static void startDynamax (PokemonBattle pokemonBattle, BattlePokemon pokemon, boolean gmax) {
+    private static void startDynamax(PokemonBattle pokemonBattle, BattlePokemon pokemon, boolean gmax) {
         if (gmax) {
             pokemonBattle.dispatchToFront(() -> {
                 new StringSpeciesFeature("dynamax_form", "gmax").apply(pokemon.getEffectedPokemon());
@@ -56,7 +52,7 @@ public abstract class DynamaxEventHandler {
         GlowHandler.applyDynamaxGlow(pokemonEntity);
     }
 
-    private static void endDynamax (PokemonBattle pokemonBattle, BattlePokemon pokemon) {
+    private static void endDynamax(PokemonBattle pokemonBattle, BattlePokemon pokemon) {
         pokemonBattle.dispatchToFront(() -> {
             pokemon.getEffectedPokemon().getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("dynamax_form"));
             pokemon.getEffectedPokemon().updateAspects();
