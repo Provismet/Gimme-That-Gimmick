@@ -20,6 +20,7 @@ public abstract class Options {
     private static boolean powerSpotRequired = true;
     private static int powerSpotRange = 30;
     private static int dynamaxScaleFactor = 4;
+    private static boolean breakableTeraOrbs = true;
 
     static {
         load();
@@ -41,12 +42,17 @@ public abstract class Options {
         return dynamaxScaleFactor;
     }
 
+    public static boolean canBreakTeraOrb () {
+        return breakableTeraOrbs;
+    }
+
     public static void save () {
         JsonObject json = new JsonBuilder()
             .append("override_showdown", overrideShowdown)
             .append("dynamax_power_spot_range", powerSpotRange)
             .append("dynamax_power_spot_required", powerSpotRequired)
             .append("dynamax_scale_factor", dynamaxScaleFactor)
+            .append("breakable_tera_orbs", breakableTeraOrbs)
             .getJson();
 
         try (FileWriter writer = new FileWriter(FILE)) {
@@ -66,6 +72,7 @@ public abstract class Options {
                 reader.getInteger("dynamax_power_spot_range").ifPresent(val -> powerSpotRange = val);
                 reader.getBoolean("dynamax_power_spot_required").ifPresent(val -> powerSpotRequired = val);
                 reader.getInteger("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
+                reader.getBoolean("breakable_tera_orbs").ifPresent(val -> breakableTeraOrbs = val);
             }
         }
         catch (FileNotFoundException e) {

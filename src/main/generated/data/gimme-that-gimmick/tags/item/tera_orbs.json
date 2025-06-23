@@ -1,5 +1,8 @@
 {
   "values": [
-    "gimme-that-gimmick:tera_orb"
+    {
+      "id": "#gimme-that-gimmick:breakable_tera_orbs",
+      "required": false
+    }
   ]
 }

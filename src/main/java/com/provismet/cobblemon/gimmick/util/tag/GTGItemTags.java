@@ -20,6 +20,7 @@ public abstract class GTGItemTags {
     public static final TagKey<Item> Z_RINGS = GTGItemTags.of("z-rings");
     public static final TagKey<Item> DYNAMAX_BANDS = GTGItemTags.of("dynamax_bands");
     public static final TagKey<Item> TERA_ORBS = GTGItemTags.of("tera_orbs");
+    public static final TagKey<Item> BREAKABLE_TERA_ORBS = GTGItemTags.of("breakable_tera_orbs");
 
     public static final TagKey<Item> GIMMICK_ENCHANTABLE = GTGItemTags.of("enchantable/gimmick");
 

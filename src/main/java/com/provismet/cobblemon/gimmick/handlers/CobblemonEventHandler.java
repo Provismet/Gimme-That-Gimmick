@@ -153,9 +153,9 @@ public abstract class CobblemonEventHandler {
         Pokemon pokemon = terastallizationEvent.getPokemon().getEffectedPokemon();
         ServerPlayerEntity player = pokemon.getOwnerPlayer();
 
-        if(player != null){
+        if (Options.canBreakTeraOrb() && player != null) {
             for (ItemStack item : player.getEquippedItems()) {
-                if (GimmickCheck.isTeraOrb(item)) {
+                if (item.isIn(GTGItemTags.BREAKABLE_TERA_ORBS)) {
                     item.setDamage(item.getDamage() + 20);
                     break;
                 }
@@ -255,13 +255,13 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit pokemonHealed(PokemonHealedEvent pokemonHealedEvent) {
+    private static Unit pokemonHealed (PokemonHealedEvent pokemonHealedEvent) {
         ServerPlayerEntity player = pokemonHealedEvent.getPokemon().getOwnerPlayer();
         if(player == null || pokemonHealedEvent.getSource() != HealingSource.Force.INSTANCE){
             return Unit.INSTANCE;
         }
         for (ItemStack item : player.getEquippedItems()) {
-            if (GimmickCheck.isTeraOrb(item)) {
+            if (item.isIn(GTGItemTags.BREAKABLE_TERA_ORBS)) {
                 item.setDamage(0);
                 break;
             }

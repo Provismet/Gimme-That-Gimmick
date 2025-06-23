@@ -26,6 +26,8 @@ public interface GimmickCheck {
     }
 
     static boolean isTeraOrb (ItemStack item) {
+        if (item.isIn(GTGItemTags.BREAKABLE_TERA_ORBS) && item.isDamageable() && item.getDamage() == item.getMaxDamage()) return false;
+
         return item.isIn(GTGItemTags.TERA_ORBS)
             || item.get(GTGItemDataComponents.TERA_ORB) != null
             || EnchantmentHelper.hasAnyEnchantmentsWith(item, GTGEnchantmentComponents.TERA_ORB);
