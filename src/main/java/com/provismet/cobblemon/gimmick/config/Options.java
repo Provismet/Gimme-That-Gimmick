@@ -19,6 +19,7 @@ public abstract class Options {
     private static boolean overrideShowdown = true;
     private static boolean powerSpotRequired = true;
     private static int powerSpotRange = 30;
+    private static int dynamaxScaleFactor = 4;
 
     static {
         load();
@@ -36,11 +37,16 @@ public abstract class Options {
         return powerSpotRequired;
     }
 
+    public static int getDynamaxScaleFactor () {
+        return dynamaxScaleFactor;
+    }
+
     public static void save () {
         JsonObject json = new JsonObject();
         json.addProperty("override_showdown", overrideShowdown);
         json.addProperty("dynamax_power_spot_range", powerSpotRange);
         json.addProperty("dynamax_power_spot_required", powerSpotRequired);
+        json.addProperty("dynamax_scale_factor", dynamaxScaleFactor);
 
         try (FileWriter writer = new FileWriter(FILE)) {
             Files.createDirectories(Path.of("./config"));
@@ -63,6 +69,9 @@ public abstract class Options {
                 }
                 if (json.has("dynamax_power_spot_required")) {
                     powerSpotRequired = json.getAsJsonPrimitive("dynamax_power_spot_required").getAsBoolean();
+                }
+                if (json.has("dynamax_scale_factor")) {
+                    dynamaxScaleFactor = json.getAsJsonPrimitive("dynamax_scale_factor").getAsInt();
                 }
             }
         }

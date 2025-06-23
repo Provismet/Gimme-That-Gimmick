@@ -1,6 +1,5 @@
 package com.provismet.cobblemon.gimmick.mixin.instructions;
 
-
 import com.cobblemon.mod.common.api.battles.interpreter.BattleMessage;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.battles.dispatch.UntilDispatch;
@@ -15,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Code adapted from to YajatKaul @ MegaShowdown.

@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.MegaEvolutionEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.TerastallizationEvent;
+import com.cobblemon.mod.common.api.events.battles.instruction.ZMoveUsedEvent;
 import com.cobblemon.mod.common.api.events.pokemon.HeldItemEvent;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonCapturedEvent;
 import com.cobblemon.mod.common.api.events.pokemon.healing.PokemonHealedEvent;
@@ -21,6 +22,7 @@ import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.battles.ActiveBattlePokemon;
 import com.cobblemon.mod.common.battles.dispatch.UntilDispatch;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
+import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
@@ -28,9 +30,11 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
+import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import kotlin.Unit;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -42,6 +46,7 @@ public abstract class CobblemonEventHandler {
     public static void register () {
         CobblemonEvents.MEGA_EVOLUTION.subscribe(Priority.NORMAL, CobblemonEventHandler::megaEvolutionUsed);
         CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, CobblemonEventHandler::terrastallizationUsed);
+        CobblemonEvents.ZPOWER_USED.subscribe(Priority.NORMAL, CobblemonEventHandler::zmoveUsed);
 
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::battleStarted);
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, CobblemonEventHandler::postBattleVictory);
@@ -51,6 +56,14 @@ public abstract class CobblemonEventHandler {
 
         CobblemonEvents.HELD_ITEM_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::heldItemFormChange);
         CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonHealed);
+    }
+
+    private static Unit zmoveUsed(ZMoveUsedEvent zMoveUsedEvent) {
+        PokemonEntity pokemonEntity = zMoveUsedEvent.getPokemon().getEntity();
+
+        GlowHandler.applyZGlow(pokemonEntity);
+
+        return Unit.INSTANCE;
     }
 
     private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
@@ -165,6 +178,7 @@ public abstract class CobblemonEventHandler {
             });
         }
 
+        GlowHandler.applyTeraGlow(pokemon.getEntity());
         return Unit.INSTANCE;
     }
 
@@ -204,6 +218,11 @@ public abstract class CobblemonEventHandler {
 
         if (pokemon.getAspects().contains("stellar-form") || pokemon.getAspects().contains("terastal-form")) {
             new StringSpeciesFeature("tera_form", "normal").apply(pokemon);
+        }
+
+        if (pokemon.getEntity() != null) {
+            pokemon.getEntity().removeStatusEffect(StatusEffects.GLOWING);
+            DynamaxEventHandler.startGradualScaling(pokemon.getEntity(), 1.0f);
         }
 
         pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect"));
