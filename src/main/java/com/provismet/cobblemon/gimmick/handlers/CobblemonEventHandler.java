@@ -41,8 +41,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.logging.Logger;
-
 public abstract class CobblemonEventHandler {
     public static void register () {
         CobblemonEvents.MEGA_EVOLUTION.subscribe(Priority.NORMAL, CobblemonEventHandler::megaEvolutionUsed);
@@ -59,11 +57,9 @@ public abstract class CobblemonEventHandler {
         CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonHealed);
     }
 
-    private static Unit zmoveUsed(ZMoveUsedEvent zMoveUsedEvent) {
+    private static Unit zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
         PokemonEntity pokemonEntity = zMoveUsedEvent.getPokemon().getEntity();
-
-        GlowHandler.applyZGlow(pokemonEntity);
-
+        if (pokemonEntity != null) GlowHandler.applyZGlow(pokemonEntity);
         return Unit.INSTANCE;
     }
 
@@ -179,7 +175,7 @@ public abstract class CobblemonEventHandler {
             });
         }
 
-        GlowHandler.applyTeraGlow(pokemon.getEntity());
+        if (pokemon.getEntity() != null) GlowHandler.applyTeraGlow(pokemon.getEntity());
         return Unit.INSTANCE;
     }
 
