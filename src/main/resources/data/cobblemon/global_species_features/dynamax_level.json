@@ -9,6 +9,6 @@
         "name": "gimme-that-gimmick.ui.dynamax.level",
         "colour": [198, 0, 0],
         "underlay": "cobblemon:textures/gui/summary/summary_stats_other_bar.png",
-        "overlay": "cobblemon:textures/gui/summary/summary_stats_scrap_overlay.png"
+        "overlay": "gimme-that-gimmick:textures/gui/summary/dynamax_level.png"
     }
 }
