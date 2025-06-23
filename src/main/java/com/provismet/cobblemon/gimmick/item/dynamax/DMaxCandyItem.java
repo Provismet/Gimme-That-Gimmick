@@ -24,11 +24,14 @@ public class DMaxCandyItem extends PolymerPokemonSelectingItem {
         if (!this.canUseOnPokemon(pokemon)) return TypedActionResult.fail(itemStack);
         if (pokemon.getEntity() != null) pokemon.getEntity().playSound(CobblemonSounds.MEDICINE_CANDY_USE, 1f, 1f);
 
-        pokemon.setDmaxLevel(pokemon.getDmaxLevel() + 1);
-        player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.candy", pokemon.getDisplayName(), pokemon.getDmaxLevel()), true);
-        itemStack.decrementUnlessCreative(1, player);
-        pokemon.updateAspects();
-        return TypedActionResult.success(itemStack);
+        if(pokemon.getDmaxLevel() <= Cobblemon.config.getMaxDynamaxLevel()){
+            pokemon.setDmaxLevel(pokemon.getDmaxLevel() + 1);
+            player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.candy", pokemon.getDisplayName(), pokemon.getDmaxLevel()), true);
+            itemStack.decrementUnlessCreative(1, player);
+            pokemon.updateAspects();
+            return TypedActionResult.success(itemStack);
+        }
+        return TypedActionResult.fail(itemStack);
     }
 
     @Override

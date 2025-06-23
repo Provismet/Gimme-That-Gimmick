@@ -32,7 +32,7 @@ public abstract class GTGItems {
     public static final PolymerHeldItem MEGA_BRACELET = register("mega_bracelet", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.KEY_STONE, Unit.INSTANCE), item, modelData, 1));
     public static final PolymerHeldItem Z_RING = register("z-ring", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.Z_RING, Unit.INSTANCE), item, modelData, 1));
     public static final PolymerHeldItem DYNAMAX_BAND = register("dynamax_band", (settings, item, modelData) -> new DynamaxBandItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.DYNAMAX_BAND, Unit.INSTANCE), item, modelData));
-    public static final TeraOrbItem TERA_ORB = register("tera_orb", (settings, item, modelData) -> new TeraOrbItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.TERA_ORB, Unit.INSTANCE), item, modelData));
+    public static final TeraOrbItem TERA_ORB = register("tera_orb", (settings, item, modelData) -> new TeraOrbItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.TERA_ORB, Unit.INSTANCE).maxDamage(100), item, modelData));
 
     public static final PolymerBlockItemTextured POWER_SPOT = register("power_spot", Items.IRON_INGOT, GTGBlocks.POWER_SPOT, PolymerBlockItemTextured::new);
 
@@ -148,6 +148,9 @@ public abstract class GTGItems {
     public static final TeraShardItem STEEL_TERA_SHARD = registerTeraShard("steel", TeraTypes.getSTEEL());
     public static final TeraShardItem WATER_TERA_SHARD = registerTeraShard("water", TeraTypes.getWATER());
     public static final TeraShardItem STELLAR_TERA_SHARD = registerTeraShard("stellar", TeraTypes.getSTELLAR());
+
+    //Form chamge items
+    //public static final PolymerHeldItem TEAL_MASK = register("teal_mas", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.KEY_STONE, Unit.INSTANCE), item, modelData, 1));
 
     private static MegaStoneItem registerMegaStone (String name) {
         return registerShowdownItem(name, MegaStoneItem::new);
