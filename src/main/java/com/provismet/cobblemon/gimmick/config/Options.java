@@ -1,13 +1,13 @@
 package com.provismet.cobblemon.gimmick.config;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.lilylib.util.json.JsonBuilder;
+import com.provismet.lilylib.util.json.JsonReader;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,11 +42,12 @@ public abstract class Options {
     }
 
     public static void save () {
-        JsonObject json = new JsonObject();
-        json.addProperty("override_showdown", overrideShowdown);
-        json.addProperty("dynamax_power_spot_range", powerSpotRange);
-        json.addProperty("dynamax_power_spot_required", powerSpotRequired);
-        json.addProperty("dynamax_scale_factor", dynamaxScaleFactor);
+        JsonObject json = new JsonBuilder()
+            .append("override_showdown", overrideShowdown)
+            .append("dynamax_power_spot_range", powerSpotRange)
+            .append("dynamax_power_spot_required", powerSpotRequired)
+            .append("dynamax_scale_factor", dynamaxScaleFactor)
+            .getJson();
 
         try (FileWriter writer = new FileWriter(FILE)) {
             Files.createDirectories(Path.of("./config"));
@@ -59,20 +60,12 @@ public abstract class Options {
 
     public static void load () {
         try {
-            JsonElement element = JsonParser.parseReader(new FileReader(FILE));
-            if (element instanceof JsonObject json) {
-                if (json.has("override_showdown")) {
-                    overrideShowdown = json.getAsJsonPrimitive("override_showdown").getAsBoolean();
-                }
-                if (json.has("dynamax_power_spot_range")) {
-                    powerSpotRange = json.getAsJsonPrimitive("dynamax_power_spot_range").getAsInt();
-                }
-                if (json.has("dynamax_power_spot_required")) {
-                    powerSpotRequired = json.getAsJsonPrimitive("dynamax_power_spot_required").getAsBoolean();
-                }
-                if (json.has("dynamax_scale_factor")) {
-                    dynamaxScaleFactor = json.getAsJsonPrimitive("dynamax_scale_factor").getAsInt();
-                }
+            JsonReader reader = JsonReader.file(new File(FILE));
+            if (reader != null) {
+                reader.getBoolean("override_showdown").ifPresent(val -> overrideShowdown = val);
+                reader.getInteger("dynamax_power_spot_range").ifPresent(val -> powerSpotRange = val);
+                reader.getBoolean("dynamax_power_spot_required").ifPresent(val -> powerSpotRequired = val);
+                reader.getInteger("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
             }
         }
         catch (FileNotFoundException e) {
