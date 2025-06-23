@@ -25,23 +25,23 @@ public abstract class Options {
         load();
     }
 
-    public static boolean shouldOverrideShowdown () {
+    public static boolean shouldOverrideShowdown() {
         return overrideShowdown;
     }
 
-    public static int getPowerSpotRange () {
+    public static int getPowerSpotRange() {
         return powerSpotRange;
     }
 
-    public static boolean isPowerSpotRequired () {
+    public static boolean isPowerSpotRequired() {
         return powerSpotRequired;
     }
 
-    public static int getDynamaxScaleFactor () {
+    public static int getDynamaxScaleFactor() {
         return dynamaxScaleFactor;
     }
 
-    public static void save () {
+    public static void save() {
         JsonObject json = new JsonObject();
         json.addProperty("override_showdown", overrideShowdown);
         json.addProperty("dynamax_power_spot_range", powerSpotRange);
@@ -51,13 +51,12 @@ public abstract class Options {
         try (FileWriter writer = new FileWriter(FILE)) {
             Files.createDirectories(Path.of("./config"));
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(json));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             GimmeThatGimmickMain.LOGGER.error("Gimme That Gimmick failed to write settings file due to error: ", e);
         }
     }
 
-    public static void load () {
+    public static void load() {
         try {
             JsonElement element = JsonParser.parseReader(new FileReader(FILE));
             if (element instanceof JsonObject json) {
@@ -74,11 +73,9 @@ public abstract class Options {
                     dynamaxScaleFactor = json.getAsJsonPrimitive("dynamax_scale_factor").getAsInt();
                 }
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             GimmeThatGimmickMain.LOGGER.info("Could not find Gimme That Gimmick config, constructing default.");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             GimmeThatGimmickMain.LOGGER.error("Could read Gimme That Gimmick config due to error:", e);
         }
         save();

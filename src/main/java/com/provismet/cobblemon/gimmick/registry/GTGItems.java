@@ -149,60 +149,58 @@ public abstract class GTGItems {
     public static final TeraShardItem WATER_TERA_SHARD = registerTeraShard("water", TeraTypes.getWATER());
     public static final TeraShardItem STELLAR_TERA_SHARD = registerTeraShard("stellar", TeraTypes.getSTELLAR());
 
-    //Form chamge items
-    //public static final PolymerHeldItem TEAL_MASK = register("teal_mas", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.KEY_STONE, Unit.INSTANCE), item, modelData, 1));
-
-    private static MegaStoneItem registerMegaStone (String name) {
+    private static MegaStoneItem registerMegaStone(String name) {
         return registerShowdownItem(name, MegaStoneItem::new);
     }
 
-    private static TypedZCrystalItem registerZCrystal (String name, ElementalType type) {
+    private static TypedZCrystalItem registerZCrystal(String name, ElementalType type) {
         return registerShowdownItem(name, (settings, item, modelData) -> new TypedZCrystalItem(settings, item, modelData, type));
     }
 
-    private static SpeciesZCrystalItem registerSpeciesZCrystal (String name, ElementalType type) {
+    private static SpeciesZCrystalItem registerSpeciesZCrystal(String name, ElementalType type) {
         return registerShowdownItem(name, (settings, item, modelData) -> new SpeciesZCrystalItem(settings, item, modelData, type));
     }
 
-    private static TeraShardItem registerTeraShard (String type, TeraType teraType) {
+    private static TeraShardItem registerTeraShard(String type, TeraType teraType) {
         return register(type + "_tera_shard", (settings, item, modelData) -> new TeraShardItem(settings.maxCount(50), item, modelData, teraType));
     }
 
-    private static PolymerHeldItem registerShowdownItem (String name) {
+    private static PolymerHeldItem registerShowdownItem(String name) {
         return registerShowdownItem(name, PolymerHeldItem::new);
     }
 
-    private static <T extends PolymerHeldItem> T registerShowdownItem (String name, ItemConstructor<T> itemConstructor) {
+    private static <T extends PolymerHeldItem> T registerShowdownItem(String name, ItemConstructor<T> itemConstructor) {
         T item = register(name, itemConstructor);
         CobblemonHeldItemManager.INSTANCE.registerRemap(item, name);
         return item;
     }
 
-    private static <T extends PolymerHeldItem> T register (String name, ItemConstructor<T> itemConstructor) {
+    private static <T extends PolymerHeldItem> T register(String name, ItemConstructor<T> itemConstructor) {
         return register(name, Items.IRON_INGOT, new Item.Settings().maxCount(64).rarity(Rarity.RARE), itemConstructor);
     }
 
-    private static <T extends PolymerHeldItem> T register (String name, Item baseItem, Item.Settings settings, ItemConstructor<T> itemConstructor) {
+    private static <T extends PolymerHeldItem> T register(String name, Item baseItem, Item.Settings settings, ItemConstructor<T> itemConstructor) {
         Identifier itemId = GimmeThatGimmickMain.identifier(name);
         PolymerModelData model = PolymerResourcePackUtils.requestModel(baseItem, itemId.withPrefixedPath("item/"));
         return Registry.register(Registries.ITEM, itemId, itemConstructor.get(settings, baseItem, model));
     }
 
-    private static <T extends PolymerBlockItemTextured> T register (String name, Item baseItem, Block block, BlockItemConstructor<T> blockItemConstructor) {
+    private static <T extends PolymerBlockItemTextured> T register(String name, Item baseItem, Block block, BlockItemConstructor<T> blockItemConstructor) {
         Identifier itemId = GimmeThatGimmickMain.identifier(name);
         PolymerModelData model = PolymerResourcePackUtils.requestModel(baseItem, itemId.withPrefixedPath("item/"));
         return Registry.register(Registries.ITEM, itemId, blockItemConstructor.get(block, new Item.Settings().maxCount(64), baseItem, model));
     }
 
-    public static void init () {}
+    public static void init() {
+    }
 
     @FunctionalInterface
     public interface ItemConstructor<T extends PolymerHeldItem> {
-        T get (Item.Settings settings, Item vanillaBaseItem, PolymerModelData modelData);
+        T get(Item.Settings settings, Item vanillaBaseItem, PolymerModelData modelData);
     }
 
     @FunctionalInterface
     public interface BlockItemConstructor<T extends PolymerBlockItemTextured> {
-        T get (Block block, Item.Settings settings, Item virtualItem, PolymerModelData model);
+        T get(Block block, Item.Settings settings, Item virtualItem, PolymerModelData model);
     }
 }

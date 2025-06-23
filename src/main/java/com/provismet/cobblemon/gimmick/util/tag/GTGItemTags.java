@@ -23,7 +23,7 @@ public abstract class GTGItemTags {
 
     public static final TagKey<Item> GIMMICK_ENCHANTABLE = GTGItemTags.of("enchantable/gimmick");
 
-    private static TagKey<Item> of (String name) {
+    private static TagKey<Item> of(String name) {
         return TagKey.of(RegistryKeys.ITEM, GimmeThatGimmickMain.identifier(name));
     }
 }

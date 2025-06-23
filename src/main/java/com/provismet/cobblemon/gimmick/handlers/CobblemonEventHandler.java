@@ -27,9 +27,9 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
+import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
@@ -40,10 +40,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.logging.Logger;
-
 public abstract class CobblemonEventHandler {
-    public static void register () {
+    public static void register() {
         CobblemonEvents.MEGA_EVOLUTION.subscribe(Priority.NORMAL, CobblemonEventHandler::megaEvolutionUsed);
         CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, CobblemonEventHandler::terrastallizationUsed);
         CobblemonEvents.ZPOWER_USED.subscribe(Priority.NORMAL, CobblemonEventHandler::zmoveUsed);
@@ -66,7 +64,7 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
+    private static Unit battleStarted(BattleStartedPreEvent battleEvent) {
         for (ServerPlayerEntity player : battleEvent.getBattle().getPlayers()) {
             GeneralPlayerData data = Cobblemon.INSTANCE.getPlayerDataManager().getGenericData(player);
 
@@ -116,17 +114,17 @@ public abstract class CobblemonEventHandler {
         return false; // Not found
     }
 
-    public static Unit postBattleVictory (BattleVictoryEvent battleVictoryEvent) {
+    public static Unit postBattleVictory(BattleVictoryEvent battleVictoryEvent) {
         battleVictoryEvent.getBattle().getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
         return Unit.INSTANCE;
     }
 
-    public static Unit postBattleFlee (BattleFledEvent battleFledEvent) {
+    public static Unit postBattleFlee(BattleFledEvent battleFledEvent) {
         battleFledEvent.getBattle().getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
         return Unit.INSTANCE;
     }
 
-    private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
+    private static Unit megaEvolutionUsed(MegaEvolutionEvent megaEvent) {
         Pokemon pokemon = megaEvent.getPokemon().getEffectedPokemon();
         ItemStack megaStone = pokemon.heldItem();
 
@@ -134,11 +132,9 @@ public abstract class CobblemonEventHandler {
         megaEvent.getBattle().dispatchToFront(() -> {
             if (megaStone.isIn(GTGItemTags.MEGA_STONES_X)) {
                 new StringSpeciesFeature("mega_evolution", "mega_x").apply(pokemon);
-            }
-            else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
+            } else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
                 new StringSpeciesFeature("mega_evolution", "mega_y").apply(pokemon);
-            }
-            else {
+            } else {
                 new StringSpeciesFeature("mega_evolution", "mega").apply(pokemon);
             }
             megaEvent.getPokemon().sendUpdate();
@@ -149,11 +145,11 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit terrastallizationUsed (TerastallizationEvent terastallizationEvent) {
+    private static Unit terrastallizationUsed(TerastallizationEvent terastallizationEvent) {
         Pokemon pokemon = terastallizationEvent.getPokemon().getEffectedPokemon();
         ServerPlayerEntity player = pokemon.getOwnerPlayer();
 
-        if(player != null){
+        if (player != null) {
             for (ItemStack item : player.getEquippedItems()) {
                 if (GimmickCheck.isTeraOrb(item)) {
                     item.setDamage(item.getDamage() + 20);
@@ -182,27 +178,26 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    public static Unit fixTeraTyping (PokemonCapturedEvent pokemonCapturedEvent) {
+    public static Unit fixTeraTyping(PokemonCapturedEvent pokemonCapturedEvent) {
         Pokemon pokemon = pokemonCapturedEvent.getPokemon();
 
         if (pokemon.getSpecies().getName().equals("Ogerpon")) {
             pokemon.setTeraType(TeraTypes.getGRASS());
-        }
-        else if (pokemon.getSpecies().getName().equals("Terapagos")) {
+        } else if (pokemon.getSpecies().getName().equals("Terapagos")) {
             pokemon.setTeraType(TeraTypes.getSTELLAR());
         }
 
         return Unit.INSTANCE;
     }
 
-    public static void resetBattlePokemon (ServerPlayerEntity player) {
+    public static void resetBattlePokemon(ServerPlayerEntity player) {
         PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
-        for (Pokemon pokemon: playerPartyStore){
+        for (Pokemon pokemon : playerPartyStore) {
             CobblemonEventHandler.resetBattleForms(pokemon);
         }
     }
 
-    public static void resetBattleForms (Pokemon pokemon) {
+    public static void resetBattleForms(Pokemon pokemon) {
         if (pokemon.getAspects().contains("mega") || pokemon.getAspects().contains("mega_x") || pokemon.getAspects().contains("mega_y")) {
             pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("mega_evolution"));
         }
@@ -229,7 +224,7 @@ public abstract class CobblemonEventHandler {
         pokemon.updateAspects();
     }
 
-    public static void updatePokemonPackets (PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
+    public static void updatePokemonPackets(PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
         if (abilities) {
             battle.sendUpdate(new AbilityUpdatePacket(battlePokemon::getEffectedPokemon, battlePokemon.getEffectedPokemon().getAbility().getTemplate()));
             battle.sendUpdate(new BattleUpdateTeamPokemonPacket(battlePokemon.getEffectedPokemon()));
@@ -237,14 +232,14 @@ public abstract class CobblemonEventHandler {
 
         for (ActiveBattlePokemon activeBattlePokemon : battle.getActivePokemon()) {
             if (
-                activeBattlePokemon.getBattlePokemon() != null
-                && activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getOwnerPlayer() == battlePokemon.getEffectedPokemon().getOwnerPlayer()
-                && activeBattlePokemon.getBattlePokemon() == battlePokemon
+                    activeBattlePokemon.getBattlePokemon() != null
+                            && activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getOwnerPlayer() == battlePokemon.getEffectedPokemon().getOwnerPlayer()
+                            && activeBattlePokemon.getBattlePokemon() == battlePokemon
             ) {
                 battle.sendSidedUpdate(activeBattlePokemon.getActor(),
-                    new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, true),
-                    new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, false),
-                    false
+                        new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, true),
+                        new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, false),
+                        false
                 );
             }
         }
@@ -257,7 +252,7 @@ public abstract class CobblemonEventHandler {
 
     private static Unit pokemonHealed(PokemonHealedEvent pokemonHealedEvent) {
         ServerPlayerEntity player = pokemonHealedEvent.getPokemon().getOwnerPlayer();
-        if(player == null || pokemonHealedEvent.getSource() != HealingSource.Force.INSTANCE){
+        if (player == null || pokemonHealedEvent.getSource() != HealingSource.Force.INSTANCE) {
             return Unit.INSTANCE;
         }
         for (ItemStack item : player.getEquippedItems()) {

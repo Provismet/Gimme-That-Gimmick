@@ -14,17 +14,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class DMaxCandyItem extends PolymerPokemonSelectingItem {
-    public DMaxCandyItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public DMaxCandyItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(settings, baseVanillaItem, modelData, 2);
     }
 
     @Nullable
     @Override
-    public TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull Pokemon pokemon) {
+    public TypedActionResult<ItemStack> applyToPokemon(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull Pokemon pokemon) {
         if (!this.canUseOnPokemon(pokemon)) return TypedActionResult.fail(itemStack);
         if (pokemon.getEntity() != null) pokemon.getEntity().playSound(CobblemonSounds.MEDICINE_CANDY_USE, 1f, 1f);
 
-        if(pokemon.getDmaxLevel() <= Cobblemon.config.getMaxDynamaxLevel()){
+        if (pokemon.getDmaxLevel() <= Cobblemon.config.getMaxDynamaxLevel()) {
             pokemon.setDmaxLevel(pokemon.getDmaxLevel() + 1);
             player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.candy", pokemon.getDisplayName(), pokemon.getDmaxLevel()), true);
             itemStack.decrementUnlessCreative(1, player);
@@ -35,7 +35,7 @@ public class DMaxCandyItem extends PolymerPokemonSelectingItem {
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon(@NotNull Pokemon pokemon) {
         return pokemon.getDmaxLevel() < Cobblemon.config.getMaxDynamaxLevel();
     }
 }
