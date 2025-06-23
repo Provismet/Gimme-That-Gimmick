@@ -9,7 +9,10 @@ import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.MegaEvolutionEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.TerastallizationEvent;
+import com.cobblemon.mod.common.api.events.pokemon.HeldItemEvent;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonCapturedEvent;
+import com.cobblemon.mod.common.api.events.pokemon.healing.PokemonHealedEvent;
+import com.cobblemon.mod.common.api.item.HealingSource;
 import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeature;
 import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
@@ -33,6 +36,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.logging.Logger;
+
 public abstract class CobblemonEventHandler {
     public static void register () {
         CobblemonEvents.MEGA_EVOLUTION.subscribe(Priority.NORMAL, CobblemonEventHandler::megaEvolutionUsed);
@@ -43,6 +48,9 @@ public abstract class CobblemonEventHandler {
         CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL, CobblemonEventHandler::postBattleFlee);
 
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.NORMAL, CobblemonEventHandler::fixTeraTyping);
+
+        CobblemonEvents.HELD_ITEM_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::heldItemFormChange);
+        CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonHealed);
     }
 
     private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
@@ -130,6 +138,16 @@ public abstract class CobblemonEventHandler {
 
     private static Unit terrastallizationUsed (TerastallizationEvent terastallizationEvent) {
         Pokemon pokemon = terastallizationEvent.getPokemon().getEffectedPokemon();
+        ServerPlayerEntity player = pokemon.getOwnerPlayer();
+
+        if(player != null){
+            for (ItemStack item : player.getEquippedItems()) {
+                if (GimmickCheck.isTeraOrb(item)) {
+                    item.setDamage(item.getDamage() + 20);
+                    break;
+                }
+            }
+        }
 
         if (pokemon.getSpecies().getName().equals("Terapagos")) {
             terastallizationEvent.getBattle().dispatchToFront(() -> {
@@ -211,5 +229,24 @@ public abstract class CobblemonEventHandler {
                 );
             }
         }
+    }
+
+    private static Unit heldItemFormChange(HeldItemEvent.Pre pre) {
+        //TODO - Add all the form changes
+        return Unit.INSTANCE;
+    }
+
+    private static Unit pokemonHealed(PokemonHealedEvent pokemonHealedEvent) {
+        ServerPlayerEntity player = pokemonHealedEvent.getPokemon().getOwnerPlayer();
+        if(player == null || pokemonHealedEvent.getSource() != HealingSource.Force.INSTANCE){
+            return Unit.INSTANCE;
+        }
+        for (ItemStack item : player.getEquippedItems()) {
+            if (GimmickCheck.isTeraOrb(item)) {
+                item.setDamage(0);
+                break;
+            }
+        }
+        return Unit.INSTANCE;
     }
 }
