@@ -36,6 +36,6 @@ public class DMaxCandyItem extends PolymerPokemonSelectingItem {
 
     @Override
     public boolean canUseOnPokemon(@NotNull Pokemon pokemon) {
-        return pokemon.getDmaxLevel() < Cobblemon.config.getMaxDynamaxLevel();
+        return !pokemon.getSpecies().getDynamaxBlocked() && pokemon.getDmaxLevel() < Cobblemon.config.getMaxDynamaxLevel();
     }
 }

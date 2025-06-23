@@ -165,6 +165,8 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("message.overlay.gimmethatgimmick.dynamax.candy", "%1$s has reached Dynamax Level: %2$s");
         translationBuilder.add("message.overlay.gimmethatgimmick.dynamax.soup.yes", "%1$s can now Gigantamax");
         translationBuilder.add("message.overlay.gimmethatgimmick.dynamax.soup.no", "%1$s can no longer Gigantamax");
+
+        translationBuilder.add("gimme-that-gimmick.ui.dynamax.level", "Dynamax Level");
     }
 
     private void teraShards (TranslationBuilder translationBuilder) {
