@@ -26,6 +26,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
 
         zMoves(translationBuilder);
         gmaxEffects(translationBuilder);
+        formChanges(translationBuilder);
 
         translationBuilder.add(GTGItemTags.GIMMICK_KEY_ITEMS, "Gimmick Key Items");
         translationBuilder.add(GTGItemTags.KEY_STONES, "Grants Mega Evolution");
@@ -452,6 +453,89 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("cobblemon.battle.start.gmaxchistrike", "%1$s concentrated intensely!");
     }
 
+    private void formChanges (TranslationBuilder translationBuilder) {
+        translationBuilder.add("gui.title.gimme-that-gimmick.form", "Select A Form");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.form", "Your %1$s has transformed into %2$s forme.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.fusion", "Your %1$s has fused with your %2$s.");
+
+        translationBuilder.add("message.overlay.gimme-that-gimmick.dna.no_dragon", "You need Kyurem in your party to use this item.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.no_sheet", "This player is not holding a team sheet.");
+
+        translationBuilder.add("message.overlay.gimme-that-gimmick.mirror.incarnate", "Your %1$s is now in Incarnate forme.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.mirror.therian", "Your %1$s is now in Therian forme.");
+
+        translationBuilder.add("message.overlay.gimme-that-gimmick.gracidea.sky", "Your %1$s is now in Sky forme.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.gracidea.land", "Your %1$s is now in Land forme.");
+
+        translationBuilder.add("message.overlay.gimme-that-gimmick.prison.unbound", "Your %1$s has been released into its Unbound forme.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.prison.confined", "Your %1$s has been restrained into its Confined forme.");
+
+        addItemWithTooltip(translationBuilder, GTGItems.ADAMANT_ORB, "Adamant Orb", "Boosts Steel- and Dragon-type attacks of Dialga");
+        addItemWithTooltip(translationBuilder, GTGItems.LUSTROUS_ORB, "Lustrous Orb", "Boosts Water- and Dragon-type attacks of Palkia");
+        addItemWithTooltip(translationBuilder, GTGItems.GRISEOUS_ORB, "Griseous Orb", "Boosts Ghost- and Dragon-type attacks of Giratina");
+
+        addItemWithTooltip(translationBuilder, GTGItems.BLUE_ORB, "Blue Orb", "Grants Primal Reversion when held by Kyogre");
+        addItemWithTooltip(translationBuilder, GTGItems.RED_ORB, "Red Orb", "Grants Primal Reversion when held by Groudon");
+
+        addItemWithTooltip(translationBuilder, GTGItems.RUSTED_SWORD, "Rusted Sword", "Turns Zacian's Iron Head into Behemoth Blade");
+        addItemWithTooltip(translationBuilder, GTGItems.RUSTED_SHIELD, "Rusted Shield", "Turns Zamazenta's Iron Head into Behemoth Bash");
+
+        addItemWithTooltip(translationBuilder, GTGItems.DRACO_PLATE, "Draco Plate", "Boosts the holder's Dragon-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.DREAD_PLATE, "Dread Plate", "Boosts the holder's Dark-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.EARTH_PLATE, "Earth Plate", "Boosts the holder's Ground-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.FIST_PLATE, "Fist Plate", "Boosts the holder's Fighting-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.FLAME_PLATE, "Flame Plate", "Boosts the holder's Fire-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.ICICLE_PLATE, "Icicle Plate", "Boosts the holder's Icicle-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.INSECT_PLATE, "Insect Plate", "Boosts the holder's Insect-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.IRON_PLATE, "Iron Plate", "Boosts the holder's Steel-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.MEADOW_PLATE, "Meadow Plate", "Boosts the holder's Grass-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.MIND_PLATE, "Mind Plate", "Boosts the holder's Psychic-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.PIXIE_PLATE, "Pixie Plate", "Boosts the holder's Fairy-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.SKY_PLATE, "Sky Plate", "Boosts the holder's Flying-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.SPLASH_PLATE, "Splash Plate", "Boosts the holder's Water-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.SPOOKY_PLATE, "Spooky Plate", "Boosts the holder's Ghost-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.STONE_PLATE, "Stone Plate", "Boosts the holder's Rock-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.TOXIC_PLATE, "Toxic Plate", "Boosts the holder's Poison-type attacks by 20%");
+        addItemWithTooltip(translationBuilder, GTGItems.ZAP_PLATE, "Zap Plate", "Boosts the holder's Electric-type attacks by 20%");
+
+        addItemWithTooltip(translationBuilder, GTGItems.BUG_MEMORY, "Bug Memory", "Grants Silvally the Bug-type");
+        addItemWithTooltip(translationBuilder, GTGItems.DARK_MEMORY, "Dark Memory", "Grants Silvally the Dark-type");
+        addItemWithTooltip(translationBuilder, GTGItems.DRAGON_MEMORY, "Dragon Memory", "Grants Silvally the Dragon-type");
+        addItemWithTooltip(translationBuilder, GTGItems.ELECTRIC_MEMORY, "Electric Memory", "Grants Silvally the Electric-type");
+        addItemWithTooltip(translationBuilder, GTGItems.FAIRY_MEMORY, "Fairy Memory", "Grants Silvally the Fairy-type");
+        addItemWithTooltip(translationBuilder, GTGItems.FIGHTING_MEMORY, "Fighting Memory", "Grants Silvally the Fighting-type");
+        addItemWithTooltip(translationBuilder, GTGItems.FIRE_MEMORY, "Fire Memory", "Grants Silvally the Fire-type");
+        addItemWithTooltip(translationBuilder, GTGItems.FLYING_MEMORY, "Flying Memory", "Grants Silvally the Flying-type");
+        addItemWithTooltip(translationBuilder, GTGItems.GHOST_MEMORY, "Ghost Memory", "Grants Silvally the Ghost-type");
+        addItemWithTooltip(translationBuilder, GTGItems.GRASS_MEMORY, "Grass Memory", "Grants Silvally the Grass-type");
+        addItemWithTooltip(translationBuilder, GTGItems.GROUND_MEMORY, "Ground Memory", "Grants Silvally the Ground-type");
+        addItemWithTooltip(translationBuilder, GTGItems.ICE_MEMORY, "Ice Memory", "Grants Silvally the Ice-type");
+        addItemWithTooltip(translationBuilder, GTGItems.POISON_MEMORY, "Poison Memory", "Grants Silvally the Poison-type");
+        addItemWithTooltip(translationBuilder, GTGItems.PSYCHIC_MEMORY, "Psychic Memory", "Grants Silvally the Psychic-type");
+        addItemWithTooltip(translationBuilder, GTGItems.ROCK_MEMORY, "Rock Memory", "Grants Silvally the Rock-type");
+        addItemWithTooltip(translationBuilder, GTGItems.STEEL_MEMORY, "Steel Memory", "Grants Silvally the Steel-type");
+        addItemWithTooltip(translationBuilder, GTGItems.WATER_MEMORY, "Water Memory", "Grants Silvally the Water-type");
+
+        addItemWithTooltip(translationBuilder, GTGItems.BURN_DRIVE, "Burn Drive", "Changes Genesect's Techno Blast to Fire-type");
+        addItemWithTooltip(translationBuilder, GTGItems.CHILL_DRIVE, "Chill Drive", "Changes Genesect's Techno Blast to Ice-type");
+        addItemWithTooltip(translationBuilder, GTGItems.DOUSE_DRIVE, "Douse Drive", "Changes Genesect's Techno Blast to Water-type");
+        addItemWithTooltip(translationBuilder, GTGItems.SHOCK_DRIVE, "Shock Drive", "Changes Genesect's Techno Blast to Electric-type");
+
+        addItemWithTooltip(translationBuilder, GTGItems.WELLSPRING_MASK, "Wellspring Mask", "Grants Ogerpon its Wellspring form");
+        addItemWithTooltip(translationBuilder, GTGItems.HEARTHFLAME_MASK, "Hearthflame Mask", "Grants Ogerpon its Hearthflame form");
+        addItemWithTooltip(translationBuilder, GTGItems.CORNERSTONE_MASK, "Cornerstone Mask", "Grants Ogerpon its Cornerstone form");
+
+        addItemWithTooltip(translationBuilder, GTGItems.REVEAL_GLASS, "Reveal Glass", "Toggles the Therian forms of the Forces of Nature");
+        addItemWithTooltip(translationBuilder, GTGItems.DNA_SPLICERS, "DNA Splicers", "Fuses and unfuses Kyurem with Reshiram or Zekrom");
+        addItemWithTooltip(translationBuilder, GTGItems.GRACIDEA_FLOWER, "Gracidea Flower", "Toggles the forme of Shaymin");
+        addItemWithTooltip(translationBuilder, GTGItems.PRISON_BOTTLE, "Prison Bottle", "Toggles the forme of Hoopa");
+        addItemWithTooltip(translationBuilder, GTGItems.N_LUNARIZER, "N Lunarizer", "Fuses Necrozma with Lunala");
+        addItemWithTooltip(translationBuilder, GTGItems.N_SOLARIZER, "N Solarizer", "Fuses Necrozma with Solgaleo");
+        addItemWithTooltip(translationBuilder, GTGItems.METEORITE, "Meteorite", "A meteorite that enables Deoxys to change its form");
+        addItemWithTooltip(translationBuilder, GTGItems.REIGNS_OF_UNITY, "Reigns of Unity", "Used to unite Calyrex with its steed");
+        addItemWithTooltip(translationBuilder, GTGItems.ROTOM_CATALOG, "Rotom Catalog", "A catalog of appliances for Rotom to possess");
+    }
+    
     private static String[] zCrystalTooltip (String type) {
         return new String[]{"This is a crystallized form of Z-Power.", "It upgrades " + type + "-type moves to Z-Moves."};
     }

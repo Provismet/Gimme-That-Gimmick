@@ -1,16 +1,29 @@
 package com.provismet.cobblemon.gimmick.registry;
 
+import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
+import com.cobblemon.mod.common.api.properties.CustomPokemonProperty;
 import com.cobblemon.mod.common.api.types.ElementalType;
 import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.api.types.tera.TeraType;
 import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.pokemon.helditem.CobblemonHeldItemManager;
+import com.cobblemon.mod.common.util.MiscUtilsKt;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.item.PolymerBlockItemTextured;
 import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DMaxCandyItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DynamaxBandItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.MaxSoupItem;
+import com.provismet.cobblemon.gimmick.item.forms.DNASplicersItem;
+import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
+import com.provismet.cobblemon.gimmick.item.forms.GracideaFlowerItem;
+import com.provismet.cobblemon.gimmick.item.forms.MeteoriteItem;
+import com.provismet.cobblemon.gimmick.item.forms.NLunarizerItem;
+import com.provismet.cobblemon.gimmick.item.forms.NSolarizerItem;
+import com.provismet.cobblemon.gimmick.item.forms.PrisonBottleItem;
+import com.provismet.cobblemon.gimmick.item.forms.ReinsOfUnityItem;
+import com.provismet.cobblemon.gimmick.item.forms.RevealGlassItem;
+import com.provismet.cobblemon.gimmick.item.forms.RotomCatalogItem;
 import com.provismet.cobblemon.gimmick.item.mega.MegaStoneItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraOrbItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraShardItem;
@@ -149,8 +162,76 @@ public abstract class GTGItems {
     public static final TeraShardItem WATER_TERA_SHARD = registerTeraShard("water", TeraTypes.getWATER());
     public static final TeraShardItem STELLAR_TERA_SHARD = registerTeraShard("stellar", TeraTypes.getSTELLAR());
 
-    //Form chamge items
-    //public static final PolymerHeldItem TEAL_MASK = register("teal_mas", (settings, item, modelData) -> new PolymerHeldItem(settings.rarity(Rarity.EPIC).maxCount(1).component(GTGItemDataComponents.KEY_STONE, Unit.INSTANCE), item, modelData, 1));
+    // Form Change Items
+    public static final MeteoriteItem METEORITE = register("meteorite", MeteoriteItem::new);
+    public static final ReinsOfUnityItem REIGNS_OF_UNITY = register("reigns_of_unity", ReinsOfUnityItem::new);
+    public static final RotomCatalogItem ROTOM_CATALOG = register("rotom_catalog", RotomCatalogItem::new);
+    public static final RevealGlassItem REVEAL_GLASS = register("reveal_glass", RevealGlassItem::new);
+    public static final DNASplicersItem DNA_SPLICERS = register("dna_splicers", DNASplicersItem::new);
+    public static final GracideaFlowerItem GRACIDEA_FLOWER = register("gracidea_flower", GracideaFlowerItem::new);
+    public static final PrisonBottleItem PRISON_BOTTLE = register("prison_bottle", PrisonBottleItem::new);
+    public static final NLunarizerItem N_LUNARIZER = register("n_lunarizer", NLunarizerItem::new);
+    public static final NSolarizerItem N_SOLARIZER = register("n_solarizer", NSolarizerItem::new);
+
+    // Form Change Held Items
+    public static final GenericFormChangeHeldItem ADAMANT_ORB = registerFormChangeChoice("adamantorb", "dialga", "orb_forme", "origin", "altered", 1);
+    public static final GenericFormChangeHeldItem LUSTROUS_ORB = registerFormChangeChoice("lustrousorb", "palkia", "orb_forme", "origin", "altered", 1);
+    public static final GenericFormChangeHeldItem GRISEOUS_ORB = registerFormChangeChoice("griseousorb", "giratina", "orb_forme", "origin", "altered", 1);
+
+    public static final GenericFormChangeHeldItem BLUE_ORB = registerFormChangeChoice("blueorb", "kyogre", "reversion_state", "primal", "standard", 1);
+    public static final GenericFormChangeHeldItem RED_ORB = registerFormChangeChoice("redorb", "groudon", "reversion_state", "primal", "standard", 1);
+
+    public static final GenericFormChangeHeldItem RUSTED_SWORD = registerFormChangeChoice("rustedsword", "zacian", "behemoth_warrior", "crowned", "hero", 1);
+    public static final GenericFormChangeHeldItem RUSTED_SHIELD = registerFormChangeChoice("rustedshield", "zamazenta", "behemoth_warrior", "crowned", "hero", 1);
+
+    // Arceus Plates
+    public static final GenericFormChangeHeldItem DRACO_PLATE = registerArceus("dracoplate", "dragon");
+    public static final GenericFormChangeHeldItem DREAD_PLATE = registerArceus("dreadplate", "dark");
+    public static final GenericFormChangeHeldItem EARTH_PLATE = registerArceus("earthplate", "ground");
+    public static final GenericFormChangeHeldItem FIST_PLATE = registerArceus("fistplate", "fighting");
+    public static final GenericFormChangeHeldItem FLAME_PLATE = registerArceus("flameplate", "fire");
+    public static final GenericFormChangeHeldItem ICICLE_PLATE = registerArceus("icicleplate", "ice");
+    public static final GenericFormChangeHeldItem INSECT_PLATE = registerArceus("insectplate", "bug");
+    public static final GenericFormChangeHeldItem IRON_PLATE = registerArceus("ironplate", "steel");
+    public static final GenericFormChangeHeldItem MEADOW_PLATE = registerArceus("meadowplate", "grass");
+    public static final GenericFormChangeHeldItem MIND_PLATE = registerArceus("mindplate", "psychic");
+    public static final GenericFormChangeHeldItem PIXIE_PLATE = registerArceus("pixieplate", "fairy");
+    public static final GenericFormChangeHeldItem SKY_PLATE = registerArceus("skyplate", "flying");
+    public static final GenericFormChangeHeldItem SPLASH_PLATE = registerArceus("splashplate", "water");
+    public static final GenericFormChangeHeldItem SPOOKY_PLATE = registerArceus("spookyplate", "ghost");
+    public static final GenericFormChangeHeldItem STONE_PLATE = registerArceus("stoneplate", "rock");
+    public static final GenericFormChangeHeldItem TOXIC_PLATE = registerArceus("toxicplate", "poison");
+    public static final GenericFormChangeHeldItem ZAP_PLATE = registerArceus("zapplate", "electric");
+
+    // Silvally Memories
+    public static final GenericFormChangeHeldItem BUG_MEMORY = registerSilvally("bug");
+    public static final GenericFormChangeHeldItem DARK_MEMORY = registerSilvally("dark");
+    public static final GenericFormChangeHeldItem DRAGON_MEMORY = registerSilvally("dragon");
+    public static final GenericFormChangeHeldItem ELECTRIC_MEMORY = registerSilvally("electric");
+    public static final GenericFormChangeHeldItem FAIRY_MEMORY = registerSilvally("fairy");
+    public static final GenericFormChangeHeldItem FIGHTING_MEMORY = registerSilvally("fighting");
+    public static final GenericFormChangeHeldItem FIRE_MEMORY = registerSilvally("fire");
+    public static final GenericFormChangeHeldItem FLYING_MEMORY = registerSilvally("flying");
+    public static final GenericFormChangeHeldItem GHOST_MEMORY = registerSilvally("ghost");
+    public static final GenericFormChangeHeldItem GRASS_MEMORY = registerSilvally("grass");
+    public static final GenericFormChangeHeldItem GROUND_MEMORY = registerSilvally("ground");
+    public static final GenericFormChangeHeldItem ICE_MEMORY = registerSilvally("ice");
+    public static final GenericFormChangeHeldItem POISON_MEMORY = registerSilvally("poison");
+    public static final GenericFormChangeHeldItem PSYCHIC_MEMORY = registerSilvally("psychic");
+    public static final GenericFormChangeHeldItem ROCK_MEMORY = registerSilvally("rock");
+    public static final GenericFormChangeHeldItem STEEL_MEMORY = registerSilvally("steel");
+    public static final GenericFormChangeHeldItem WATER_MEMORY = registerSilvally("water");
+
+    // Genesect Drives
+    public static final GenericFormChangeHeldItem BURN_DRIVE = registerGenesect("burn", "fire");
+    public static final GenericFormChangeHeldItem CHILL_DRIVE = registerGenesect("chill", "ice");
+    public static final GenericFormChangeHeldItem DOUSE_DRIVE = registerGenesect("douse", "water");
+    public static final GenericFormChangeHeldItem SHOCK_DRIVE = registerGenesect("shock", "electric");
+
+    // Ogerpon Masks
+    public static final GenericFormChangeHeldItem WELLSPRING_MASK = registerOgerpon("wellspring");
+    public static final GenericFormChangeHeldItem HEARTHFLAME_MASK = registerOgerpon("hearthflame");
+    public static final GenericFormChangeHeldItem CORNERSTONE_MASK = registerOgerpon("cornerstone");
 
     private static MegaStoneItem registerMegaStone (String name) {
         return registerShowdownItem(name, MegaStoneItem::new);
@@ -176,6 +257,30 @@ public abstract class GTGItems {
         T item = register(name, itemConstructor);
         CobblemonHeldItemManager.INSTANCE.registerRemap(item, name);
         return item;
+    }
+
+    private static GenericFormChangeHeldItem registerOgerpon (String mask) {
+        return registerFormChangeChoice(mask + "mask", "ogerpon", "ogre_mask", mask, "teal", 1);
+    }
+
+    private static GenericFormChangeHeldItem registerGenesect (String driveName, String type) {
+        return registerFormChangeChoice(driveName + "drive", "genesect", "techno_drive", type, "none", 1);
+    }
+
+    private static GenericFormChangeHeldItem registerSilvally (String type) {
+        return registerFormChangeChoice(type + "memory", "silvally", "rks_memory", type, "normal", 1);
+    }
+
+    private static GenericFormChangeHeldItem registerArceus (String name, String type) {
+        return registerFormChangeChoice(name, "arceus", "multitype", type, "normal", 1);
+    }
+
+    private static GenericFormChangeHeldItem registerFormChangeChoice (String name, String species, String propertyName, String appliedChoice, String defaultChoice, int tooltipLines) {
+        return registerFormChange(name, species, new StringSpeciesFeature(propertyName, appliedChoice), new StringSpeciesFeature(propertyName, defaultChoice), tooltipLines);
+    }
+
+    private static GenericFormChangeHeldItem registerFormChange (String name, String species, CustomPokemonProperty apply, CustomPokemonProperty remove, int tooltipLines) {
+        return registerShowdownItem(name, (settings, item, modelData) -> new GenericFormChangeHeldItem(settings, item, modelData, tooltipLines, MiscUtilsKt.cobblemonResource(species), apply, remove));
     }
 
     private static <T extends PolymerHeldItem> T register (String name, ItemConstructor<T> itemConstructor) {

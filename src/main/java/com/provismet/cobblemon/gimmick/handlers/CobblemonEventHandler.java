@@ -30,6 +30,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
+import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
@@ -250,8 +251,14 @@ public abstract class CobblemonEventHandler {
         }
     }
 
-    private static Unit heldItemFormChange(HeldItemEvent.Pre pre) {
-        //TODO - Add all the form changes
+    private static Unit heldItemFormChange(HeldItemEvent.Pre heldItemEvent) {
+        if (heldItemEvent.getReturning().getItem() instanceof GenericFormChangeHeldItem formChanger) {
+            formChanger.removeFromPokemon(heldItemEvent.getPokemon());
+        }
+        if (heldItemEvent.getReceiving().getItem() instanceof GenericFormChangeHeldItem formChanger) {
+            formChanger.giveToPokemon(heldItemEvent.getPokemon());
+        }
+
         return Unit.INSTANCE;
     }
 
