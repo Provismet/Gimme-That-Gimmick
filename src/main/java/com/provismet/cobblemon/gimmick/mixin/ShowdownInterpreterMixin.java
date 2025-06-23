@@ -24,8 +24,7 @@ import java.util.Map;
 
 @Mixin(value = ShowdownInterpreter.class, remap = false)
 public abstract class ShowdownInterpreterMixin {
-    @Shadow
-    @Final
+    @Shadow @Final
     private static Map<String, Function4<PokemonBattle, InstructionSet, BattleMessage, Iterator<BattleMessage>, InterpreterInstruction>> updateInstructionParser;
 
     @Inject(method = "<clinit>", at = @At("TAIL"))

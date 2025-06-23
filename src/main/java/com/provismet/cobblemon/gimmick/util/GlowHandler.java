@@ -1,11 +1,14 @@
 package com.provismet.cobblemon.gimmick.util;
 
+import com.cobblemon.mod.common.api.types.ElementalType;
+import com.cobblemon.mod.common.api.types.ElementalTypes;
 import com.cobblemon.mod.common.api.types.tera.TeraType;
 import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.scoreboard.Team;
@@ -15,7 +18,7 @@ import net.minecraft.util.Formatting;
 import java.util.UUID;
 
 public class GlowHandler {
-    public static void applyDynamaxGlow(PokemonEntity pokemonEntity) {
+    public static void applyDynamaxGlow(PokemonEntity pokemonEntity){
         if (pokemonEntity.getWorld() instanceof ServerWorld serverLevel) {
             pokemonEntity.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
             ServerScoreboard scoreboard = serverLevel.getScoreboard();
@@ -33,7 +36,7 @@ public class GlowHandler {
         }
     }
 
-    public static void applyTeraGlow(PokemonEntity pokemon) {
+    public static void applyTeraGlow(PokemonEntity pokemon){
         if (pokemon.getWorld() instanceof ServerWorld serverLevel) {
             pokemon.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
             ServerScoreboard scoreboard = serverLevel.getScoreboard();
@@ -51,7 +54,7 @@ public class GlowHandler {
         }
     }
 
-    public static void applyZGlow(PokemonEntity pokemon) {
+    public static void applyZGlow(PokemonEntity pokemon){
         if (pokemon.getWorld() instanceof ServerWorld serverLevel) {
             pokemon.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
             ServerScoreboard scoreboard = serverLevel.getScoreboard();
@@ -93,7 +96,6 @@ public class GlowHandler {
             return Formatting.WHITE;
         }
     }
-
     private static Formatting getGlowColorZMoves(ItemStack heldItem) {
         if (heldItem.isOf(GTGItems.ALORAICHIUM_Z)) return Formatting.YELLOW;
         if (heldItem.isOf(GTGItems.BUGINIUM_Z)) return Formatting.DARK_GREEN;

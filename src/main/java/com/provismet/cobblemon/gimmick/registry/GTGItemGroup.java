@@ -7,131 +7,131 @@ import net.minecraft.text.Text;
 
 public abstract class GTGItemGroup {
     public static final ItemGroup GTG_ITEMS = PolymerItemGroupUtils.builder()
-            .icon(GTGItems.ABSOLITE::getDefaultStack)
-            .displayName(Text.translatable("gimmethatgimmick.itemGroup.name"))
-            .entries((displayContext, entries) -> {
-                // Key Items
-                entries.add(GTGItems.MEGA_BRACELET);
-                entries.add(GTGItems.Z_RING);
-                entries.add(GTGItems.DYNAMAX_BAND);
-                entries.add(GTGItems.TERA_ORB);
-                entries.add(GTGItems.POWER_SPOT);
+        .icon(GTGItems.ABSOLITE::getDefaultStack)
+        .displayName(Text.translatable("gimmethatgimmick.itemGroup.name"))
+        .entries((displayContext, entries) -> {
+            // Key Items
+            entries.add(GTGItems.MEGA_BRACELET);
+            entries.add(GTGItems.Z_RING);
+            entries.add(GTGItems.DYNAMAX_BAND);
+            entries.add(GTGItems.TERA_ORB);
+            entries.add(GTGItems.POWER_SPOT);
 
-                // Mega Stones
-                entries.add(GTGItems.ABOMASITE);
-                entries.add(GTGItems.ABSOLITE);
-                entries.add(GTGItems.AERODACTYLITE);
-                entries.add(GTGItems.AGGRONITE);
-                entries.add(GTGItems.ALAKAZITE);
-                entries.add(GTGItems.ALTARIANITE);
-                entries.add(GTGItems.AMPHAROSITE);
-                entries.add(GTGItems.AUDINITE);
-                entries.add(GTGItems.BANETTITE);
-                entries.add(GTGItems.BEEDRILLITE);
-                entries.add(GTGItems.BLASTOISINITE);
-                entries.add(GTGItems.BLAZIKENITE);
-                entries.add(GTGItems.CAMERUPTITE);
-                entries.add(GTGItems.CHARIZARDITE_X);
-                entries.add(GTGItems.CHARIZARDITE_Y);
-                entries.add(GTGItems.DIANCITE);
-                entries.add(GTGItems.GALLADITE);
-                entries.add(GTGItems.GARCHOMPITE);
-                entries.add(GTGItems.GARDEVOIRITE);
-                entries.add(GTGItems.GENGARITE);
-                entries.add(GTGItems.GLALITITE);
-                entries.add(GTGItems.GYARADOSITE);
-                entries.add(GTGItems.HERACRONITE);
-                entries.add(GTGItems.HOUNDOOMINITE);
-                entries.add(GTGItems.KANGASKHANITE);
-                entries.add(GTGItems.LATIASITE);
-                entries.add(GTGItems.LATIOSITE);
-                entries.add(GTGItems.LOPUNNITE);
-                entries.add(GTGItems.LUCARIONITE);
-                entries.add(GTGItems.MANECTITE);
-                entries.add(GTGItems.MAWILITE);
-                entries.add(GTGItems.MEDICHAMITE);
-                entries.add(GTGItems.METAGROSSITE);
-                entries.add(GTGItems.MEWTWONITE_X);
-                entries.add(GTGItems.MEWTWONITE_Y);
-                entries.add(GTGItems.PIDGEOTITE);
-                entries.add(GTGItems.PINSIRITE);
-                entries.add(GTGItems.SABLENITE);
-                entries.add(GTGItems.SALAMENCITE);
-                entries.add(GTGItems.SCEPTILITE);
-                entries.add(GTGItems.SCIZORITE);
-                entries.add(GTGItems.SHARPEDONITE);
-                entries.add(GTGItems.SLOWBRONITE);
-                entries.add(GTGItems.STEELIXITE);
-                entries.add(GTGItems.SWAMPERTITE);
-                entries.add(GTGItems.TYRANITARITE);
-                entries.add(GTGItems.VENUSAURITE);
+            // Mega Stones
+            entries.add(GTGItems.ABOMASITE);
+            entries.add(GTGItems.ABSOLITE);
+            entries.add(GTGItems.AERODACTYLITE);
+            entries.add(GTGItems.AGGRONITE);
+            entries.add(GTGItems.ALAKAZITE);
+            entries.add(GTGItems.ALTARIANITE);
+            entries.add(GTGItems.AMPHAROSITE);
+            entries.add(GTGItems.AUDINITE);
+            entries.add(GTGItems.BANETTITE);
+            entries.add(GTGItems.BEEDRILLITE);
+            entries.add(GTGItems.BLASTOISINITE);
+            entries.add(GTGItems.BLAZIKENITE);
+            entries.add(GTGItems.CAMERUPTITE);
+            entries.add(GTGItems.CHARIZARDITE_X);
+            entries.add(GTGItems.CHARIZARDITE_Y);
+            entries.add(GTGItems.DIANCITE);
+            entries.add(GTGItems.GALLADITE);
+            entries.add(GTGItems.GARCHOMPITE);
+            entries.add(GTGItems.GARDEVOIRITE);
+            entries.add(GTGItems.GENGARITE);
+            entries.add(GTGItems.GLALITITE);
+            entries.add(GTGItems.GYARADOSITE);
+            entries.add(GTGItems.HERACRONITE);
+            entries.add(GTGItems.HOUNDOOMINITE);
+            entries.add(GTGItems.KANGASKHANITE);
+            entries.add(GTGItems.LATIASITE);
+            entries.add(GTGItems.LATIOSITE);
+            entries.add(GTGItems.LOPUNNITE);
+            entries.add(GTGItems.LUCARIONITE);
+            entries.add(GTGItems.MANECTITE);
+            entries.add(GTGItems.MAWILITE);
+            entries.add(GTGItems.MEDICHAMITE);
+            entries.add(GTGItems.METAGROSSITE);
+            entries.add(GTGItems.MEWTWONITE_X);
+            entries.add(GTGItems.MEWTWONITE_Y);
+            entries.add(GTGItems.PIDGEOTITE);
+            entries.add(GTGItems.PINSIRITE);
+            entries.add(GTGItems.SABLENITE);
+            entries.add(GTGItems.SALAMENCITE);
+            entries.add(GTGItems.SCEPTILITE);
+            entries.add(GTGItems.SCIZORITE);
+            entries.add(GTGItems.SHARPEDONITE);
+            entries.add(GTGItems.SLOWBRONITE);
+            entries.add(GTGItems.STEELIXITE);
+            entries.add(GTGItems.SWAMPERTITE);
+            entries.add(GTGItems.TYRANITARITE);
+            entries.add(GTGItems.VENUSAURITE);
 
-                // Z-Crystals
-                entries.add(GTGItems.ALORAICHIUM_Z);
-                entries.add(GTGItems.DECIDIUM_Z);
-                entries.add(GTGItems.EEVIUM_Z);
-                entries.add(GTGItems.INCINIUM_Z);
-                entries.add(GTGItems.KOMMONIUM_Z);
-                entries.add(GTGItems.LUNALIUM_Z);
-                entries.add(GTGItems.LYCANIUM_Z);
-                entries.add(GTGItems.MARSHADIUM_Z);
-                entries.add(GTGItems.MEWNIUM_Z);
-                entries.add(GTGItems.MIMIKIUM_Z);
-                entries.add(GTGItems.PIKANIUM_Z);
-                entries.add(GTGItems.PIKASHUNIUM_Z);
-                entries.add(GTGItems.PRIMARIUM_Z);
-                entries.add(GTGItems.SNORLIUM_Z);
-                entries.add(GTGItems.SOLGANIUM_Z);
-                entries.add(GTGItems.TAPUNIUM_Z);
-                entries.add(GTGItems.ULTRANECROZIUM_Z);
-                entries.add(GTGItems.BUGINIUM_Z);
-                entries.add(GTGItems.DARKINIUM_Z);
-                entries.add(GTGItems.DRAGONIUM_Z);
-                entries.add(GTGItems.ELECTRIUM_Z);
-                entries.add(GTGItems.FAIRIUM_Z);
-                entries.add(GTGItems.FIGHTINIUM_Z);
-                entries.add(GTGItems.FIRIUM_Z);
-                entries.add(GTGItems.FLYINIUM_Z);
-                entries.add(GTGItems.GHOSTIUM_Z);
-                entries.add(GTGItems.GRASSIUM_Z);
-                entries.add(GTGItems.GROUNDIUM_Z);
-                entries.add(GTGItems.ICIUM_Z);
-                entries.add(GTGItems.NORMALIUM_Z);
-                entries.add(GTGItems.POISONIUM_Z);
-                entries.add(GTGItems.PSYCHIUM_Z);
-                entries.add(GTGItems.ROCKIUM_Z);
-                entries.add(GTGItems.STEELIUM_Z);
-                entries.add(GTGItems.WATERIUM_Z);
+            // Z-Crystals
+            entries.add(GTGItems.ALORAICHIUM_Z);
+            entries.add(GTGItems.DECIDIUM_Z);
+            entries.add(GTGItems.EEVIUM_Z);
+            entries.add(GTGItems.INCINIUM_Z);
+            entries.add(GTGItems.KOMMONIUM_Z);
+            entries.add(GTGItems.LUNALIUM_Z);
+            entries.add(GTGItems.LYCANIUM_Z);
+            entries.add(GTGItems.MARSHADIUM_Z);
+            entries.add(GTGItems.MEWNIUM_Z);
+            entries.add(GTGItems.MIMIKIUM_Z);
+            entries.add(GTGItems.PIKANIUM_Z);
+            entries.add(GTGItems.PIKASHUNIUM_Z);
+            entries.add(GTGItems.PRIMARIUM_Z);
+            entries.add(GTGItems.SNORLIUM_Z);
+            entries.add(GTGItems.SOLGANIUM_Z);
+            entries.add(GTGItems.TAPUNIUM_Z);
+            entries.add(GTGItems.ULTRANECROZIUM_Z);
+            entries.add(GTGItems.BUGINIUM_Z);
+            entries.add(GTGItems.DARKINIUM_Z);
+            entries.add(GTGItems.DRAGONIUM_Z);
+            entries.add(GTGItems.ELECTRIUM_Z);
+            entries.add(GTGItems.FAIRIUM_Z);
+            entries.add(GTGItems.FIGHTINIUM_Z);
+            entries.add(GTGItems.FIRIUM_Z);
+            entries.add(GTGItems.FLYINIUM_Z);
+            entries.add(GTGItems.GHOSTIUM_Z);
+            entries.add(GTGItems.GRASSIUM_Z);
+            entries.add(GTGItems.GROUNDIUM_Z);
+            entries.add(GTGItems.ICIUM_Z);
+            entries.add(GTGItems.NORMALIUM_Z);
+            entries.add(GTGItems.POISONIUM_Z);
+            entries.add(GTGItems.PSYCHIUM_Z);
+            entries.add(GTGItems.ROCKIUM_Z);
+            entries.add(GTGItems.STEELIUM_Z);
+            entries.add(GTGItems.WATERIUM_Z);
 
-                // Dynamax
-                entries.add(GTGItems.DYNAMAX_CANDY);
-                entries.add(GTGItems.MAX_SOUP);
-                entries.add(GTGItems.MAX_MUSHROOM);
+            // Dynamax
+            entries.add(GTGItems.DYNAMAX_CANDY);
+            entries.add(GTGItems.MAX_SOUP);
+            entries.add(GTGItems.MAX_MUSHROOM);
 
-                // Tera Shards
-                entries.add(GTGItems.BUG_TERA_SHARD);
-                entries.add(GTGItems.DARK_TERA_SHARD);
-                entries.add(GTGItems.DRAGON_TERA_SHARD);
-                entries.add(GTGItems.ELECTRIC_TERA_SHARD);
-                entries.add(GTGItems.FAIRY_TERA_SHARD);
-                entries.add(GTGItems.FIGHTING_TERA_SHARD);
-                entries.add(GTGItems.FIRE_TERA_SHARD);
-                entries.add(GTGItems.FLYING_TERA_SHARD);
-                entries.add(GTGItems.GHOST_TERA_SHARD);
-                entries.add(GTGItems.GRASS_TERA_SHARD);
-                entries.add(GTGItems.GROUND_TERA_SHARD);
-                entries.add(GTGItems.ICE_TERA_SHARD);
-                entries.add(GTGItems.NORMAL_TERA_SHARD);
-                entries.add(GTGItems.POISON_TERA_SHARD);
-                entries.add(GTGItems.PSYCHIC_TERA_SHARD);
-                entries.add(GTGItems.ROCK_TERA_SHARD);
-                entries.add(GTGItems.STEEL_TERA_SHARD);
-                entries.add(GTGItems.WATER_TERA_SHARD);
-                entries.add(GTGItems.STELLAR_TERA_SHARD);
-            })
-            .build();
+            // Tera Shards
+            entries.add(GTGItems.BUG_TERA_SHARD);
+            entries.add(GTGItems.DARK_TERA_SHARD);
+            entries.add(GTGItems.DRAGON_TERA_SHARD);
+            entries.add(GTGItems.ELECTRIC_TERA_SHARD);
+            entries.add(GTGItems.FAIRY_TERA_SHARD);
+            entries.add(GTGItems.FIGHTING_TERA_SHARD);
+            entries.add(GTGItems.FIRE_TERA_SHARD);
+            entries.add(GTGItems.FLYING_TERA_SHARD);
+            entries.add(GTGItems.GHOST_TERA_SHARD);
+            entries.add(GTGItems.GRASS_TERA_SHARD);
+            entries.add(GTGItems.GROUND_TERA_SHARD);
+            entries.add(GTGItems.ICE_TERA_SHARD);
+            entries.add(GTGItems.NORMAL_TERA_SHARD);
+            entries.add(GTGItems.POISON_TERA_SHARD);
+            entries.add(GTGItems.PSYCHIC_TERA_SHARD);
+            entries.add(GTGItems.ROCK_TERA_SHARD);
+            entries.add(GTGItems.STEEL_TERA_SHARD);
+            entries.add(GTGItems.WATER_TERA_SHARD);
+            entries.add(GTGItems.STELLAR_TERA_SHARD);
+        })
+        .build();
 
-    public static void register() {
+    public static void register () {
         PolymerItemGroupUtils.registerPolymerItemGroup(GimmeThatGimmickMain.identifier("item_group"), GTG_ITEMS);
     }
 }

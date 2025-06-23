@@ -10,14 +10,13 @@ import net.minecraft.registry.Registry;
 
 public abstract class GTGBlocks {
     public static final Block POWER_SPOT = Registry.register(Registries.BLOCK, GimmeThatGimmickMain.identifier("power_spot"),
-            new PowerSpotBlock(
-                    AbstractBlock.Settings.create()
-                            .solid()
-                            .mapColor(MapColor.DULL_RED),
-                    GimmeThatGimmickMain.identifier("power_spot")
-            )
+        new PowerSpotBlock(
+            AbstractBlock.Settings.create()
+                .solid()
+                .mapColor(MapColor.DULL_RED),
+            GimmeThatGimmickMain.identifier("power_spot")
+        )
     );
 
-    public static void init() {
-    }
+    public static void init () {}
 }

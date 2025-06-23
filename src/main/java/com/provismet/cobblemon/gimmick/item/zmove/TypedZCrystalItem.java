@@ -11,11 +11,11 @@ import net.minecraft.item.Item;
 public class TypedZCrystalItem extends PolymerHeldItem {
     public final ElementalType type;
 
-    public TypedZCrystalItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData, ElementalType type) {
+    public TypedZCrystalItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, ElementalType type) {
         this(settings, baseVanillaItem, modelData, 2, type);
     }
 
-    public TypedZCrystalItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines, ElementalType type) {
+    public TypedZCrystalItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines, ElementalType type) {
         super(settings, baseVanillaItem, modelData, tooltipLines);
         this.type = type;
     }

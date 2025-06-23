@@ -12,12 +12,12 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 public class TeraOrbItem extends PolymerHeldItem {
-    public TeraOrbItem(Item.Settings settings, Item polymerItem, PolymerModelData modelData) {
+    public TeraOrbItem (Item.Settings settings, Item polymerItem, PolymerModelData modelData) {
         super(settings, polymerItem, modelData, 1);
     }
 
     @Override
-    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+    public ActionResult useOnEntity (ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
         if (entity instanceof PokemonEntity pokemonEntity) {
             user.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera", pokemonEntity.getPokemon().getTeraType().getDisplayName()), true);
             return ActionResult.SUCCESS;
