@@ -11,13 +11,13 @@ import net.minecraft.util.Identifier;
 public class PowerSpotBlock extends Block implements PolymerTexturedBlock {
     private final BlockState model;
 
-    public PowerSpotBlock(Settings settings, Identifier id) {
+    public PowerSpotBlock (Settings settings, Identifier id) {
         super(settings);
         this.model = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, PolymerBlockModel.of(id.withPrefixedPath("block/")));
     }
 
     @Override
-    public BlockState getPolymerBlockState(BlockState blockState) {
+    public BlockState getPolymerBlockState (BlockState blockState) {
         return this.model;
     }
 }

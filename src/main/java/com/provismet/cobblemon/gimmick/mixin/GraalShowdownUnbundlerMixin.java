@@ -20,12 +20,11 @@ import java.nio.file.StandardCopyOption;
  */
 @Mixin(GraalShowdownUnbundler.class)
 public abstract class GraalShowdownUnbundlerMixin {
-    @Unique
-    private boolean loaded = false;
+    @Unique private boolean loaded = false;
 
     @Inject(method = "attemptUnbundle", at = @At("TAIL"), remap = false)
-    private void replaceScripts(CallbackInfo info) {
-        if (!loaded) {
+    private void replaceScripts (CallbackInfo info) {
+        if(!loaded){
             loaded = true;
             if (Options.shouldOverrideShowdown()) {
                 Path showdown_sim = Path.of("./showdown/sim");
@@ -51,7 +50,7 @@ public abstract class GraalShowdownUnbundlerMixin {
     }
 
     @Unique
-    private void yoink(String resourcePath, Path targetPath) {
+    private void yoink (String resourcePath, Path targetPath) {
         try (InputStream inputStream = this.getClass().getResourceAsStream(resourcePath)) {
             if (inputStream == null) {
                 GimmeThatGimmickMain.LOGGER.error("Fallback file not found: {}", resourcePath);

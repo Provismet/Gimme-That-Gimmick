@@ -16,12 +16,11 @@ public abstract class GTGItemDataComponents {
     public static final ComponentType<Unit> DYNAMAX_BAND = register("dynamax_band", builder -> builder.codec(Unit.CODEC).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
     public static final ComponentType<Unit> TERA_ORB = register("tera_orb", builder -> builder.codec(Unit.CODEC).packetCodec(PacketCodec.unit(Unit.INSTANCE)));
 
-    private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+    private static <T> ComponentType<T> register (String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         ComponentType<T> component = Registry.register(Registries.DATA_COMPONENT_TYPE, GimmeThatGimmickMain.identifier(name), builderOperator.apply(ComponentType.builder()).build());
         PolymerComponent.registerDataComponent(component);
         return component;
     }
 
-    public static void init() {
-    }
+    public static void init () {}
 }

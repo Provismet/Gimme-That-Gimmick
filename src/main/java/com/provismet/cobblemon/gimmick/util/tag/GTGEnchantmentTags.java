@@ -8,7 +8,7 @@ import net.minecraft.registry.tag.TagKey;
 public abstract class GTGEnchantmentTags {
     public static final TagKey<Enchantment> KEY_ITEM = GTGEnchantmentTags.of("key_item");
 
-    private static TagKey<Enchantment> of(String name) {
+    private static TagKey<Enchantment> of (String name) {
         return TagKey.of(RegistryKeys.ENCHANTMENT, GimmeThatGimmickMain.identifier(name));
     }
 }

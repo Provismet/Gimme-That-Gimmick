@@ -14,15 +14,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Code adapted from to YajatKaul @ MegaShowdown.
  */
 @Mixin(value = StartInstruction.class, remap = false)
-public class StartInstructionMixin {
-    @Shadow
-    @Final
-    private BattleMessage message;
+public class StartInstructionMixin  {
+    @Shadow @Final private BattleMessage message;
 
     @Inject(method = "invoke", at = @At("HEAD"), remap = false)
     private void injectBeforeInvoke(PokemonBattle battle, CallbackInfo info) {
