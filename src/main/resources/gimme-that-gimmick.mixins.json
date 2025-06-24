@@ -7,6 +7,8 @@
         "GraalShowdownUnbundlerMixin",
         "MoveActionResponseMixin",
         "PokemonBattleMixin",
+        "PokemonMixin",
+        "PartyStoreMixin",
         "ShowdownActionRequestMixin",
         "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",

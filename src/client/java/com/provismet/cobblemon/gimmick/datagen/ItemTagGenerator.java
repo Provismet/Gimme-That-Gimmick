@@ -30,8 +30,11 @@ public class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
         this.getOrCreateTagBuilder(GTGItemTags.DYNAMAX_BANDS)
             .add(GTGItems.DYNAMAX_BAND);
 
-        this.getOrCreateTagBuilder(GTGItemTags.TERA_ORBS)
+        this.getOrCreateTagBuilder(GTGItemTags.BREAKABLE_TERA_ORBS)
             .add(GTGItems.TERA_ORB);
+
+        this.getOrCreateTagBuilder(GTGItemTags.TERA_ORBS)
+            .addOptionalTag(GTGItemTags.BREAKABLE_TERA_ORBS);
 
         // Addons should add to this.
         this.getOrCreateTagBuilder(GTGItemTags.GIMMICK_ENCHANTABLE);

@@ -1,13 +1,13 @@
 package com.provismet.cobblemon.gimmick.config;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.lilylib.util.json.JsonBuilder;
+import com.provismet.lilylib.util.json.JsonReader;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,62 +20,65 @@ public abstract class Options {
     private static boolean powerSpotRequired = true;
     private static int powerSpotRange = 30;
     private static int dynamaxScaleFactor = 4;
+    private static boolean breakableTeraOrbs = true;
 
     static {
         load();
     }
 
-    public static boolean shouldOverrideShowdown() {
+    public static boolean shouldOverrideShowdown () {
         return overrideShowdown;
     }
 
-    public static int getPowerSpotRange() {
+    public static int getPowerSpotRange () {
         return powerSpotRange;
     }
 
-    public static boolean isPowerSpotRequired() {
+    public static boolean isPowerSpotRequired () {
         return powerSpotRequired;
     }
 
-    public static int getDynamaxScaleFactor() {
+    public static int getDynamaxScaleFactor () {
         return dynamaxScaleFactor;
     }
 
-    public static void save() {
-        JsonObject json = new JsonObject();
-        json.addProperty("override_showdown", overrideShowdown);
-        json.addProperty("dynamax_power_spot_range", powerSpotRange);
-        json.addProperty("dynamax_power_spot_required", powerSpotRequired);
-        json.addProperty("dynamax_scale_factor", dynamaxScaleFactor);
+    public static boolean canBreakTeraOrb () {
+        return breakableTeraOrbs;
+    }
+
+    public static void save () {
+        JsonObject json = new JsonBuilder()
+            .append("override_showdown", overrideShowdown)
+            .append("dynamax_power_spot_range", powerSpotRange)
+            .append("dynamax_power_spot_required", powerSpotRequired)
+            .append("dynamax_scale_factor", dynamaxScaleFactor)
+            .append("breakable_tera_orbs", breakableTeraOrbs)
+            .getJson();
 
         try (FileWriter writer = new FileWriter(FILE)) {
             Files.createDirectories(Path.of("./config"));
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(json));
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             GimmeThatGimmickMain.LOGGER.error("Gimme That Gimmick failed to write settings file due to error: ", e);
         }
     }
 
-    public static void load() {
+    public static void load () {
         try {
-            JsonElement element = JsonParser.parseReader(new FileReader(FILE));
-            if (element instanceof JsonObject json) {
-                if (json.has("override_showdown")) {
-                    overrideShowdown = json.getAsJsonPrimitive("override_showdown").getAsBoolean();
-                }
-                if (json.has("dynamax_power_spot_range")) {
-                    powerSpotRange = json.getAsJsonPrimitive("dynamax_power_spot_range").getAsInt();
-                }
-                if (json.has("dynamax_power_spot_required")) {
-                    powerSpotRequired = json.getAsJsonPrimitive("dynamax_power_spot_required").getAsBoolean();
-                }
-                if (json.has("dynamax_scale_factor")) {
-                    dynamaxScaleFactor = json.getAsJsonPrimitive("dynamax_scale_factor").getAsInt();
-                }
+            JsonReader reader = JsonReader.file(new File(FILE));
+            if (reader != null) {
+                reader.getBoolean("override_showdown").ifPresent(val -> overrideShowdown = val);
+                reader.getInteger("dynamax_power_spot_range").ifPresent(val -> powerSpotRange = val);
+                reader.getBoolean("dynamax_power_spot_required").ifPresent(val -> powerSpotRequired = val);
+                reader.getInteger("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
+                reader.getBoolean("breakable_tera_orbs").ifPresent(val -> breakableTeraOrbs = val);
             }
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             GimmeThatGimmickMain.LOGGER.info("Could not find Gimme That Gimmick config, constructing default.");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             GimmeThatGimmickMain.LOGGER.error("Could read Gimme That Gimmick config due to error:", e);
         }
         save();

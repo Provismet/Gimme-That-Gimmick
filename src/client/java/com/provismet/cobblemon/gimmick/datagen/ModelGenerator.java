@@ -29,6 +29,7 @@ public class ModelGenerator extends FabricModelProvider {
         this.createZCrystals(register);
         this.createDynamax(register);
         this.createTeraShards(register);
+        this.createFormChanges(register);
     }
 
     private void createKeyItems (Consumer<Item> register) {
@@ -153,5 +154,72 @@ public class ModelGenerator extends FabricModelProvider {
         register.accept(GTGItems.STEEL_TERA_SHARD);
         register.accept(GTGItems.WATER_TERA_SHARD);
         register.accept(GTGItems.STELLAR_TERA_SHARD);
+    }
+
+    private void createFormChanges (Consumer<Item> register) {
+        register.accept(GTGItems.ADAMANT_ORB);
+        register.accept(GTGItems.LUSTROUS_ORB);
+        register.accept(GTGItems.GRISEOUS_ORB);
+
+        register.accept(GTGItems.BLUE_ORB);
+        register.accept(GTGItems.RED_ORB);
+
+        register.accept(GTGItems.RUSTED_SWORD);
+        register.accept(GTGItems.RUSTED_SHIELD);
+
+        register.accept(GTGItems.DRACO_PLATE);
+        register.accept(GTGItems.DREAD_PLATE);
+        register.accept(GTGItems.EARTH_PLATE);
+        register.accept(GTGItems.FIST_PLATE);
+        register.accept(GTGItems.FLAME_PLATE);
+        register.accept(GTGItems.ICICLE_PLATE);
+        register.accept(GTGItems.INSECT_PLATE);
+        register.accept(GTGItems.IRON_PLATE);
+        register.accept(GTGItems.MEADOW_PLATE);
+        register.accept(GTGItems.MIND_PLATE);
+        register.accept(GTGItems.PIXIE_PLATE);
+        register.accept(GTGItems.SKY_PLATE);
+        register.accept(GTGItems.SPLASH_PLATE);
+        register.accept(GTGItems.SPOOKY_PLATE);
+        register.accept(GTGItems.STONE_PLATE);
+        register.accept(GTGItems.TOXIC_PLATE);
+        register.accept(GTGItems.ZAP_PLATE);
+
+        register.accept(GTGItems.BUG_MEMORY);
+        register.accept(GTGItems.DARK_MEMORY);
+        register.accept(GTGItems.DRAGON_MEMORY);
+        register.accept(GTGItems.ELECTRIC_MEMORY);
+        register.accept(GTGItems.FAIRY_MEMORY);
+        register.accept(GTGItems.FIGHTING_MEMORY);
+        register.accept(GTGItems.FIRE_MEMORY);
+        register.accept(GTGItems.FLYING_MEMORY);
+        register.accept(GTGItems.GHOST_MEMORY);
+        register.accept(GTGItems.GRASS_MEMORY);
+        register.accept(GTGItems.GROUND_MEMORY);
+        register.accept(GTGItems.ICE_MEMORY);
+        register.accept(GTGItems.POISON_MEMORY);
+        register.accept(GTGItems.PSYCHIC_MEMORY);
+        register.accept(GTGItems.ROCK_MEMORY);
+        register.accept(GTGItems.STEEL_MEMORY);
+        register.accept(GTGItems.WATER_MEMORY);
+
+        register.accept(GTGItems.BURN_DRIVE);
+        register.accept(GTGItems.CHILL_DRIVE);
+        register.accept(GTGItems.DOUSE_DRIVE);
+        register.accept(GTGItems.SHOCK_DRIVE);
+
+        register.accept(GTGItems.WELLSPRING_MASK);
+        register.accept(GTGItems.HEARTHFLAME_MASK);
+        register.accept(GTGItems.CORNERSTONE_MASK);
+
+        register.accept(GTGItems.METEORITE);
+        register.accept(GTGItems.REIGNS_OF_UNITY);
+        register.accept(GTGItems.ROTOM_CATALOG);
+        register.accept(GTGItems.GRACIDEA_FLOWER);
+        register.accept(GTGItems.PRISON_BOTTLE);
+        register.accept(GTGItems.REVEAL_GLASS);
+        register.accept(GTGItems.DNA_SPLICERS);
+        register.accept(GTGItems.N_LUNARIZER);
+        register.accept(GTGItems.N_SOLARIZER);
     }
 }
