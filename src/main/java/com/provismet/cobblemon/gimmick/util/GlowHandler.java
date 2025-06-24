@@ -69,7 +69,7 @@ public class GlowHandler {
         }
 
         if (pokemon.getWorld() instanceof ServerWorld serverLevel) {
-            pokemon.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
+            pokemon.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 140, 0, false, false));
             ServerScoreboard scoreboard = serverLevel.getScoreboard();
             String teamName = "glow_type_" + type.getName().toLowerCase(Locale.ROOT);
 
