@@ -32,14 +32,25 @@ import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
+import com.provismet.cobblemon.gimmick.util.MegaHelper;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import kotlin.Unit;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public abstract class CobblemonEventHandler {
     public static void register () {
@@ -55,6 +66,45 @@ public abstract class CobblemonEventHandler {
 
         CobblemonEvents.HELD_ITEM_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::heldItemFormChange);
         CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonHealed);
+
+        UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
+    }
+
+    private static ActionResult megaEvolveOutside(PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
+        if(GimmickCheck.isKeyStone(player.getStackInHand(hand)) && entity instanceof PokemonEntity pokemonEntity) {
+            Pokemon pokemon = pokemonEntity.getPokemon();
+            ItemStack megaStone = pokemon.heldItem();
+
+            if(!MegaHelper.hasMegaAspect(pokemon)) {
+                if(MegaHelper.checkForMega((ServerPlayerEntity) player)){
+                    player.sendMessage(
+                            Text.translatable("message.gtg.mega_exists").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFF0000))),
+                            true
+                    );
+                    return ActionResult.PASS;
+                }
+
+                if (megaStone.isIn(GTGItemTags.MEGA_STONES_X)) {
+                    new StringSpeciesFeature("mega_evolution", "mega_x").apply(pokemon);
+                }
+                else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
+                    new StringSpeciesFeature("mega_evolution", "mega_y").apply(pokemon);
+                }
+                else if (megaStone.isIn(GTGItemTags.MEGA_STONES)){
+                    new StringSpeciesFeature("mega_evolution", "mega").apply(pokemon);
+                } else {
+                    return ActionResult.PASS;
+                }
+                pokemon.setTradeable(false);
+            } else {
+                new StringSpeciesFeature("mega_evolution", "none").apply(pokemon);
+                pokemon.setTradeable(true);
+            }
+
+            return ActionResult.SUCCESS;
+        }
+
+        return ActionResult.PASS;
     }
 
     private static Unit zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
@@ -65,6 +115,7 @@ public abstract class CobblemonEventHandler {
 
     private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
         for (ServerPlayerEntity player : battleEvent.getBattle().getPlayers()) {
+            CobblemonEventHandler.resetBattlePokemon(player);
             GeneralPlayerData data = Cobblemon.INSTANCE.getPlayerDataManager().getGenericData(player);
 
             boolean hasKeyStone = false;
