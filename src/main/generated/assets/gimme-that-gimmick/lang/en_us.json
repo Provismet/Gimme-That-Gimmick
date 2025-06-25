@@ -910,6 +910,7 @@
   "message.overlay.gimme-that-gimmick.fusion": "Your %1$s has fused with your %2$s.",
   "message.overlay.gimme-that-gimmick.gracidea.land": "Your %1$s is now in Land forme.",
   "message.overlay.gimme-that-gimmick.gracidea.sky": "Your %1$s is now in Sky forme.",
+  "message.overlay.gimme-that-gimmick.mega_exists": "You already have a Mega Pokémon.",
   "message.overlay.gimme-that-gimmick.mirror.incarnate": "Your %1$s is now in Incarnate forme.",
   "message.overlay.gimme-that-gimmick.mirror.therian": "Your %1$s is now in Therian forme.",
   "message.overlay.gimme-that-gimmick.no_sheet": "This player is not holding a team sheet.",

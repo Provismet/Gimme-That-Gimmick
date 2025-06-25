@@ -69,6 +69,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
     }
 
     private void megaStones (TranslationBuilder translationBuilder) {
+        translationBuilder.add("message.overlay.gimme-that-gimmick.mega_exists", "You already have a Mega Pokémon.");
         addItemWithTooltip(translationBuilder, GTGItems.ABOMASITE, "Abomasite", "One of a variety of mysterious Mega Stones.", "Have Abomasnow hold it, and this stone will enable it to Mega Evolve during battle.");
         addItemWithTooltip(translationBuilder, GTGItems.ABSOLITE, "Absolite", "One of a variety of mysterious Mega Stones.", "Have Absol hold it, and this stone will enable it to Mega Evolve during battle.");
         addItemWithTooltip(translationBuilder, GTGItems.AERODACTYLITE, "Aerodactylite", "One of a variety of mysterious Mega Stones.", "Have Aerodactyl hold it, and this stone will enable it to Mega Evolve during battle.");
