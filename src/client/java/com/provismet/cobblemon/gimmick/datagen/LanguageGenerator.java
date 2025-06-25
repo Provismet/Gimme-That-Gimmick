@@ -470,9 +470,9 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.unbound", "Your %1$s has been released into its Unbound forme.");
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.confined", "Your %1$s has been restrained into its Confined forme.");
 
-        addItemWithTooltip(translationBuilder, GTGItems.ADAMANT_ORB, "Adamant Orb", "Boosts Steel- and Dragon-type attacks of Dialga");
-        addItemWithTooltip(translationBuilder, GTGItems.LUSTROUS_ORB, "Lustrous Orb", "Boosts Water- and Dragon-type attacks of Palkia");
-        addItemWithTooltip(translationBuilder, GTGItems.GRISEOUS_ORB, "Griseous Orb", "Boosts Ghost- and Dragon-type attacks of Giratina");
+        addItemWithTooltip(translationBuilder, GTGItems.ADAMANT_CRYSTAL, "Adamant Crystal", "Boosts Steel- and Dragon-type attacks of Dialga");
+        addItemWithTooltip(translationBuilder, GTGItems.LUSTROUS_GLOBE, "Lustrous Globe", "Boosts Water- and Dragon-type attacks of Palkia");
+        addItemWithTooltip(translationBuilder, GTGItems.GRISEOUS_CORE, "Griseous Core", "Boosts Ghost- and Dragon-type attacks of Giratina");
 
         addItemWithTooltip(translationBuilder, GTGItems.BLUE_ORB, "Blue Orb", "Grants Primal Reversion when held by Kyogre");
         addItemWithTooltip(translationBuilder, GTGItems.RED_ORB, "Red Orb", "Grants Primal Reversion when held by Groudon");

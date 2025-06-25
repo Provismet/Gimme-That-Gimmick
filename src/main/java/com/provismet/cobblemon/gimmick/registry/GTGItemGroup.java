@@ -139,9 +139,9 @@ public abstract class GTGItemGroup {
             entries.add(GTGItems.N_LUNARIZER);
             entries.add(GTGItems.N_SOLARIZER);
             entries.add(GTGItems.ROTOM_CATALOG);
-            entries.add(GTGItems.ADAMANT_ORB);
-            entries.add(GTGItems.LUSTROUS_ORB);
-            entries.add(GTGItems.GRISEOUS_ORB);
+            entries.add(GTGItems.ADAMANT_CRYSTAL);
+            entries.add(GTGItems.LUSTROUS_GLOBE);
+            entries.add(GTGItems.GRISEOUS_CORE);
             entries.add(GTGItems.BLUE_ORB);
             entries.add(GTGItems.RED_ORB);
             entries.add(GTGItems.RUSTED_SWORD);

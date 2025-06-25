@@ -174,9 +174,9 @@ public abstract class GTGItems {
     public static final NSolarizerItem N_SOLARIZER = register("n_solarizer", NSolarizerItem::new);
 
     // Form Change Held Items
-    public static final GenericFormChangeHeldItem ADAMANT_ORB = registerFormChangeChoice("adamantorb", "dialga", "orb_forme", "origin", "altered", 1);
-    public static final GenericFormChangeHeldItem LUSTROUS_ORB = registerFormChangeChoice("lustrousorb", "palkia", "orb_forme", "origin", "altered", 1);
-    public static final GenericFormChangeHeldItem GRISEOUS_ORB = registerFormChangeChoice("griseousorb", "giratina", "orb_forme", "origin", "altered", 1);
+    public static final GenericFormChangeHeldItem ADAMANT_CRYSTAL = registerFormChangeChoice("adamantcrystal", "dialga", "orb_forme", "origin", "altered", 1);
+    public static final GenericFormChangeHeldItem LUSTROUS_GLOBE = registerFormChangeChoice("lustrousglobe", "palkia", "orb_forme", "origin", "altered", 1);
+    public static final GenericFormChangeHeldItem GRISEOUS_CORE = registerFormChangeChoice("griseouscore", "giratina", "orb_forme", "origin", "altered", 1);
 
     public static final GenericFormChangeHeldItem BLUE_ORB = registerFormChangeChoice("blueorb", "kyogre", "reversion_state", "primal", "standard", 1);
     public static final GenericFormChangeHeldItem RED_ORB = registerFormChangeChoice("redorb", "groudon", "reversion_state", "primal", "standard", 1);
