@@ -1,6 +1,7 @@
 package com.provismet.cobblemon.gimmick.item.forms;
 
 import com.cobblemon.mod.common.api.callback.PartySelectCallbacks;
+import com.cobblemon.mod.common.api.item.PokemonSelectingItem;
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.PokemonPropertyExtractor;
@@ -21,18 +22,10 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-public abstract class AbstractFormChangeFusionItem extends PolymerPokemonSelectingItem {
-    public AbstractFormChangeFusionItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
-        super(settings, baseVanillaItem, modelData);
-    }
-
-    public AbstractFormChangeFusionItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines) {
-        super(settings, baseVanillaItem, modelData, tooltipLines);
-    }
-
+public interface FormChangeFusionItem extends PokemonSelectingItem {
     @Nullable
     @Override
-    public TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack stack, @NotNull Pokemon pokemon) {
+    default TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         if (!this.canUseOnPokemon(pokemon)) return TypedActionResult.fail(stack);
 
         if (pokemon.getPersistentData().contains("fusion_forme")) { // Split
@@ -59,7 +52,7 @@ public abstract class AbstractFormChangeFusionItem extends PolymerPokemonSelecti
         return TypedActionResult.success(stack);
     }
 
-    protected Unit merge (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon, Pokemon other) {
+    default Unit merge (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon, Pokemon other) {
         PokemonProperties otherPokemonProps = other.createPokemonProperties(PokemonPropertyExtractor.ALL);
         otherPokemonProps.setOriginalTrainer(other.getOriginalTrainerName());
         otherPokemonProps.setMoves(
@@ -91,11 +84,11 @@ public abstract class AbstractFormChangeFusionItem extends PolymerPokemonSelecti
         return other.heldItem().isEmpty() && this.canBeMerged(other);
     }
 
-    protected void postMerge (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon, Pokemon absorbed) {
+    default void postMerge (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon, Pokemon absorbed) {
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.fusion", pokemon.getDisplayName(), absorbed.getDisplayName()), true);
     }
 
-    protected abstract boolean canBeMerged (Pokemon other);
-    protected abstract void applyUnplitForme (Pokemon pokemon);
-    protected abstract void applyFusedForme (Pokemon pokemon, Pokemon other);
+    boolean canBeMerged (Pokemon other);
+    void applyUnplitForme (Pokemon pokemon);
+    void applyFusedForme (Pokemon pokemon, Pokemon other);
 }

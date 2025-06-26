@@ -2,13 +2,14 @@ package com.provismet.cobblemon.gimmick.item.forms;
 
 import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class DNASplicersItem extends AbstractFormChangeFusionItem {
+public class DNASplicersItem extends PolymerPokemonSelectingItem implements FormChangeFusionItem {
     private static final String FEATURE = "absofusion";
     private static final Set<String> DRAGONS = Set.of("cobblemon:reshiram", "cobblemon:zekrom");
 
@@ -17,17 +18,17 @@ public class DNASplicersItem extends AbstractFormChangeFusionItem {
     }
 
     @Override
-    protected boolean canBeMerged (Pokemon other) {
+    public boolean canBeMerged (Pokemon other) {
         return DRAGONS.contains(other.getSpecies().getResourceIdentifier().toString());
     }
 
     @Override
-    protected void applyUnplitForme (Pokemon pokemon) {
+    public void applyUnplitForme (Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "none").apply(pokemon);
     }
 
     @Override
-    protected void applyFusedForme (Pokemon pokemon, Pokemon other) {
+    public void applyFusedForme (Pokemon pokemon, Pokemon other) {
         String forme = other.getSpecies().getResourceIdentifier().getPath().equals("zekrom") ? "black" : "white";
         new StringSpeciesFeature(FEATURE, forme).apply(pokemon);
     }

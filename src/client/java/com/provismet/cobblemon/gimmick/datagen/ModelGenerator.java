@@ -19,6 +19,7 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels (BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(GTGBlocks.POWER_SPOT);
+        blockStateModelGenerator.registerSimpleCubeAll(GTGBlocks.METEORITE);
     }
 
     @Override

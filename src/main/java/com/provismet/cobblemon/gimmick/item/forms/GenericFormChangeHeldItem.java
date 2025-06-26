@@ -24,7 +24,6 @@ public class GenericFormChangeHeldItem extends PolymerHeldItem {
             this.apply.apply(pokemon);
             pokemon.updateAspects();
         }
-
     }
 
     public void removeFromPokemon (Pokemon pokemon) {

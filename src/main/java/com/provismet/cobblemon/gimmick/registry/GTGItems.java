@@ -163,7 +163,7 @@ public abstract class GTGItems {
     public static final TeraShardItem STELLAR_TERA_SHARD = registerTeraShard("stellar", TeraTypes.getSTELLAR());
 
     // Form Change Items
-    public static final MeteoriteItem METEORITE = register("meteorite", MeteoriteItem::new);
+    public static final MeteoriteItem METEORITE = register("meteorite", Items.IRON_INGOT, GTGBlocks.METEORITE, MeteoriteItem::new);
     public static final ReinsOfUnityItem REIGNS_OF_UNITY = register("reigns_of_unity", ReinsOfUnityItem::new);
     public static final RotomCatalogItem ROTOM_CATALOG = register("rotom_catalog", RotomCatalogItem::new);
     public static final RevealGlassItem REVEAL_GLASS = register("reveal_glass", RevealGlassItem::new);

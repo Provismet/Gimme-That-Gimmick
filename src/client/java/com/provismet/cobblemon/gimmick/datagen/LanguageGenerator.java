@@ -1,12 +1,13 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
-import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
+import com.provismet.cobblemon.gimmick.item.NumericalTooltipItem;
 import com.provismet.cobblemon.gimmick.registry.GTGBlocks;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantments;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import com.provismet.lilylib.datagen.provider.LilyLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -48,7 +49,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("gimmethatgimmick.itemGroup.name", "Gimme That Gimmick");
     }
 
-    private static void addItemWithTooltip (TranslationBuilder translationBuilder, PolymerHeldItem item, String name, String... tooltip) {
+    private static <T extends Item & NumericalTooltipItem> void addItemWithTooltip (TranslationBuilder translationBuilder, T item, String name, String... tooltip) {
         translationBuilder.add(item, name);
         for (int i = 0; i < tooltip.length; ++i) {
             translationBuilder.add(item.getTooltipTranslationKey(i + 1), tooltip[i]);

@@ -9,10 +9,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Identifier;
 
-public class AbstractPolymerTexturedBlock extends Block implements PolymerTexturedBlock {
+public class GenericPolymerTexturedBlock extends Block implements PolymerTexturedBlock {
     private final BlockState model;
 
-    public AbstractPolymerTexturedBlock (AbstractBlock.Settings settings, Identifier id, BlockModelType modelType) {
+    public GenericPolymerTexturedBlock (AbstractBlock.Settings settings, Identifier id, BlockModelType modelType) {
         super(settings);
         this.model = PolymerBlockResourceUtils.requestBlock(modelType, PolymerBlockModel.of(id.withPrefixedPath("block/")));
     }

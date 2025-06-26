@@ -1,4 +1,6 @@
 {
+  "block.gimme-that-gimmick.meteorite": "Meteorite",
+  "block.gimme-that-gimmick.meteorite.tooltip.1": "A meteorite that enables Deoxys to change its form",
   "block.gimme-that-gimmick.power_spot": "Power Spot",
   "cobblemon.battle.activate.gmaxcentiferno": "%1$s became trapped in the fiery vortex!",
   "cobblemon.battle.damage.gmaxcannonade": "%1$s is hurt by the vortex!",
@@ -757,8 +759,6 @@
   "item.gimme-that-gimmick.metagrossite": "Metagrossite",
   "item.gimme-that-gimmick.metagrossite.tooltip.1": "One of a variety of mysterious Mega Stones.",
   "item.gimme-that-gimmick.metagrossite.tooltip.2": "Have Metagross hold it, and this stone will enable it to Mega Evolve during battle.",
-  "item.gimme-that-gimmick.meteorite": "Meteorite",
-  "item.gimme-that-gimmick.meteorite.tooltip.1": "A meteorite that enables Deoxys to change its form",
   "item.gimme-that-gimmick.mewniumz": "Mewnium-Z",
   "item.gimme-that-gimmick.mewniumz.tooltip.1": "This is a crystallized form of Z-Power.",
   "item.gimme-that-gimmick.mewniumz.tooltip.2": "It upgrades Mew's Psychic to a Z-Move.",
