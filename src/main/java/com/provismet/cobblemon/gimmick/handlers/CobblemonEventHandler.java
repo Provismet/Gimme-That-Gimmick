@@ -27,7 +27,6 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
@@ -42,12 +41,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -72,20 +71,22 @@ public abstract class CobblemonEventHandler {
     }
 
     private static ActionResult megaEvolveOutside (PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
-        if (player.getStackInHand(hand).isIn(GTGItemTags.KEY_STONES) && entity instanceof PokemonEntity pokemonEntity) {
+        if (player.getStackInHand(hand).isIn(GTGItemTags.KEY_STONES) && entity instanceof PokemonEntity pokemonEntity && !player.isSneaking()) {
             Pokemon pokemon = pokemonEntity.getPokemon();
+            if (pokemon.getPersistentData().contains("last_mega", NbtElement.LONG_TYPE) && Math.abs(world.getTime() - pokemon.getPersistentData().getLong("last_mega")) < 20) {
+                return ActionResult.FAIL;
+            }
 
+            player.swingHand(hand, true);
             if (!MegaHelper.hasMegaAspect(pokemon)) {
                 if (MegaHelper.checkForMega((ServerPlayerEntity) player)) {
-                    player.sendMessage(
-                            Text.translatable("message.overlay.gimme-that-gimmick.mega_exists").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFF0000))),
-                            true
-                    );
-                    return ActionResult.PASS;
+                    player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_exists").formatted(Formatting.RED), true);
+                    return ActionResult.SUCCESS;
                 }
 
                 if (!MegaHelper.megaEvolve(pokemon)) {
-                    return ActionResult.PASS;
+                    player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.no_stone").formatted(Formatting.RED), true);
+                    return ActionResult.FAIL;
                 }
             }
             else {
@@ -95,10 +96,10 @@ public abstract class CobblemonEventHandler {
                     pokemon.getPersistentData().remove("tempUntradeable");
                 }
             }
-
+            // This event triggers twice each time? Just adding a delay.
+            pokemon.getPersistentData().putLong("last_mega", world.getTime());
             return ActionResult.SUCCESS;
         }
-
         return ActionResult.PASS;
     }
 

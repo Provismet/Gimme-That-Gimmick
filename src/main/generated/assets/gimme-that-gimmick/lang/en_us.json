@@ -914,6 +914,7 @@
   "message.overlay.gimme-that-gimmick.mirror.incarnate": "Your %1$s is now in Incarnate forme.",
   "message.overlay.gimme-that-gimmick.mirror.therian": "Your %1$s is now in Therian forme.",
   "message.overlay.gimme-that-gimmick.no_sheet": "This player is not holding a team sheet.",
+  "message.overlay.gimme-that-gimmick.no_stone": "Your Pokémon is not holding its Mega Stone.",
   "message.overlay.gimme-that-gimmick.prison.confined": "Your %1$s has been restrained into its Confined forme.",
   "message.overlay.gimme-that-gimmick.prison.unbound": "Your %1$s has been released into its Unbound forme.",
   "message.overlay.gimmethatgimmick.dynamax": "DMax Level: %1$s, GMax: %2$s",
