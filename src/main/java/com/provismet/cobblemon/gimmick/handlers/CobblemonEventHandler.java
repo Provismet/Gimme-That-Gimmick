@@ -27,6 +27,7 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
@@ -70,35 +71,29 @@ public abstract class CobblemonEventHandler {
         UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
     }
 
-    private static ActionResult megaEvolveOutside(PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
-        if(GimmickCheck.isKeyStone(player.getStackInHand(hand)) && entity instanceof PokemonEntity pokemonEntity) {
+    private static ActionResult megaEvolveOutside (PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
+        if (player.getStackInHand(hand).isIn(GTGItemTags.KEY_STONES) && entity instanceof PokemonEntity pokemonEntity) {
             Pokemon pokemon = pokemonEntity.getPokemon();
-            ItemStack megaStone = pokemon.heldItem();
 
-            if(!MegaHelper.hasMegaAspect(pokemon)) {
-                if(MegaHelper.checkForMega((ServerPlayerEntity) player)){
+            if (!MegaHelper.hasMegaAspect(pokemon)) {
+                if (MegaHelper.checkForMega((ServerPlayerEntity) player)) {
                     player.sendMessage(
-                            Text.translatable("message.gtg.mega_exists").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFF0000))),
+                            Text.translatable("message.overlay.gimme-that-gimmick.mega_exists").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFF0000))),
                             true
                     );
                     return ActionResult.PASS;
                 }
 
-                if (megaStone.isIn(GTGItemTags.MEGA_STONES_X)) {
-                    new StringSpeciesFeature("mega_evolution", "mega_x").apply(pokemon);
-                }
-                else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
-                    new StringSpeciesFeature("mega_evolution", "mega_y").apply(pokemon);
-                }
-                else if (megaStone.isIn(GTGItemTags.MEGA_STONES)){
-                    new StringSpeciesFeature("mega_evolution", "mega").apply(pokemon);
-                } else {
+                if (!MegaHelper.megaEvolve(pokemon)) {
                     return ActionResult.PASS;
                 }
-                pokemon.setTradeable(false);
-            } else {
+            }
+            else {
                 new StringSpeciesFeature("mega_evolution", "none").apply(pokemon);
-                pokemon.setTradeable(true);
+                if (pokemon.getPersistentData().contains("tempUntradeable")) {
+                    pokemon.setTradeable(true);
+                    pokemon.getPersistentData().remove("tempUntradeable");
+                }
             }
 
             return ActionResult.SUCCESS;
@@ -175,20 +170,9 @@ public abstract class CobblemonEventHandler {
     }
 
     private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
-        Pokemon pokemon = megaEvent.getPokemon().getEffectedPokemon();
-        ItemStack megaStone = pokemon.heldItem();
-
         // Allows sidemods to dispatch animations before the transformation triggers.
         megaEvent.getBattle().dispatchToFront(() -> {
-            if (megaStone.isIn(GTGItemTags.MEGA_STONES_X)) {
-                new StringSpeciesFeature("mega_evolution", "mega_x").apply(pokemon);
-            }
-            else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
-                new StringSpeciesFeature("mega_evolution", "mega_y").apply(pokemon);
-            }
-            else {
-                new StringSpeciesFeature("mega_evolution", "mega").apply(pokemon);
-            }
+            MegaHelper.megaEvolve(megaEvent.getPokemon().getEffectedPokemon());
             megaEvent.getPokemon().sendUpdate();
             updatePokemonPackets(megaEvent.getBattle(), megaEvent.getPokemon(), true);
 

@@ -19,6 +19,7 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels (BlockStateModelGenerator blockStateModelGenerator) {
         blockStateModelGenerator.registerSimpleCubeAll(GTGBlocks.POWER_SPOT);
+        blockStateModelGenerator.registerSimpleCubeAll(GTGBlocks.METEORITE);
     }
 
     @Override
@@ -157,9 +158,9 @@ public class ModelGenerator extends FabricModelProvider {
     }
 
     private void createFormChanges (Consumer<Item> register) {
-        register.accept(GTGItems.ADAMANT_ORB);
-        register.accept(GTGItems.LUSTROUS_ORB);
-        register.accept(GTGItems.GRISEOUS_ORB);
+        register.accept(GTGItems.ADAMANT_CRYSTAL);
+        register.accept(GTGItems.LUSTROUS_GLOBE);
+        register.accept(GTGItems.GRISEOUS_CORE);
 
         register.accept(GTGItems.BLUE_ORB);
         register.accept(GTGItems.RED_ORB);

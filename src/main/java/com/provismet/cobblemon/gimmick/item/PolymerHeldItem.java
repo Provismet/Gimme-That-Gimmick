@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PolymerHeldItem extends SimplePolymerItem {
+public class PolymerHeldItem extends SimplePolymerItem implements NumericalTooltipItem {
     private final PolymerModelData modelData;
     private final int tooltipLines;
 
@@ -29,10 +29,6 @@ public class PolymerHeldItem extends SimplePolymerItem {
     @Override
     public int getPolymerCustomModelData (ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         return this.modelData.value();
-    }
-
-    public String getTooltipTranslationKey (int lineNumber) {
-        return this.getTranslationKey() + ".tooltip." + lineNumber;
     }
 
     @Override

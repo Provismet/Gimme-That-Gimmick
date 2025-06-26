@@ -3,6 +3,7 @@ package com.provismet.cobblemon.gimmick;
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.UltraBurstEventHandler;
+import com.provismet.cobblemon.gimmick.registry.GTGBlocks;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantmentComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemGroup;
@@ -17,6 +18,7 @@ public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 
         GTGItems.init();
+        GTGBlocks.init();
         GTGItemDataComponents.init();
         GTGEnchantmentComponents.init();
         GTGItemGroup.register();

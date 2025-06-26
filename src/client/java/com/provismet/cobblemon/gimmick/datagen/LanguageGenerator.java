@@ -1,12 +1,13 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
-import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
+import com.provismet.cobblemon.gimmick.item.NumericalTooltipItem;
 import com.provismet.cobblemon.gimmick.registry.GTGBlocks;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantments;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import com.provismet.lilylib.datagen.provider.LilyLanguageProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -48,7 +49,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("gimmethatgimmick.itemGroup.name", "Gimme That Gimmick");
     }
 
-    private static void addItemWithTooltip (TranslationBuilder translationBuilder, PolymerHeldItem item, String name, String... tooltip) {
+    private static <T extends Item & NumericalTooltipItem> void addItemWithTooltip (TranslationBuilder translationBuilder, T item, String name, String... tooltip) {
         translationBuilder.add(item, name);
         for (int i = 0; i < tooltip.length; ++i) {
             translationBuilder.add(item.getTooltipTranslationKey(i + 1), tooltip[i]);
@@ -69,6 +70,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
     }
 
     private void megaStones (TranslationBuilder translationBuilder) {
+        translationBuilder.add("message.overlay.gimme-that-gimmick.mega_exists", "You already have a Mega Pokémon.");
         addItemWithTooltip(translationBuilder, GTGItems.ABOMASITE, "Abomasite", "One of a variety of mysterious Mega Stones.", "Have Abomasnow hold it, and this stone will enable it to Mega Evolve during battle.");
         addItemWithTooltip(translationBuilder, GTGItems.ABSOLITE, "Absolite", "One of a variety of mysterious Mega Stones.", "Have Absol hold it, and this stone will enable it to Mega Evolve during battle.");
         addItemWithTooltip(translationBuilder, GTGItems.AERODACTYLITE, "Aerodactylite", "One of a variety of mysterious Mega Stones.", "Have Aerodactyl hold it, and this stone will enable it to Mega Evolve during battle.");
@@ -470,9 +472,9 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.unbound", "Your %1$s has been released into its Unbound forme.");
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.confined", "Your %1$s has been restrained into its Confined forme.");
 
-        addItemWithTooltip(translationBuilder, GTGItems.ADAMANT_ORB, "Adamant Orb", "Boosts Steel- and Dragon-type attacks of Dialga");
-        addItemWithTooltip(translationBuilder, GTGItems.LUSTROUS_ORB, "Lustrous Orb", "Boosts Water- and Dragon-type attacks of Palkia");
-        addItemWithTooltip(translationBuilder, GTGItems.GRISEOUS_ORB, "Griseous Orb", "Boosts Ghost- and Dragon-type attacks of Giratina");
+        addItemWithTooltip(translationBuilder, GTGItems.ADAMANT_CRYSTAL, "Adamant Crystal", "Boosts Steel- and Dragon-type attacks of Dialga");
+        addItemWithTooltip(translationBuilder, GTGItems.LUSTROUS_GLOBE, "Lustrous Globe", "Boosts Water- and Dragon-type attacks of Palkia");
+        addItemWithTooltip(translationBuilder, GTGItems.GRISEOUS_CORE, "Griseous Core", "Boosts Ghost- and Dragon-type attacks of Giratina");
 
         addItemWithTooltip(translationBuilder, GTGItems.BLUE_ORB, "Blue Orb", "Grants Primal Reversion when held by Kyogre");
         addItemWithTooltip(translationBuilder, GTGItems.RED_ORB, "Red Orb", "Grants Primal Reversion when held by Groudon");
