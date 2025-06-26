@@ -4,6 +4,7 @@ import com.provismet.cobblemon.gimmick.registry.GTGBlocks;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
 
@@ -17,9 +18,16 @@ public class BlockTagGenerator extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void configure (RegistryWrapper.WrapperLookup wrapperLookup) {
         this.getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
-            .add(GTGBlocks.POWER_SPOT);
+            .add(GTGBlocks.POWER_SPOT)
+            .add(GTGBlocks.METEORITE);
 
         this.getOrCreateTagBuilder(GTGBlockTags.POWER_SPOTS)
+            .add(GTGBlocks.POWER_SPOT);
+
+        this.getOrCreateTagBuilder(GTGBlockTags.MAX_MUSHROOM_PLANTABLE)
+            .addOptionalTag(BlockTags.NYLIUM)
+            .add(Blocks.MOSS_BLOCK)
+            .add(Blocks.MYCELIUM)
             .add(GTGBlocks.POWER_SPOT);
     }
 }

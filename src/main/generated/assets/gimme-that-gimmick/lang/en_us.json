@@ -1,4 +1,5 @@
 {
+  "block.gimme-that-gimmick.max_mushroom": "Max Mushroom",
   "block.gimme-that-gimmick.meteorite": "Meteorite",
   "block.gimme-that-gimmick.meteorite.tooltip.1": "A meteorite that enables Deoxys to change its form",
   "block.gimme-that-gimmick.power_spot": "Power Spot",
@@ -746,7 +747,6 @@
   "item.gimme-that-gimmick.mawilite": "Mawilite",
   "item.gimme-that-gimmick.mawilite.tooltip.1": "One of a variety of mysterious Mega Stones.",
   "item.gimme-that-gimmick.mawilite.tooltip.2": "Have Mawile hold it, and this stone will enable it to Mega Evolve during battle.",
-  "item.gimme-that-gimmick.max_mushroom": "Max Mushroom",
   "item.gimme-that-gimmick.max_soup": "Max Soup",
   "item.gimme-that-gimmick.max_soup.tooltip.1": "Grants the Gigantamax factor to eligible Pokemon or removes it if already present.",
   "item.gimme-that-gimmick.meadowplate": "Meadow Plate",

@@ -139,7 +139,7 @@ public abstract class GTGItems {
     // Dynamax
     public static final DMaxCandyItem DYNAMAX_CANDY = register("dynamax_candy", DMaxCandyItem::new);
     public static final MaxSoupItem MAX_SOUP = register("max_soup", MaxSoupItem::new);
-    public static final PolymerHeldItem MAX_MUSHROOM = register("max_mushroom", PolymerHeldItem::new);
+    public static final PolymerBlockItemTextured MAX_MUSHROOM = register("max_mushroom", Items.IRON_INGOT, GTGBlocks.MAX_MUSHROOM, PolymerBlockItemTextured::new);
 
     // Tera Shards
     public static final TeraShardItem BUG_TERA_SHARD = registerTeraShard("bug", TeraTypes.getBUG());

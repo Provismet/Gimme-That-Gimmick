@@ -162,7 +162,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
     private void dynamax (TranslationBuilder translationBuilder) {
         addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_CANDY, "Dynamax Candy", "A candy that is packed with energy. If consumed, it raises the Dynamax Level of a Pokémon by one.", "A higher level means higher HP when Dynamaxed. ");
         addItemWithTooltip(translationBuilder, GTGItems.MAX_SOUP, "Max Soup", "Grants the Gigantamax factor to eligible Pokemon or removes it if already present.");
-        translationBuilder.add(GTGItems.MAX_MUSHROOM, "Max Mushroom");
+        translationBuilder.add(GTGBlocks.MAX_MUSHROOM, "Max Mushroom");
 
         translationBuilder.add("message.overlay.gimmethatgimmick.dynamax", "DMax Level: %1$s, GMax: %2$s");
         translationBuilder.add("message.overlay.gimmethatgimmick.dynamax.candy", "%1$s has reached Dynamax Level: %2$s");

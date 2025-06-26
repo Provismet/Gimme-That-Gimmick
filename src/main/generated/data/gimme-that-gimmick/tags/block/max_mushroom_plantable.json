@@ -1,0 +1,11 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:nylium",
+      "required": false
+    },
+    "minecraft:moss_block",
+    "minecraft:mycelium",
+    "gimme-that-gimmick:power_spot"
+  ]
+}
