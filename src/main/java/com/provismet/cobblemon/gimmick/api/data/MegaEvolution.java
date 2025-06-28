@@ -19,6 +19,8 @@ import net.minecraft.network.codec.PacketCodecs;
  * @see FormData#showdownId()
  */
 public record MegaEvolution (String speciesFormId, String megaFeature, String megaAspect) {
+    public static final MegaEvolution DEFAULT = MegaEvolution.create("none");
+
     public static final Codec<MegaEvolution> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.fieldOf("speciesFormId").forGetter(MegaEvolution::speciesFormId),
         Codec.STRING.optionalFieldOf("megaFeature", "mega_evolution").forGetter(MegaEvolution::megaFeature),
