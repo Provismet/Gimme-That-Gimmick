@@ -25,7 +25,7 @@ public class MaxMushroomBlock extends CropBlock implements PolymerTexturedBlock 
     private final BlockState model2;
     private final BlockState model3;
 
-    public MaxMushroomBlock (Settings settings, Identifier id) {
+    public MaxMushroomBlock(Settings settings, Identifier id) {
         super(settings);
         this.model0 = PolymerBlockResourceUtils.requestBlock(BlockModelType.PLANT_BLOCK, PolymerBlockModel.of(id.withPrefixedPath("block/").withSuffixedPath("_0")));
         this.model1 = PolymerBlockResourceUtils.requestBlock(BlockModelType.PLANT_BLOCK, PolymerBlockModel.of(id.withPrefixedPath("block/").withSuffixedPath("_1")));
@@ -39,7 +39,7 @@ public class MaxMushroomBlock extends CropBlock implements PolymerTexturedBlock 
     }
 
     @Override
-    protected void randomTick (BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
+    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
         if (state.get(AGE) < MAX_AGE && world.getLightLevel(pos.up()) >= 9 && random.nextInt(5) == 0) {
             world.setBlockState(pos, state.with(AGE, state.get(AGE) + 1), Block.NOTIFY_ALL);
             world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(state));
@@ -48,27 +48,27 @@ public class MaxMushroomBlock extends CropBlock implements PolymerTexturedBlock 
     }
 
     @Override
-    public boolean isFertilizable (WorldView world, BlockPos pos, BlockState state) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
         return state.get(AGE) < MAX_AGE;
     }
 
     @Override
-    protected int getGrowthAmount (World world) {
+    protected int getGrowthAmount(World world) {
         return 1;
     }
 
     @Override
-    public boolean canPlaceAt (BlockState state, WorldView world, BlockPos pos) {
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return world.getBlockState(pos.down()).isIn(GTGBlockTags.MAX_MUSHROOM_PLANTABLE);
     }
 
     @Override
-    public ItemStack getPickStack (WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
         return new ItemStack(GTGItems.MAX_MUSHROOM);
     }
 
     @Override
-    public BlockState getPolymerBlockState (BlockState state) {
+    public BlockState getPolymerBlockState(BlockState state) {
         int age = state.get(AGE);
         if (age == 0) return this.model0;
         if (age == 1) return this.model1;

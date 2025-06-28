@@ -1,12 +1,6 @@
 package com.provismet.cobblemon.gimmick.mixin;
 
-import com.cobblemon.mod.common.battles.ActiveBattlePokemon;
-import com.cobblemon.mod.common.battles.BattleTypes;
-import com.cobblemon.mod.common.battles.InBattleGimmickMove;
-import com.cobblemon.mod.common.battles.InBattleMove;
-import com.cobblemon.mod.common.battles.MoveActionResponse;
-import com.cobblemon.mod.common.battles.MoveTarget;
-import com.cobblemon.mod.common.battles.ShowdownMoveset;
+import com.cobblemon.mod.common.battles.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,9 +13,12 @@ import java.util.List;
 @Mixin(value = MoveActionResponse.class, remap = false)
 public abstract class MoveActionResponseMixin {
 
-    @Shadow private String moveName;
-    @Shadow private String targetPnx;
-    @Shadow private String gimmickID;
+    @Shadow
+    private String moveName;
+    @Shadow
+    private String targetPnx;
+    @Shadow
+    private String gimmickID;
 
     /**
      * @author YajatKaul
@@ -34,9 +31,9 @@ public abstract class MoveActionResponseMixin {
         }
 
         InBattleMove move = showdownMoveSet.getMoves().stream()
-            .filter(m -> m.getId().equals(moveName))
-            .findFirst()
-            .orElse(null);
+                .filter(m -> m.getId().equals(moveName))
+                .findFirst()
+                .orElse(null);
         if (move == null) return false;
 
         InBattleGimmickMove gimmickMove = move.getGimmickMove();
@@ -52,16 +49,16 @@ public abstract class MoveActionResponseMixin {
         if (availableTargets == null || availableTargets.isEmpty()) return true;
 
         boolean isGimmickAOEInSingles =
-            ("terastal".equals(gimmickID) || "dynamax".equals(gimmickID)) &&
-                (moveTarget == MoveTarget.allAdjacent ||
-                    moveTarget == MoveTarget.allAdjacentFoes ||
-                    moveTarget == MoveTarget.adjacentFoe) &&
-                activeBattlePokemon.getBattle().getFormat().getBattleType() == BattleTypes.INSTANCE.getSINGLES();
+                ("terastal".equals(gimmickID) || "dynamax".equals(gimmickID)) &&
+                        (moveTarget == MoveTarget.allAdjacent ||
+                                moveTarget == MoveTarget.allAdjacentFoes ||
+                                moveTarget == MoveTarget.adjacentFoe) &&
+                        activeBattlePokemon.getBattle().getFormat().getBattleType() == BattleTypes.INSTANCE.getSINGLES();
 
 
         if (targetPnx == null) {
             if (activeBattlePokemon.getBattle().getFormat().getBattleType() != BattleTypes.INSTANCE.getSINGLES()
-                && moveTarget == MoveTarget.adjacentFoe) {
+                    && moveTarget == MoveTarget.adjacentFoe) {
                 return true;
             }
 

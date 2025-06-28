@@ -21,15 +21,16 @@ public abstract class GTGBlocks {
     public static final Block METEORITE = register("meteorite", AbstractBlock.Settings.create().solid().mapColor(MapColor.GRAY).strength(10f, 6f), MeteoriteBlock::new);
     public static final Block MAX_MUSHROOM = register("max_mushroom", AbstractBlock.Settings.create().noCollision().mapColor(MapColor.DULL_RED), MaxMushroomBlock::new);
 
-    private static Block register (String name, BlockModelType modelType, AbstractBlock.Settings settings, TriFunction<AbstractBlock.Settings, Identifier, BlockModelType, GenericPolymerTexturedBlock> constructor) {
+    private static Block register(String name, BlockModelType modelType, AbstractBlock.Settings settings, TriFunction<AbstractBlock.Settings, Identifier, BlockModelType, GenericPolymerTexturedBlock> constructor) {
         Identifier id = GimmeThatGimmickMain.identifier(name);
         return Registry.register(Registries.BLOCK, id, constructor.apply(settings, id, modelType));
     }
 
-    private static <T extends Block & PolymerTexturedBlock> Block register (String name, AbstractBlock.Settings settings, BiFunction<AbstractBlock.Settings, Identifier, T> constructor) {
+    private static <T extends Block & PolymerTexturedBlock> Block register(String name, AbstractBlock.Settings settings, BiFunction<AbstractBlock.Settings, Identifier, T> constructor) {
         Identifier id = GimmeThatGimmickMain.identifier(name);
         return Registry.register(Registries.BLOCK, id, constructor.apply(settings, id));
     }
 
-    public static void init () {}
+    public static void init() {
+    }
 }

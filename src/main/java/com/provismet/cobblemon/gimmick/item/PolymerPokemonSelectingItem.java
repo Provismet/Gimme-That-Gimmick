@@ -16,22 +16,22 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class PolymerPokemonSelectingItem extends PolymerHeldItem implements PokemonSelectingItem {
-    public PolymerPokemonSelectingItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public PolymerPokemonSelectingItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(settings, baseVanillaItem, modelData);
     }
 
-    public PolymerPokemonSelectingItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines) {
+    public PolymerPokemonSelectingItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines) {
         super(settings, baseVanillaItem, modelData, tooltipLines);
     }
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> use (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
+    public TypedActionResult<ItemStack> use(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
         return PokemonSelectingItem.DefaultImpls.use(this, player, itemStack);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use (World world, PlayerEntity user, Hand hand) {
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (user instanceof ServerPlayerEntity serverPlayer) {
             return this.use(serverPlayer, serverPlayer.getStackInHand(hand));
         }
@@ -40,35 +40,35 @@ public abstract class PolymerPokemonSelectingItem extends PolymerHeldItem implem
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> interactGeneral (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
+    public TypedActionResult<ItemStack> interactGeneral(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
         return PokemonSelectingItem.DefaultImpls.interactGeneral(this, player, itemStack);
     }
 
     @Nullable
     @Override
-    public BagItem getBagItem () {
+    public BagItem getBagItem() {
         return null;
     }
 
     @Override
-    public boolean canUseOnBattlePokemon (@NotNull BattlePokemon battlePokemon) {
+    public boolean canUseOnBattlePokemon(@NotNull BattlePokemon battlePokemon) {
         return false;
     }
 
     @Override
-    public void applyToBattlePokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
+    public void applyToBattlePokemon(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
 
     }
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> interactWithSpecificBattle (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
+    public TypedActionResult<ItemStack> interactWithSpecificBattle(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
         return TypedActionResult.fail(itemStack);
     }
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> interactGeneralBattle (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattleActor battleActor) {
+    public TypedActionResult<ItemStack> interactGeneralBattle(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattleActor battleActor) {
         return TypedActionResult.fail(itemStack);
     }
 }

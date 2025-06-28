@@ -13,28 +13,28 @@ public class DNASplicersItem extends PolymerPokemonSelectingItem implements Form
     private static final String FEATURE = "absofusion";
     private static final Set<String> DRAGONS = Set.of("cobblemon:reshiram", "cobblemon:zekrom");
 
-    public DNASplicersItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public DNASplicersItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(settings, baseVanillaItem, modelData, 1);
     }
 
     @Override
-    public boolean canBeMerged (Pokemon other) {
+    public boolean canBeMerged(Pokemon other) {
         return DRAGONS.contains(other.getSpecies().getResourceIdentifier().toString());
     }
 
     @Override
-    public void applyUnplitForme (Pokemon pokemon) {
+    public void applyUnplitForme(Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "none").apply(pokemon);
     }
 
     @Override
-    public void applyFusedForme (Pokemon pokemon, Pokemon other) {
+    public void applyFusedForme(Pokemon pokemon, Pokemon other) {
         String forme = other.getSpecies().getResourceIdentifier().getPath().equals("zekrom") ? "black" : "white";
         new StringSpeciesFeature(FEATURE, forme).apply(pokemon);
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon(@NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getResourceIdentifier().toString().equals("cobblemon:kyurem");
     }
 }

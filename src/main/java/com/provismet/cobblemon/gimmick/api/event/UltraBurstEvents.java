@@ -8,17 +8,17 @@ import net.fabricmc.fabric.api.event.EventFactory;
 
 public interface UltraBurstEvents {
     Event<UltraBurst> ULTRA_BURST = EventFactory.createWithPhases(
-        UltraBurst.class,
-        listeners -> (battle, pokemon) -> {
-            for (UltraBurst listener : listeners) {
-                listener.onUltraBurst(battle, pokemon);
-            }
-        },
-        EventPhases.PHASE_ORDERING
+            UltraBurst.class,
+            listeners -> (battle, pokemon) -> {
+                for (UltraBurst listener : listeners) {
+                    listener.onUltraBurst(battle, pokemon);
+                }
+            },
+            EventPhases.PHASE_ORDERING
     );
 
     @FunctionalInterface
     interface UltraBurst {
-        void onUltraBurst (PokemonBattle battle, BattlePokemon pokemon);
+        void onUltraBurst(PokemonBattle battle, BattlePokemon pokemon);
     }
 }

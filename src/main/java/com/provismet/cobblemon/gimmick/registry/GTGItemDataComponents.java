@@ -21,11 +21,12 @@ public abstract class GTGItemDataComponents {
     public static final ComponentType<String> SHOWDOWN_ID = register("showdown_id", builder -> builder.codec(Codec.STRING).packetCodec(PacketCodecs.STRING));
     public static final ComponentType<MegaEvolution> MEGA_EVOLUTION = register("mega_evolution", builder -> builder.codec(MegaEvolution.CODEC).packetCodec(MegaEvolution.PACKET_CODEC));
 
-    private static <T> ComponentType<T> register (String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+    private static <T> ComponentType<T> register(String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         ComponentType<T> component = Registry.register(Registries.DATA_COMPONENT_TYPE, GimmeThatGimmickMain.identifier(name), builderOperator.apply(ComponentType.builder()).build());
         PolymerComponent.registerDataComponent(component);
         return component;
     }
 
-    public static void init () {}
+    public static void init() {
+    }
 }

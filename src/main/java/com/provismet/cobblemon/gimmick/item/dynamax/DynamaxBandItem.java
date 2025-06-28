@@ -12,20 +12,20 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 
 public class DynamaxBandItem extends PolymerHeldItem {
-    public DynamaxBandItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public DynamaxBandItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(settings, baseVanillaItem, modelData, 1);
     }
 
     @Override
-    public ActionResult useOnEntity (ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
+    public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
         if (entity instanceof PokemonEntity pokemonEntity) {
             user.sendMessage(
-                Text.translatable(
-                    "message.overlay.gimmethatgimmick.dynamax",
-                    pokemonEntity.getPokemon().getDmaxLevel(),
-                    pokemonEntity.getPokemon().getGmaxFactor() ? Text.translatable("message.overlay.gimmethatgimmick.yes") : Text.translatable("message.overlay.gimmethatgimmick.no")
-                ),
-                true
+                    Text.translatable(
+                            "message.overlay.gimmethatgimmick.dynamax",
+                            pokemonEntity.getPokemon().getDmaxLevel(),
+                            pokemonEntity.getPokemon().getGmaxFactor() ? Text.translatable("message.overlay.gimmethatgimmick.yes") : Text.translatable("message.overlay.gimmethatgimmick.no")
+                    ),
+                    true
             );
             return ActionResult.SUCCESS;
         }

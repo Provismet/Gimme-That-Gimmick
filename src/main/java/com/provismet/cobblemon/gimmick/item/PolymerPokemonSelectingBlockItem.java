@@ -26,13 +26,13 @@ import java.util.List;
 public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemTextured implements PokemonSelectingItem, NumericalTooltipItem {
     private final int tooltipLines;
 
-    public PolymerPokemonSelectingBlockItem (Block block, Settings settings, Item virtualItem, PolymerModelData model, int tooltipLines) {
+    public PolymerPokemonSelectingBlockItem(Block block, Settings settings, Item virtualItem, PolymerModelData model, int tooltipLines) {
         super(block, settings, virtualItem, model);
         this.tooltipLines = tooltipLines;
     }
 
     @Override
-    public void appendTooltip (ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
         for (int i = 1; i <= this.tooltipLines; ++i) {
             tooltip.add(Text.translatable(this.getTooltipTranslationKey(i)).formatted(Formatting.GRAY));
@@ -41,12 +41,12 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> use (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
+    public TypedActionResult<ItemStack> use(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
         return PokemonSelectingItem.DefaultImpls.use(this, player, itemStack);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use (World world, PlayerEntity user, Hand hand) {
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (user instanceof ServerPlayerEntity serverPlayer) {
             return this.use(serverPlayer, serverPlayer.getStackInHand(hand));
         }
@@ -54,42 +54,42 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
     }
 
     @Override
-    public ActionResult useOnBlock (ItemUsageContext context) {
+    public ActionResult useOnBlock(ItemUsageContext context) {
         if (context.getPlayer() != null && context.getPlayer().isSneaking()) return super.useOnBlock(context);
         return ActionResult.PASS;
     }
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> interactGeneral (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
+    public TypedActionResult<ItemStack> interactGeneral(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
         return PokemonSelectingItem.DefaultImpls.interactGeneral(this, player, itemStack);
     }
 
     @Nullable
     @Override
-    public BagItem getBagItem () {
+    public BagItem getBagItem() {
         return null;
     }
 
     @Override
-    public boolean canUseOnBattlePokemon (@NotNull BattlePokemon battlePokemon) {
+    public boolean canUseOnBattlePokemon(@NotNull BattlePokemon battlePokemon) {
         return false;
     }
 
     @Override
-    public void applyToBattlePokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
+    public void applyToBattlePokemon(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
 
     }
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> interactWithSpecificBattle (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
+    public TypedActionResult<ItemStack> interactWithSpecificBattle(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattlePokemon battlePokemon) {
         return TypedActionResult.fail(itemStack);
     }
 
     @NotNull
     @Override
-    public TypedActionResult<ItemStack> interactGeneralBattle (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattleActor battleActor) {
+    public TypedActionResult<ItemStack> interactGeneralBattle(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattleActor battleActor) {
         return TypedActionResult.fail(itemStack);
     }
 }
