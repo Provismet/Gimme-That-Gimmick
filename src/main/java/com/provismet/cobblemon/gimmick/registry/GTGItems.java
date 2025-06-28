@@ -299,7 +299,9 @@ public abstract class GTGItems {
         return Registry.register(Registries.ITEM, itemId, blockItemConstructor.get(block, new Item.Settings().maxCount(64), baseItem, model));
     }
 
-    public static void init () {}
+    public static void init () {
+        CobblemonHeldItemManager.INSTANCE.registerStackRemap(stack -> stack.get(GTGItemDataComponents.SHOWDOWN_ID));
+    }
 
     @FunctionalInterface
     public interface ItemConstructor<T extends PolymerHeldItem> {
