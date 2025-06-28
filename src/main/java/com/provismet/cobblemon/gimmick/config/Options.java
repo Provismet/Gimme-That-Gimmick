@@ -26,44 +26,45 @@ public abstract class Options {
         load();
     }
 
-    public static boolean shouldOverrideShowdown() {
+    public static boolean shouldOverrideShowdown () {
         return overrideShowdown;
     }
 
-    public static int getPowerSpotRange() {
+    public static int getPowerSpotRange () {
         return powerSpotRange;
     }
 
-    public static boolean isPowerSpotRequired() {
+    public static boolean isPowerSpotRequired () {
         return powerSpotRequired;
     }
 
-    public static int getDynamaxScaleFactor() {
+    public static int getDynamaxScaleFactor () {
         return dynamaxScaleFactor;
     }
 
-    public static boolean canBreakTeraOrb() {
+    public static boolean canBreakTeraOrb () {
         return breakableTeraOrbs;
     }
 
-    public static void save() {
+    public static void save () {
         JsonObject json = new JsonBuilder()
-                .append("override_showdown", overrideShowdown)
-                .append("dynamax_power_spot_range", powerSpotRange)
-                .append("dynamax_power_spot_required", powerSpotRequired)
-                .append("dynamax_scale_factor", dynamaxScaleFactor)
-                .append("breakable_tera_orbs", breakableTeraOrbs)
-                .getJson();
+            .append("override_showdown", overrideShowdown)
+            .append("dynamax_power_spot_range", powerSpotRange)
+            .append("dynamax_power_spot_required", powerSpotRequired)
+            .append("dynamax_scale_factor", dynamaxScaleFactor)
+            .append("breakable_tera_orbs", breakableTeraOrbs)
+            .getJson();
 
         try (FileWriter writer = new FileWriter(FILE)) {
             Files.createDirectories(Path.of("./config"));
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(json));
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             GimmeThatGimmickMain.LOGGER.error("Gimme That Gimmick failed to write settings file due to error: ", e);
         }
     }
 
-    public static void load() {
+    public static void load () {
         try {
             JsonReader reader = JsonReader.file(new File(FILE));
             if (reader != null) {
@@ -73,9 +74,11 @@ public abstract class Options {
                 reader.getInteger("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
                 reader.getBoolean("breakable_tera_orbs").ifPresent(val -> breakableTeraOrbs = val);
             }
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             GimmeThatGimmickMain.LOGGER.info("Could not find Gimme That Gimmick config, constructing default.");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             GimmeThatGimmickMain.LOGGER.error("Could read Gimme That Gimmick config due to error:", e);
         }
         save();

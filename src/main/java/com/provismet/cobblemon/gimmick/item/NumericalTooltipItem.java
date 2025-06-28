@@ -1,9 +1,9 @@
 package com.provismet.cobblemon.gimmick.item;
 
 public interface NumericalTooltipItem {
-    String getTranslationKey();
+    String getTranslationKey ();
 
-    default String getTooltipTranslationKey(int lineNumber) {
+    default String getTooltipTranslationKey (int lineNumber) {
         return this.getTranslationKey() + ".tooltip." + lineNumber;
     }
 }

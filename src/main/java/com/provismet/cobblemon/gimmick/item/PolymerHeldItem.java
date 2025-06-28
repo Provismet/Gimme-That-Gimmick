@@ -16,23 +16,23 @@ public class PolymerHeldItem extends SimplePolymerItem implements NumericalToolt
     private final PolymerModelData modelData;
     private final int tooltipLines;
 
-    public PolymerHeldItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public PolymerHeldItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         this(settings, baseVanillaItem, modelData, 0);
     }
 
-    public PolymerHeldItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines) {
+    public PolymerHeldItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines) {
         super(settings, baseVanillaItem);
         this.modelData = modelData;
         this.tooltipLines = tooltipLines;
     }
 
     @Override
-    public int getPolymerCustomModelData(ItemStack itemStack, @Nullable ServerPlayerEntity player) {
+    public int getPolymerCustomModelData (ItemStack itemStack, @Nullable ServerPlayerEntity player) {
         return this.modelData.value();
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip (ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
         for (int i = 1; i <= this.tooltipLines; ++i) {
             tooltip.add(Text.translatable(this.getTooltipTranslationKey(i)).formatted(Formatting.GRAY));

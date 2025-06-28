@@ -21,8 +21,7 @@ import java.util.List;
  */
 @Mixin(value = ShowdownActionRequest.class, remap = false)
 public class ShowdownActionRequestMixin {
-    @Shadow
-    private List<ShowdownMoveset> active;
+    @Shadow private List<ShowdownMoveset> active;
 
     @Inject(method = "sanitize", at = @At("TAIL"), remap = false)
     private void afterSanitize(PokemonBattle battle, BattleActor battleActor, CallbackInfo info) {

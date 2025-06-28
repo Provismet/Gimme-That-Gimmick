@@ -5,5 +5,5 @@ import org.jetbrains.annotations.Nullable;
 
 public interface DataItemStack {
     @Nullable
-    ItemStack create();
+    ItemStack create ();
 }

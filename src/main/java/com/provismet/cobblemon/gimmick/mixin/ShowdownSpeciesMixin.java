@@ -20,18 +20,16 @@ import java.util.Map;
  */
 @Mixin(PokemonSpecies.ShowdownSpecies.class)
 public class ShowdownSpeciesMixin {
-    @Shadow(remap = false)
-    @Final
-    @Mutable
+    @Shadow(remap = false) @Final @Mutable
     private Map<String, String> abilities;
 
     @Inject(method = "<init>", at = @At("TAIL"), remap = false)
-    private void populateAbilities(Species species, FormData formData, CallbackInfo info) {
-        if (formData == null) return;
+    private void populateAbilities (Species species, FormData formData, CallbackInfo info) {
+        if(formData == null) return;
 
         Iterator<PotentialAbility> abilityIterator = formData.getAbilities().iterator();
         abilities = Map.of(
-                "0", abilityIterator.hasNext() ? abilityIterator.next().getTemplate().getName() : "No Ability"
+            "0", abilityIterator.hasNext() ? abilityIterator.next().getTemplate().getName() : "No Ability"
         );
     }
 }

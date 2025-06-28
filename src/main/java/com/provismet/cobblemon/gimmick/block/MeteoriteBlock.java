@@ -17,21 +17,21 @@ import net.minecraft.world.World;
 import java.util.Objects;
 
 public class MeteoriteBlock extends GenericPolymerTexturedBlock {
-    public MeteoriteBlock(Settings settings, Identifier id) {
+    public MeteoriteBlock (Settings settings, Identifier id) {
         super(settings, id, BlockModelType.FULL_BLOCK);
     }
 
     @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    protected ActionResult onUse (BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (player instanceof ServerPlayerEntity serverPlayer) {
             PartySelectCallbacks.INSTANCE.createFromPokemon(
-                    serverPlayer,
-                    PlayerExtensionsKt.party(serverPlayer).toGappyList().stream().filter(Objects::nonNull).toList(),
-                    GTGItems.METEORITE::canUseOnPokemon,
-                    pokemon -> {
-                        GTGItems.METEORITE.applyToPokemon(serverPlayer, GTGItems.METEORITE.getDefaultStack(), pokemon);
-                        return Unit.INSTANCE;
-                    }
+                serverPlayer,
+                PlayerExtensionsKt.party(serverPlayer).toGappyList().stream().filter(Objects::nonNull).toList(),
+                GTGItems.METEORITE::canUseOnPokemon,
+                pokemon -> {
+                    GTGItems.METEORITE.applyToPokemon(serverPlayer, GTGItems.METEORITE.getDefaultStack(), pokemon);
+                    return Unit.INSTANCE;
+                }
             );
         }
         return ActionResult.SUCCESS;

@@ -20,9 +20,7 @@ import java.util.Arrays;
  */
 @Mixin(value = EndInstruction.class, remap = false)
 public class EndInstructionMixin {
-    @Shadow
-    @Final
-    private BattleMessage message;
+    @Shadow @Final private BattleMessage message;
 
     @Inject(method = "invoke", at = @At("HEAD"), remap = false)
     private void injectBeforeInvoke(PokemonBattle battle, CallbackInfo ci) {

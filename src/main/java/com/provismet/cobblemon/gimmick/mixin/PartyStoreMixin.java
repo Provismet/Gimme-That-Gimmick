@@ -17,12 +17,10 @@ import java.util.List;
 
 @Mixin(value = PartyStore.class, remap = false)
 public abstract class PartyStoreMixin extends PokemonStore<PartyPosition> {
-    @Shadow
-    @Final
-    private List<Pokemon> slots;
+    @Shadow @Final private List<Pokemon> slots;
 
     @Inject(method = "sendTo", at = @At("TAIL"))
-    private void updateGlobalFeatures(ServerPlayerEntity player, CallbackInfo ci) {
+    private void updateGlobalFeatures (ServerPlayerEntity player, CallbackInfo ci) {
         this.slots.forEach(pokemon -> {
             if (pokemon != null) {
                 GlobalFeatureManager.update(pokemon, player);
@@ -31,7 +29,7 @@ public abstract class PartyStoreMixin extends PokemonStore<PartyPosition> {
     }
 
     @Inject(method = "set(Lcom/cobblemon/mod/common/api/storage/party/PartyPosition;Lcom/cobblemon/mod/common/pokemon/Pokemon;)V", at = @At("TAIL"))
-    private void updateGlobalsOnSet(PartyPosition position, Pokemon pokemon, CallbackInfo ci) {
+    private void updateGlobalsOnSet (PartyPosition position, Pokemon pokemon, CallbackInfo ci) {
         this.getObservingPlayers().forEach(player -> GlobalFeatureManager.update(pokemon, player));
     }
 }

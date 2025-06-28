@@ -8,27 +8,27 @@ import net.minecraft.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 public class NLunarizerItem extends PolymerPokemonSelectingItem implements FormChangeFusionItem {
-    public NLunarizerItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public NLunarizerItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(settings, baseVanillaItem, modelData, 1);
     }
 
     @Override
-    public boolean canBeMerged(Pokemon other) {
+    public boolean canBeMerged (Pokemon other) {
         return other.getSpecies().getResourceIdentifier().toString().equals("cobblemon:lunala");
     }
 
     @Override
-    public void applyUnplitForme(Pokemon pokemon) {
+    public void applyUnplitForme (Pokemon pokemon) {
         new StringSpeciesFeature("prism_fusion", "none").apply(pokemon);
     }
 
     @Override
-    public void applyFusedForme(Pokemon pokemon, Pokemon other) {
+    public void applyFusedForme (Pokemon pokemon, Pokemon other) {
         new StringSpeciesFeature("prism_fusion", "dawn").apply(pokemon);
     }
 
     @Override
-    public boolean canUseOnPokemon(@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getResourceIdentifier().toString().equals("cobblemon:necrozma");
     }
 }

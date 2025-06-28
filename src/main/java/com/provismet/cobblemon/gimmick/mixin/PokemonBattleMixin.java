@@ -12,12 +12,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = PokemonBattle.class, remap = false)
 public abstract class PokemonBattleMixin {
-    @Shadow
-    @Final
-    public abstract Iterable<BattleActor> getActors();
+    @Shadow @Final public abstract Iterable<BattleActor> getActors ();
 
     @Inject(method = "stop", at = @At("HEAD"))
-    private void resetTeamsOnForceTie(CallbackInfo info) {
+    private void resetTeamsOnForceTie (CallbackInfo info) {
         for (BattleActor actor : this.getActors()) {
             actor.getPokemonList().forEach(bp -> {
                 CobblemonEventHandler.resetBattleForms(bp.getEffectedPokemon());

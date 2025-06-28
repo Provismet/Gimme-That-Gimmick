@@ -12,21 +12,21 @@ public class GenericFormChangeHeldItem extends PolymerHeldItem {
     private final CustomPokemonProperty apply;
     private final CustomPokemonProperty remove;
 
-    public GenericFormChangeHeldItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines, Identifier species, CustomPokemonProperty apply, CustomPokemonProperty remove) {
+    public GenericFormChangeHeldItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines, Identifier species, CustomPokemonProperty apply, CustomPokemonProperty remove) {
         super(settings, baseVanillaItem, modelData, tooltipLines);
         this.species = species;
         this.apply = apply;
         this.remove = remove;
     }
 
-    public void giveToPokemon(Pokemon pokemon) {
+    public void giveToPokemon (Pokemon pokemon) {
         if (pokemon.getSpecies().getResourceIdentifier().equals(this.species)) {
             this.apply.apply(pokemon);
             pokemon.updateAspects();
         }
     }
 
-    public void removeFromPokemon(Pokemon pokemon) {
+    public void removeFromPokemon (Pokemon pokemon) {
         if (pokemon.getSpecies().getResourceIdentifier().equals(this.species)) {
             this.remove.apply(pokemon);
             pokemon.updateAspects();

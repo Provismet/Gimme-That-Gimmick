@@ -15,34 +15,34 @@ import org.jetbrains.annotations.NotNull;
 public class PrisonBottleItem extends PolymerPokemonSelectingItem implements FormChangeToggleItem {
     private static final String FEATURE = "djinn_state";
 
-    public PrisonBottleItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public PrisonBottleItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(settings, baseVanillaItem, modelData, 1);
     }
 
     @Override
-    public boolean shouldApplySpecialForm(Pokemon pokemon) {
+    public boolean shouldApplySpecialForm (Pokemon pokemon) {
         return !pokemon.getAspects().contains("unbound");
     }
 
     @Override
-    public void applySpecialForm(ServerPlayerEntity player, Pokemon pokemon) {
+    public void applySpecialForm (ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "unbound").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.unbound", pokemon.getDisplayName()), true);
     }
 
     @Override
-    public void removeSpecialForm(ServerPlayerEntity player, Pokemon pokemon) {
+    public void removeSpecialForm (ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "confined").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.confined", pokemon.getDisplayName()), true);
     }
 
     @Override
-    public boolean canUseOnPokemon(@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getResourceIdentifier().toString().equals("cobblemon:hoopa");
     }
 
     @Override
-    public void postFormChange(ServerPlayerEntity player, ItemStack stack, Pokemon pokemon) {
-        player.getWorld().playSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1f, 1f, true);
+    public void postFormChange (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon) {
+        player.getWorld().playSound(player.getX(), player.getY(), player.getZ(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1f , 1f, true);
     }
 }

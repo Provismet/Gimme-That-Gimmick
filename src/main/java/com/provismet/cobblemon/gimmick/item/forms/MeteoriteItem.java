@@ -15,24 +15,24 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MeteoriteItem extends PolymerPokemonSelectingBlockItem implements FormChangeSelectionItem {
-    public MeteoriteItem(Block block, Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
+    public MeteoriteItem (Block block, Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(block, settings, baseVanillaItem, modelData, 1);
     }
 
     @Override
-    public @Nullable TypedActionResult<ItemStack> applyToPokemon(@NotNull ServerPlayerEntity player, @NotNull ItemStack stack, @NotNull Pokemon pokemon) {
+    public @Nullable TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         GimmeThatGimmickMain.LOGGER.info("applyToPokemon");
         return FormChangeSelectionItem.super.applyToPokemon(player, stack, pokemon);
     }
 
     @Override
-    public void applyForm(ServerPlayerEntity player, Pokemon pokemon, FormData form) {
+    public void applyForm (ServerPlayerEntity player, Pokemon pokemon, FormData form) {
         String formName = form == null ? "normal" : form.formOnlyShowdownId();
         new StringSpeciesFeature("meteorite_forme", formName).apply(pokemon);
     }
 
     @Override
-    public boolean canUseOnPokemon(@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getResourceIdentifier().toString().equals("cobblemon:deoxys");
     }
 }

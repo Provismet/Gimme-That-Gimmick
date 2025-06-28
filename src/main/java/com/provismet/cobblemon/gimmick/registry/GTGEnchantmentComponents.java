@@ -15,12 +15,11 @@ public abstract class GTGEnchantmentComponents {
     public static final ComponentType<Unit> DYNAMAX_BAND = register("dynamax_band", builder -> builder.codec(Unit.CODEC));
     public static final ComponentType<Unit> TERA_ORB = register("tera_orb", builder -> builder.codec(Unit.CODEC));
 
-    private static <T> ComponentType<T> register(String path, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+    private static <T> ComponentType<T> register (String path, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         ComponentType<T> type = Registry.register(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, GimmeThatGimmickMain.identifier(path), builderOperator.apply(ComponentType.builder()).build());
         PolymerComponent.registerEnchantmentEffectComponent(type);
         return type;
     }
 
-    public static void init() {
-    }
+    public static void init () {}
 }
