@@ -20,32 +20,32 @@ import java.util.List;
 @Mixin(CobblemonNetwork.class)
 public class CobblemonNetworkMixin {
     @Inject(method = "generateS2CPacketInfoList", at = @At("RETURN"), remap = false)
-    private void generateS2CPacketInfoList (CallbackInfoReturnable<List<PacketRegisterInfo<?>>> cir, @Local List<PacketRegisterInfo<?>> list) {
+    private void generateS2CPacketInfoList(CallbackInfoReturnable<List<PacketRegisterInfo<?>>> cir, @Local List<PacketRegisterInfo<?>> list) {
         list.add(
-            new PacketRegisterInfo<>(
-                TeraTypeUpdatePacket.Companion.getID(),
-                TeraTypeUpdatePacket.Companion::decode,
-                new PokemonUpdatePacketHandler<>(),
-                null
-            )
+                new PacketRegisterInfo<>(
+                        TeraTypeUpdatePacket.Companion.getID(),
+                        TeraTypeUpdatePacket.Companion::decode,
+                        new PokemonUpdatePacketHandler<>(),
+                        null
+                )
         );
 
         list.add(
-            new PacketRegisterInfo<>(
-                DmaxLevelUpdatePacket.Companion.getID(),
-                DmaxLevelUpdatePacket.Companion::decode,
-                new PokemonUpdatePacketHandler<>(),
-                null
-            )
+                new PacketRegisterInfo<>(
+                        DmaxLevelUpdatePacket.Companion.getID(),
+                        DmaxLevelUpdatePacket.Companion::decode,
+                        new PokemonUpdatePacketHandler<>(),
+                        null
+                )
         );
 
         list.add(
-            new PacketRegisterInfo<>(
-                GmaxFactorUpdatePacket.Companion.getID(),
-                GmaxFactorUpdatePacket.Companion::decode,
-                new PokemonUpdatePacketHandler<>(),
-                null
-            )
+                new PacketRegisterInfo<>(
+                        GmaxFactorUpdatePacket.Companion.getID(),
+                        GmaxFactorUpdatePacket.Companion::decode,
+                        new PokemonUpdatePacketHandler<>(),
+                        null
+                )
         );
     }
 }

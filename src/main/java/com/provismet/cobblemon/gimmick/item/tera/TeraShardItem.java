@@ -21,14 +21,14 @@ public class TeraShardItem extends PolymerPokemonSelectingItem {
 
     private final TeraType type;
 
-    public TeraShardItem (Item.Settings settings, Item polymerItem, PolymerModelData modelData, TeraType teraType) {
+    public TeraShardItem(Item.Settings settings, Item polymerItem, PolymerModelData modelData, TeraType teraType) {
         super(settings, polymerItem, modelData, 0);
         this.type = teraType;
     }
 
     @Nullable
     @Override
-    public TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull Pokemon pokemon) {
+    public TypedActionResult<ItemStack> applyToPokemon(@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull Pokemon pokemon) {
         if (pokemon.getEntity() == null || pokemon.getEntity().getWorld().isClient || pokemon.getEntity().isBattling()) {
             return TypedActionResult.pass(itemStack);
         }
@@ -49,8 +49,7 @@ public class TeraShardItem extends PolymerPokemonSelectingItem {
                 pokemon.updateAspects();
                 player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.set", pokemon.getDisplayName(), this.type.getDisplayName()), true);
                 return TypedActionResult.success(itemStack);
-            }
-            else {
+            } else {
                 player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.no_shards").formatted(Formatting.RED), true);
             }
         }
@@ -58,7 +57,7 @@ public class TeraShardItem extends PolymerPokemonSelectingItem {
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon(@NotNull Pokemon pokemon) {
         return !BLACKLIST.contains(pokemon.getSpecies().getName());
     }
 }

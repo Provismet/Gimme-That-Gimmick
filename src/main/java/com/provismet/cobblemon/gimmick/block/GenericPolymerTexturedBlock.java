@@ -12,13 +12,13 @@ import net.minecraft.util.Identifier;
 public class GenericPolymerTexturedBlock extends Block implements PolymerTexturedBlock {
     private final BlockState model;
 
-    public GenericPolymerTexturedBlock (AbstractBlock.Settings settings, Identifier id, BlockModelType modelType) {
+    public GenericPolymerTexturedBlock(AbstractBlock.Settings settings, Identifier id, BlockModelType modelType) {
         super(settings);
         this.model = PolymerBlockResourceUtils.requestBlock(modelType, PolymerBlockModel.of(id.withPrefixedPath("block/")));
     }
 
     @Override
-    public BlockState getPolymerBlockState (BlockState blockState) {
+    public BlockState getPolymerBlockState(BlockState blockState) {
         return this.model;
     }
 }

@@ -2,31 +2,23 @@ package com.provismet.cobblemon.gimmick.api.data.registry;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.provismet.cobblemon.gimmick.api.data.DataItem;
-import com.provismet.cobblemon.gimmick.api.data.DataItemStack;
-import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
-import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
 
-/**
- * Represents regular Showdown held items, adding only a showdown id to the existing item.
- *
- * @param itemData The custom data-driven item.
- * @param showdownId The Showdown id used by this item.
- */
-public record HeldItem (DataItem itemData, String showdownId) implements DataItemStack {
+import java.util.List;
+
+public record HeldItem(
+        String gtg_id,
+        String showdown_id,
+        String item_id,
+        String item_name,
+        List<String> item_description,
+        Integer custom_model_data
+) {
     public static final Codec<HeldItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-        DataItem.CODEC.fieldOf("item").forGetter(HeldItem::itemData),
-        Codec.STRING.fieldOf("showdownId").forGetter(HeldItem::showdownId)
+            Codec.STRING.fieldOf("gtg_id").forGetter(HeldItem::gtg_id),
+            Codec.STRING.fieldOf("showdown_id").forGetter(HeldItem::showdown_id),
+            Codec.STRING.fieldOf("item_id").forGetter(HeldItem::item_id),
+            Codec.STRING.fieldOf("item_name").forGetter(HeldItem::item_name),
+            Codec.list(Codec.STRING).fieldOf("item_description").forGetter(HeldItem::item_description),
+            Codec.INT.fieldOf("custom_model_data").forGetter(HeldItem::custom_model_data)
     ).apply(instance, HeldItem::new));
-
-    @Override
-    @Nullable
-    public ItemStack create () {
-        ItemStack stack = this.itemData.create();
-        if (stack == null) return null;
-
-        stack.set(GTGItemDataComponents.SHOWDOWN_ID, this.showdownId);
-        return stack;
-    }
 }

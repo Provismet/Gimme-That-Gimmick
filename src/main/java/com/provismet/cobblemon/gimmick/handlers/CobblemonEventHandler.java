@@ -27,9 +27,10 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
+import com.provismet.cobblemon.gimmick.config.Options;
+import com.provismet.cobblemon.gimmick.handlers.datapack.BattleFormChangeHandler;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import com.provismet.cobblemon.gimmick.util.MegaHelper;
@@ -53,7 +54,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class CobblemonEventHandler {
-    public static void register () {
+    public static void register() {
         CobblemonEvents.MEGA_EVOLUTION.subscribe(Priority.NORMAL, CobblemonEventHandler::megaEvolutionUsed);
         CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, CobblemonEventHandler::terrastallizationUsed);
         CobblemonEvents.ZPOWER_USED.subscribe(Priority.NORMAL, CobblemonEventHandler::zmoveUsed);
@@ -67,10 +68,12 @@ public abstract class CobblemonEventHandler {
         CobblemonEvents.HELD_ITEM_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::heldItemFormChange);
         CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonHealed);
 
+        CobblemonEvents.FORME_CHANGE.subscribe(Priority.NORMAL, BattleFormChangeHandler::formeChanges);
+
         UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
     }
 
-    private static ActionResult megaEvolveOutside (PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
+    private static ActionResult megaEvolveOutside(PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
         if (player.getStackInHand(hand).isIn(GTGItemTags.KEY_STONES) && entity instanceof PokemonEntity pokemonEntity && !player.isSneaking()) {
             Pokemon pokemon = pokemonEntity.getPokemon();
             if (pokemon.getPersistentData().contains("last_mega", NbtElement.LONG_TYPE) && Math.abs(world.getTime() - pokemon.getPersistentData().getLong("last_mega")) < 20) {
@@ -88,8 +91,7 @@ public abstract class CobblemonEventHandler {
                     player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.no_stone").formatted(Formatting.RED), true);
                     return ActionResult.FAIL;
                 }
-            }
-            else {
+            } else {
                 new StringSpeciesFeature("mega_evolution", "none").apply(pokemon);
                 if (pokemon.getPersistentData().contains("tempUntradeable")) {
                     pokemon.setTradeable(true);
@@ -103,13 +105,13 @@ public abstract class CobblemonEventHandler {
         return ActionResult.PASS;
     }
 
-    private static Unit zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
+    private static Unit zmoveUsed(ZMoveUsedEvent zMoveUsedEvent) {
         PokemonEntity pokemonEntity = zMoveUsedEvent.getPokemon().getEntity();
         if (pokemonEntity != null) GlowHandler.applyZGlow(pokemonEntity);
         return Unit.INSTANCE;
     }
 
-    private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
+    private static Unit battleStarted(BattleStartedPreEvent battleEvent) {
         for (ServerPlayerEntity player : battleEvent.getBattle().getPlayers()) {
             CobblemonEventHandler.resetBattlePokemon(player);
             GeneralPlayerData data = Cobblemon.INSTANCE.getPlayerDataManager().getGenericData(player);
@@ -160,17 +162,17 @@ public abstract class CobblemonEventHandler {
         return false; // Not found
     }
 
-    public static Unit postBattleVictory (BattleVictoryEvent battleVictoryEvent) {
+    public static Unit postBattleVictory(BattleVictoryEvent battleVictoryEvent) {
         battleVictoryEvent.getBattle().getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
         return Unit.INSTANCE;
     }
 
-    public static Unit postBattleFlee (BattleFledEvent battleFledEvent) {
+    public static Unit postBattleFlee(BattleFledEvent battleFledEvent) {
         battleFledEvent.getBattle().getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
         return Unit.INSTANCE;
     }
 
-    private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
+    private static Unit megaEvolutionUsed(MegaEvolutionEvent megaEvent) {
         // Allows sidemods to dispatch animations before the transformation triggers.
         megaEvent.getBattle().dispatchToFront(() -> {
             MegaHelper.megaEvolve(megaEvent.getPokemon().getEffectedPokemon());
@@ -182,7 +184,7 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit terrastallizationUsed (TerastallizationEvent terastallizationEvent) {
+    private static Unit terrastallizationUsed(TerastallizationEvent terastallizationEvent) {
         Pokemon pokemon = terastallizationEvent.getPokemon().getEffectedPokemon();
         ServerPlayerEntity player = pokemon.getOwnerPlayer();
 
@@ -215,27 +217,26 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    public static Unit fixTeraTyping (PokemonCapturedEvent pokemonCapturedEvent) {
+    public static Unit fixTeraTyping(PokemonCapturedEvent pokemonCapturedEvent) {
         Pokemon pokemon = pokemonCapturedEvent.getPokemon();
 
         if (pokemon.getSpecies().getName().equals("Ogerpon")) {
             pokemon.setTeraType(TeraTypes.getGRASS());
-        }
-        else if (pokemon.getSpecies().getName().equals("Terapagos")) {
+        } else if (pokemon.getSpecies().getName().equals("Terapagos")) {
             pokemon.setTeraType(TeraTypes.getSTELLAR());
         }
 
         return Unit.INSTANCE;
     }
 
-    public static void resetBattlePokemon (ServerPlayerEntity player) {
+    public static void resetBattlePokemon(ServerPlayerEntity player) {
         PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
-        for (Pokemon pokemon: playerPartyStore){
+        for (Pokemon pokemon : playerPartyStore) {
             CobblemonEventHandler.resetBattleForms(pokemon);
         }
     }
 
-    public static void resetBattleForms (Pokemon pokemon) {
+    public static void resetBattleForms(Pokemon pokemon) {
         if (pokemon.getAspects().contains("mega") || pokemon.getAspects().contains("mega_x") || pokemon.getAspects().contains("mega_y")) {
             pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("mega_evolution"));
         }
@@ -262,7 +263,7 @@ public abstract class CobblemonEventHandler {
         pokemon.updateAspects();
     }
 
-    public static void updatePokemonPackets (PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
+    public static void updatePokemonPackets(PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
         if (abilities) {
             battle.sendUpdate(new AbilityUpdatePacket(battlePokemon::getEffectedPokemon, battlePokemon.getEffectedPokemon().getAbility().getTemplate()));
             battle.sendUpdate(new BattleUpdateTeamPokemonPacket(battlePokemon.getEffectedPokemon()));
@@ -270,14 +271,14 @@ public abstract class CobblemonEventHandler {
 
         for (ActiveBattlePokemon activeBattlePokemon : battle.getActivePokemon()) {
             if (
-                activeBattlePokemon.getBattlePokemon() != null
-                && activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getOwnerPlayer() == battlePokemon.getEffectedPokemon().getOwnerPlayer()
-                && activeBattlePokemon.getBattlePokemon() == battlePokemon
+                    activeBattlePokemon.getBattlePokemon() != null
+                            && activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getOwnerPlayer() == battlePokemon.getEffectedPokemon().getOwnerPlayer()
+                            && activeBattlePokemon.getBattlePokemon() == battlePokemon
             ) {
                 battle.sendSidedUpdate(activeBattlePokemon.getActor(),
-                    new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, true),
-                    new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, false),
-                    false
+                        new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, true),
+                        new BattleTransformPokemonPacket(activeBattlePokemon.getPNX(), battlePokemon, false),
+                        false
                 );
             }
         }
@@ -294,9 +295,9 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit pokemonHealed (PokemonHealedEvent pokemonHealedEvent) {
+    private static Unit pokemonHealed(PokemonHealedEvent pokemonHealedEvent) {
         ServerPlayerEntity player = pokemonHealedEvent.getPokemon().getOwnerPlayer();
-        if(player == null || pokemonHealedEvent.getSource() != HealingSource.Force.INSTANCE){
+        if (player == null || pokemonHealedEvent.getSource() != HealingSource.Force.INSTANCE) {
             return Unit.INSTANCE;
         }
         for (ItemStack item : player.getEquippedItems()) {

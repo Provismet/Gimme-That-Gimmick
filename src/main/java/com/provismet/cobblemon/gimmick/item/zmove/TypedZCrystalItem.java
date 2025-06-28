@@ -13,11 +13,11 @@ import net.minecraft.item.Item;
 public class TypedZCrystalItem extends GenericFormChangeHeldItem {
     public final ElementalType type;
 
-    public TypedZCrystalItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, ElementalType type) {
+    public TypedZCrystalItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData, ElementalType type) {
         this(settings, baseVanillaItem, modelData, 2, type);
     }
 
-    public TypedZCrystalItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines, ElementalType type) {
+    public TypedZCrystalItem(Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines, ElementalType type) {
         super(settings, baseVanillaItem, modelData, tooltipLines, MiscUtilsKt.cobblemonResource("arceus"), new StringSpeciesFeature("multitype", type.getName()), new StringSpeciesFeature("multitype", "normal"));
         this.type = type;
     }

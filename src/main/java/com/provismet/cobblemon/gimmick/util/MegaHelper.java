@@ -9,19 +9,33 @@ import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import java.util.List;
+
 public class MegaHelper {
     public static boolean checkForMega(ServerPlayerEntity player) {
         PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
         PCStore playerPCStore = Cobblemon.INSTANCE.getStorage().getPC(player);
 
         for (Pokemon pokemon : playerPartyStore) {
-            if (hasMegaAspect(pokemon)) {
+            List<String> targetLabels = List.of("mega", "mega_x", "mega_y");
+
+            boolean canHaveAnyMegaForm = pokemon.getSpecies().getForms().stream()
+                    .flatMap(form -> form.getLabels().stream())
+                    .anyMatch(targetLabels::contains);
+
+            if (canHaveAnyMegaForm && hasMegaAspect(pokemon)) {
                 return true;
             }
         }
 
         for (Pokemon pokemon : playerPCStore) {
-            if (hasMegaAspect(pokemon)) {
+            List<String> targetLabels = List.of("mega", "mega_x", "mega_y");
+
+            boolean canHaveAnyMegaForm = pokemon.getSpecies().getForms().stream()
+                    .flatMap(form -> form.getLabels().stream())
+                    .anyMatch(targetLabels::contains);
+
+            if (canHaveAnyMegaForm && hasMegaAspect(pokemon)) {
                 return true;
             }
         }
@@ -35,18 +49,15 @@ public class MegaHelper {
                 pokemon.getAspects().contains("mega");
     }
 
-    public static boolean megaEvolve (Pokemon pokemon) {
+    public static boolean megaEvolve(Pokemon pokemon) {
         ItemStack megaStone = pokemon.heldItem();
         if (megaStone.isIn(GTGItemTags.MEGA_STONES_X)) {
             new StringSpeciesFeature("mega_evolution", "mega_x").apply(pokemon);
-        }
-        else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
+        } else if (megaStone.isIn(GTGItemTags.MEGA_STONES_Y)) {
             new StringSpeciesFeature("mega_evolution", "mega_y").apply(pokemon);
-        }
-        else if (megaStone.isIn(GTGItemTags.MEGA_STONES)) {
+        } else if (megaStone.isIn(GTGItemTags.MEGA_STONES)) {
             new StringSpeciesFeature("mega_evolution", "mega").apply(pokemon);
-        }
-        else {
+        } else {
             return false;
         }
 

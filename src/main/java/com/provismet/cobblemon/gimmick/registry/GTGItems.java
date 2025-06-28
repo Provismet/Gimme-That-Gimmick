@@ -14,16 +14,7 @@ import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DMaxCandyItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DynamaxBandItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.MaxSoupItem;
-import com.provismet.cobblemon.gimmick.item.forms.DNASplicersItem;
-import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
-import com.provismet.cobblemon.gimmick.item.forms.GracideaFlowerItem;
-import com.provismet.cobblemon.gimmick.item.forms.MeteoriteItem;
-import com.provismet.cobblemon.gimmick.item.forms.NLunarizerItem;
-import com.provismet.cobblemon.gimmick.item.forms.NSolarizerItem;
-import com.provismet.cobblemon.gimmick.item.forms.PrisonBottleItem;
-import com.provismet.cobblemon.gimmick.item.forms.ReinsOfUnityItem;
-import com.provismet.cobblemon.gimmick.item.forms.RevealGlassItem;
-import com.provismet.cobblemon.gimmick.item.forms.RotomCatalogItem;
+import com.provismet.cobblemon.gimmick.item.forms.*;
 import com.provismet.cobblemon.gimmick.item.mega.MegaStoneItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraOrbItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraShardItem;
@@ -233,83 +224,83 @@ public abstract class GTGItems {
     public static final GenericFormChangeHeldItem HEARTHFLAME_MASK = registerOgerpon("hearthflame");
     public static final GenericFormChangeHeldItem CORNERSTONE_MASK = registerOgerpon("cornerstone");
 
-    private static MegaStoneItem registerMegaStone (String name) {
+    private static MegaStoneItem registerMegaStone(String name) {
         return registerShowdownItem(name, MegaStoneItem::new);
     }
 
-    private static TypedZCrystalItem registerZCrystal (String name, ElementalType type) {
+    private static TypedZCrystalItem registerZCrystal(String name, ElementalType type) {
         return registerShowdownItem(name, (settings, item, modelData) -> new TypedZCrystalItem(settings, item, modelData, type));
     }
 
-    private static SpeciesZCrystalItem registerSpeciesZCrystal (String name, ElementalType type) {
+    private static SpeciesZCrystalItem registerSpeciesZCrystal(String name, ElementalType type) {
         return registerShowdownItem(name, (settings, item, modelData) -> new SpeciesZCrystalItem(settings, item, modelData, type));
     }
 
-    private static TeraShardItem registerTeraShard (String type, TeraType teraType) {
+    private static TeraShardItem registerTeraShard(String type, TeraType teraType) {
         return register(type + "_tera_shard", (settings, item, modelData) -> new TeraShardItem(settings.maxCount(50), item, modelData, teraType));
     }
 
-    private static PolymerHeldItem registerShowdownItem (String name) {
+    private static PolymerHeldItem registerShowdownItem(String name) {
         return registerShowdownItem(name, PolymerHeldItem::new);
     }
 
-    private static <T extends PolymerHeldItem> T registerShowdownItem (String name, ItemConstructor<T> itemConstructor) {
+    private static <T extends PolymerHeldItem> T registerShowdownItem(String name, ItemConstructor<T> itemConstructor) {
         T item = register(name, itemConstructor);
         CobblemonHeldItemManager.INSTANCE.registerRemap(item, name);
         return item;
     }
 
-    private static GenericFormChangeHeldItem registerOgerpon (String mask) {
+    private static GenericFormChangeHeldItem registerOgerpon(String mask) {
         return registerFormChangeChoice(mask + "mask", "ogerpon", "ogre_mask", mask, "teal", 1);
     }
 
-    private static GenericFormChangeHeldItem registerGenesect (String driveName, String type) {
+    private static GenericFormChangeHeldItem registerGenesect(String driveName, String type) {
         return registerFormChangeChoice(driveName + "drive", "genesect", "techno_drive", type, "none", 1);
     }
 
-    private static GenericFormChangeHeldItem registerSilvally (String type) {
+    private static GenericFormChangeHeldItem registerSilvally(String type) {
         return registerFormChangeChoice(type + "memory", "silvally", "rks_memory", type, "normal", 1);
     }
 
-    private static GenericFormChangeHeldItem registerArceus (String name, String type) {
+    private static GenericFormChangeHeldItem registerArceus(String name, String type) {
         return registerFormChangeChoice(name, "arceus", "multitype", type, "normal", 1);
     }
 
-    private static GenericFormChangeHeldItem registerFormChangeChoice (String name, String species, String propertyName, String appliedChoice, String defaultChoice, int tooltipLines) {
+    private static GenericFormChangeHeldItem registerFormChangeChoice(String name, String species, String propertyName, String appliedChoice, String defaultChoice, int tooltipLines) {
         return registerFormChange(name, species, new StringSpeciesFeature(propertyName, appliedChoice), new StringSpeciesFeature(propertyName, defaultChoice), tooltipLines);
     }
 
-    private static GenericFormChangeHeldItem registerFormChange (String name, String species, CustomPokemonProperty apply, CustomPokemonProperty remove, int tooltipLines) {
+    private static GenericFormChangeHeldItem registerFormChange(String name, String species, CustomPokemonProperty apply, CustomPokemonProperty remove, int tooltipLines) {
         return registerShowdownItem(name, (settings, item, modelData) -> new GenericFormChangeHeldItem(settings, item, modelData, tooltipLines, MiscUtilsKt.cobblemonResource(species), apply, remove));
     }
 
-    private static <T extends PolymerHeldItem> T register (String name, ItemConstructor<T> itemConstructor) {
+    private static <T extends PolymerHeldItem> T register(String name, ItemConstructor<T> itemConstructor) {
         return register(name, Items.IRON_INGOT, new Item.Settings().maxCount(64).rarity(Rarity.RARE), itemConstructor);
     }
 
-    private static <T extends PolymerHeldItem> T register (String name, Item baseItem, Item.Settings settings, ItemConstructor<T> itemConstructor) {
+    private static <T extends PolymerHeldItem> T register(String name, Item baseItem, Item.Settings settings, ItemConstructor<T> itemConstructor) {
         Identifier itemId = GimmeThatGimmickMain.identifier(name);
         PolymerModelData model = PolymerResourcePackUtils.requestModel(baseItem, itemId.withPrefixedPath("item/"));
         return Registry.register(Registries.ITEM, itemId, itemConstructor.get(settings, baseItem, model));
     }
 
-    private static <T extends PolymerBlockItemTextured> T register (String name, Item baseItem, Block block, BlockItemConstructor<T> blockItemConstructor) {
+    private static <T extends PolymerBlockItemTextured> T register(String name, Item baseItem, Block block, BlockItemConstructor<T> blockItemConstructor) {
         Identifier itemId = GimmeThatGimmickMain.identifier(name);
         PolymerModelData model = PolymerResourcePackUtils.requestModel(baseItem, itemId.withPrefixedPath("item/"));
         return Registry.register(Registries.ITEM, itemId, blockItemConstructor.get(block, new Item.Settings().maxCount(64), baseItem, model));
     }
 
-    public static void init () {
+    public static void init() {
         CobblemonHeldItemManager.INSTANCE.registerStackRemap(stack -> stack.get(GTGItemDataComponents.SHOWDOWN_ID));
     }
 
     @FunctionalInterface
     public interface ItemConstructor<T extends PolymerHeldItem> {
-        T get (Item.Settings settings, Item vanillaBaseItem, PolymerModelData modelData);
+        T get(Item.Settings settings, Item vanillaBaseItem, PolymerModelData modelData);
     }
 
     @FunctionalInterface
     public interface BlockItemConstructor<T extends PolymerBlockItemTextured> {
-        T get (Block block, Item.Settings settings, Item virtualItem, PolymerModelData model);
+        T get(Block block, Item.Settings settings, Item virtualItem, PolymerModelData model);
     }
 }
