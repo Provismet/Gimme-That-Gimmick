@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick;
 
+import com.provismet.cobblemon.gimmick.commands.GTGCommands;
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.UltraBurstEventHandler;
@@ -11,7 +12,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 
 public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
     @Override
-    public void onInitializeServer() {
+    public void onInitializeServer () {
         PolymerResourcePackUtils.markAsRequired();
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 
@@ -22,6 +23,7 @@ public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
         GTGItemDataComponents.init();
         GTGEnchantmentComponents.init();
         GTGItemGroup.register();
+        GTGCommands.register();
 
         CobblemonEventHandler.register();
         UltraBurstEventHandler.register();

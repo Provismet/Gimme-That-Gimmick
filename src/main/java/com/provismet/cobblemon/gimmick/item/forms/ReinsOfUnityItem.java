@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -18,17 +19,17 @@ public class ReinsOfUnityItem extends PolymerPokemonSelectingItem implements For
     }
 
     @Override
-    public boolean canBeMerged (Pokemon other) {
+    public boolean canBeMerged (ItemStack stack, Pokemon other) {
         return HORSES.contains(other.getSpecies().getResourceIdentifier().toString());
     }
 
     @Override
-    public void applyUnplitForme (Pokemon pokemon) {
+    public void applyUnplitForme (ItemStack stack, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "none").apply(pokemon);
     }
 
     @Override
-    public void applyFusedForme (Pokemon pokemon, Pokemon other) {
+    public void applyFusedForme (ItemStack stack, Pokemon pokemon, Pokemon other) {
         String forme = other.getSpecies().getResourceIdentifier().getPath().equals("glastrier") ? "ice" : "shadow";
         new StringSpeciesFeature(FEATURE, forme).apply(pokemon);
     }

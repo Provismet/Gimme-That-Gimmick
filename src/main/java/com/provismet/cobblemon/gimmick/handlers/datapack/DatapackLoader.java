@@ -79,11 +79,6 @@ public class DatapackLoader {
             }
         }
 
-        //FUSIONS
-        for (FusionData fusion : GTGDynamicRegistries.fusionRegistry) {
-            GTGCommands.VALID_ITEMS.add(fusion.gtg_id());
-        }
-
         //KEY ITEMS
         for (KeyItemData keyItems : GTGDynamicRegistries.keyItemsRegistry) {
             GTGCommands.VALID_ITEMS.add(keyItems.gtg_id());

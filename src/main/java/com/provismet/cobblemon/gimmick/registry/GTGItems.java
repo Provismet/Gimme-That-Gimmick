@@ -15,6 +15,7 @@ import com.provismet.cobblemon.gimmick.item.dynamax.DMaxCandyItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DynamaxBandItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.MaxSoupItem;
 import com.provismet.cobblemon.gimmick.item.forms.DNASplicersItem;
+import com.provismet.cobblemon.gimmick.item.forms.DataDrivenFusionItem;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.forms.GracideaFlowerItem;
 import com.provismet.cobblemon.gimmick.item.forms.MeteoriteItem;
@@ -232,6 +233,9 @@ public abstract class GTGItems {
     public static final GenericFormChangeHeldItem WELLSPRING_MASK = registerOgerpon("wellspring");
     public static final GenericFormChangeHeldItem HEARTHFLAME_MASK = registerOgerpon("hearthflame");
     public static final GenericFormChangeHeldItem CORNERSTONE_MASK = registerOgerpon("cornerstone");
+
+    // Data-Driven Items
+    public static final DataDrivenFusionItem DATA_DRIVEN_FUSION = register("data_driven_fusion", DataDrivenFusionItem::new);
 
     private static MegaStoneItem registerMegaStone (String name) {
         return registerShowdownItem(name, MegaStoneItem::new);

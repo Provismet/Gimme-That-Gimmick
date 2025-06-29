@@ -1,0 +1,36 @@
+{
+  "fusion": {
+    "defaultFeatures": {
+      "absofusion": "none"
+    },
+    "inputFeatures": [
+      {
+        "absofusion": "white"
+      },
+      {
+        "absofusion": "black"
+      }
+    ],
+    "inputPokemon": [
+      {
+        "showdownId": "reshiram"
+      },
+      {
+        "showdownId": "zekrom"
+      }
+    ],
+    "recipient": {
+      "showdownId": "kyurem"
+    }
+  },
+  "item": {
+    "customModelData": 20,
+    "name": "Fake DNA Splicers",
+    "rarity": "epic",
+    "tooltip": [
+      "Tooltip line 1",
+      "Tooltip line 2"
+    ],
+    "vanillaItem": "minecraft:paper"
+  }
+}

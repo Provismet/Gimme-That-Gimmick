@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class NLunarizerItem extends PolymerPokemonSelectingItem implements FormChangeFusionItem {
@@ -13,17 +14,17 @@ public class NLunarizerItem extends PolymerPokemonSelectingItem implements FormC
     }
 
     @Override
-    public boolean canBeMerged (Pokemon other) {
+    public boolean canBeMerged (ItemStack stack, Pokemon other) {
         return other.getSpecies().getResourceIdentifier().toString().equals("cobblemon:lunala");
     }
 
     @Override
-    public void applyUnplitForme (Pokemon pokemon) {
+    public void applyUnplitForme (ItemStack stack, Pokemon pokemon) {
         new StringSpeciesFeature("prism_fusion", "none").apply(pokemon);
     }
 
     @Override
-    public void applyFusedForme (Pokemon pokemon, Pokemon other) {
+    public void applyFusedForme (ItemStack stack,Pokemon pokemon, Pokemon other) {
         new StringSpeciesFeature("prism_fusion", "dawn").apply(pokemon);
     }
 

@@ -1,6 +1,7 @@
 package com.provismet.cobblemon.gimmick;
 
 import com.provismet.cobblemon.gimmick.registry.GTGBlocks;
+import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantmentComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemGroup;
@@ -18,6 +19,7 @@ public class GimmeThatGimmickClient implements ClientModInitializer {
 			GTGItemDataComponents.init();
 			GTGEnchantmentComponents.init();
 			GTGItemGroup.register();
+			//GTGDynamicRegistryKeys.register();
 		}
 	}
 }
