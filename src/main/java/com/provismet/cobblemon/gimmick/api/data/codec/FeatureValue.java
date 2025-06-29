@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 
+// TODO: Try and find a way to let the feature json use primitive strings or primitive booleans.
 public class FeatureValue {
     public static final Codec<FeatureValue> CODEC = new Codec<>() {
         @Override
