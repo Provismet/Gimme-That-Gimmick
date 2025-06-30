@@ -5,7 +5,7 @@ import com.provismet.cobblemon.gimmick.api.data.DataItem;
 import com.provismet.cobblemon.gimmick.api.data.Fusion;
 import com.provismet.cobblemon.gimmick.api.data.PokemonFeatures;
 import com.provismet.cobblemon.gimmick.api.data.PokemonRequirements;
-import com.provismet.cobblemon.gimmick.api.data.registry.FormChangeFusionDataItem;
+import com.provismet.cobblemon.gimmick.api.data.registry.form.FormChangeFusionDataItem;
 import com.provismet.cobblemon.gimmick.api.datagen.FormChangeFusionItemProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.item.Items;
@@ -40,11 +40,11 @@ public class DebugFusionGenerator extends FormChangeFusionItemProvider {
                     Rarity.EPIC
                 ),
                 new Fusion(
-                    PokemonRequirements.fromSpecies("kyurem"),
-                    List.of(PokemonRequirements.fromSpecies("reshiram"), PokemonRequirements.fromSpecies("zekrom")),
+                    PokemonRequirements.species("kyurem"),
+                    List.of(PokemonRequirements.species("reshiram"), PokemonRequirements.species("zekrom")),
                     List.of(PokemonFeatures.single("absofusion", "white"), PokemonFeatures.single("absofusion", "black")),
                     PokemonFeatures.single("absofusion", "none"),
-                    null
+                    Optional.empty()
                 )
             )
         );

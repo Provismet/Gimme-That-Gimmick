@@ -20,18 +20,18 @@ public class GracideaFlowerItem extends PolymerPokemonSelectingItem implements F
     }
 
     @Override
-    public boolean shouldApplySpecialForm (Pokemon pokemon) {
+    public boolean shouldApplySpecialForm (ItemStack stack, Pokemon pokemon) {
         return !pokemon.getAspects().contains("sky-forme");
     }
 
     @Override
-    public void applySpecialForm (ServerPlayerEntity player, Pokemon pokemon) {
+    public void applySpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "sky").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.gracidea.sky", pokemon.getDisplayName()), true);
     }
 
     @Override
-    public void removeSpecialForm (ServerPlayerEntity player, Pokemon pokemon) {
+    public void removeSpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "land").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.gracidea.land", pokemon.getDisplayName()), true);
     }

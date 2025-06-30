@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.pokemon.helditem.CobblemonHeldItemManager;
 import com.cobblemon.mod.common.util.MiscUtilsKt;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.cobblemon.gimmick.api.data.MegaEvolution;
 import com.provismet.cobblemon.gimmick.item.PolymerBlockItemTextured;
 import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DMaxCandyItem;
@@ -16,6 +17,7 @@ import com.provismet.cobblemon.gimmick.item.dynamax.DynamaxBandItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.MaxSoupItem;
 import com.provismet.cobblemon.gimmick.item.forms.DNASplicersItem;
 import com.provismet.cobblemon.gimmick.item.forms.DataDrivenFusionItem;
+import com.provismet.cobblemon.gimmick.item.forms.DataDrivenToggleItem;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.forms.GracideaFlowerItem;
 import com.provismet.cobblemon.gimmick.item.forms.MeteoriteItem;
@@ -51,53 +53,53 @@ public abstract class GTGItems {
     public static final PolymerBlockItemTextured POWER_SPOT = register("power_spot", Items.IRON_INGOT, GTGBlocks.POWER_SPOT, PolymerBlockItemTextured::new);
 
     // Mega Stones
-    public static final MegaStoneItem ABOMASITE = registerMegaStone("abomasite");
-    public static final MegaStoneItem ABSOLITE = registerMegaStone("absolite");
-    public static final MegaStoneItem AERODACTYLITE = registerMegaStone("aerodactylite");
-    public static final MegaStoneItem AGGRONITE = registerMegaStone("aggronite");
-    public static final MegaStoneItem ALAKAZITE = registerMegaStone("alakazite");
-    public static final MegaStoneItem ALTARIANITE = registerMegaStone("altarianite");
-    public static final MegaStoneItem AMPHAROSITE = registerMegaStone("ampharosite");
-    public static final MegaStoneItem AUDINITE = registerMegaStone("audinite");
-    public static final MegaStoneItem BANETTITE = registerMegaStone("banettite");
-    public static final MegaStoneItem BEEDRILLITE = registerMegaStone("beedrillite");
-    public static final MegaStoneItem BLASTOISINITE = registerMegaStone("blastoisinite");
-    public static final MegaStoneItem BLAZIKENITE = registerMegaStone("blazikenite");
-    public static final MegaStoneItem CAMERUPTITE = registerMegaStone("cameruptite");
-    public static final MegaStoneItem CHARIZARDITE_X = registerMegaStone("charizarditex");
-    public static final MegaStoneItem CHARIZARDITE_Y = registerMegaStone("charizarditey");
-    public static final MegaStoneItem DIANCITE = registerMegaStone("diancite");
-    public static final MegaStoneItem GALLADITE = registerMegaStone("galladite");
-    public static final MegaStoneItem GARCHOMPITE = registerMegaStone("garchompite");
-    public static final MegaStoneItem GARDEVOIRITE = registerMegaStone("gardevoirite");
-    public static final MegaStoneItem GENGARITE = registerMegaStone("gengarite");
-    public static final MegaStoneItem GLALITITE = registerMegaStone("glalitite");
-    public static final MegaStoneItem GYARADOSITE = registerMegaStone("gyaradosite");
-    public static final MegaStoneItem HERACRONITE = registerMegaStone("heracronite");
-    public static final MegaStoneItem HOUNDOOMINITE = registerMegaStone("houndoominite");
-    public static final MegaStoneItem KANGASKHANITE = registerMegaStone("kangaskhanite");
-    public static final MegaStoneItem LATIASITE = registerMegaStone("latiasite");
-    public static final MegaStoneItem LATIOSITE = registerMegaStone("latiosite");
-    public static final MegaStoneItem LOPUNNITE = registerMegaStone("lopunnite");
-    public static final MegaStoneItem LUCARIONITE = registerMegaStone("lucarionite");
-    public static final MegaStoneItem MANECTITE = registerMegaStone("manectite");
-    public static final MegaStoneItem MAWILITE = registerMegaStone("mawilite");
-    public static final MegaStoneItem MEDICHAMITE = registerMegaStone("medichamite");
-    public static final MegaStoneItem METAGROSSITE = registerMegaStone("metagrossite");
-    public static final MegaStoneItem MEWTWONITE_X = registerMegaStone("mewtwonitex");
-    public static final MegaStoneItem MEWTWONITE_Y = registerMegaStone("mewtwonitey");
-    public static final MegaStoneItem PIDGEOTITE = registerMegaStone("pidgeotite");
-    public static final MegaStoneItem PINSIRITE = registerMegaStone("pinsirite");
-    public static final MegaStoneItem SABLENITE = registerMegaStone("sablenite");
-    public static final MegaStoneItem SALAMENCITE = registerMegaStone("salamencite");
-    public static final MegaStoneItem SCEPTILITE = registerMegaStone("sceptilite");
-    public static final MegaStoneItem SCIZORITE = registerMegaStone("scizorite");
-    public static final MegaStoneItem SHARPEDONITE = registerMegaStone("sharpedonite");
-    public static final MegaStoneItem SLOWBRONITE = registerMegaStone("slowbronite");
-    public static final MegaStoneItem STEELIXITE = registerMegaStone("steelixite");
-    public static final MegaStoneItem SWAMPERTITE = registerMegaStone("swampertite");
-    public static final MegaStoneItem TYRANITARITE = registerMegaStone("tyranitarite");
-    public static final MegaStoneItem VENUSAURITE = registerMegaStone("venusaurite");
+    public static final MegaStoneItem ABOMASITE = registerMegaStone("abomasite", "abomasnow");
+    public static final MegaStoneItem ABSOLITE = registerMegaStone("absolite", "absol");
+    public static final MegaStoneItem AERODACTYLITE = registerMegaStone("aerodactylite", "aerodactyl");
+    public static final MegaStoneItem AGGRONITE = registerMegaStone("aggronite", "aggron");
+    public static final MegaStoneItem ALAKAZITE = registerMegaStone("alakazite", "alakazam");
+    public static final MegaStoneItem ALTARIANITE = registerMegaStone("altarianite", "altaria");
+    public static final MegaStoneItem AMPHAROSITE = registerMegaStone("ampharosite", "ampharos");
+    public static final MegaStoneItem AUDINITE = registerMegaStone("audinite", "audino");
+    public static final MegaStoneItem BANETTITE = registerMegaStone("banettite", "banette");
+    public static final MegaStoneItem BEEDRILLITE = registerMegaStone("beedrillite", "beedrill");
+    public static final MegaStoneItem BLASTOISINITE = registerMegaStone("blastoisinite", "blastoise");
+    public static final MegaStoneItem BLAZIKENITE = registerMegaStone("blazikenite", "blaziken");
+    public static final MegaStoneItem CAMERUPTITE = registerMegaStone("cameruptite", "camerupt");
+    public static final MegaStoneItem CHARIZARDITE_X = registerMegaStone("charizarditex", "charizard", "mega_x");
+    public static final MegaStoneItem CHARIZARDITE_Y = registerMegaStone("charizarditey", "charizard", "mega_y");
+    public static final MegaStoneItem DIANCITE = registerMegaStone("diancite", "diancie");
+    public static final MegaStoneItem GALLADITE = registerMegaStone("galladite", "gallade");
+    public static final MegaStoneItem GARCHOMPITE = registerMegaStone("garchompite", "garchomp");
+    public static final MegaStoneItem GARDEVOIRITE = registerMegaStone("gardevoirite", "gardevoir");
+    public static final MegaStoneItem GENGARITE = registerMegaStone("gengarite", "gengar");
+    public static final MegaStoneItem GLALITITE = registerMegaStone("glalitite", "glalie");
+    public static final MegaStoneItem GYARADOSITE = registerMegaStone("gyaradosite", "gyarados");
+    public static final MegaStoneItem HERACRONITE = registerMegaStone("heracronite", "heracross");
+    public static final MegaStoneItem HOUNDOOMINITE = registerMegaStone("houndoominite", "houndoom");
+    public static final MegaStoneItem KANGASKHANITE = registerMegaStone("kangaskhanite", "kangaskhan");
+    public static final MegaStoneItem LATIASITE = registerMegaStone("latiasite", "latias");
+    public static final MegaStoneItem LATIOSITE = registerMegaStone("latiosite", "latios");
+    public static final MegaStoneItem LOPUNNITE = registerMegaStone("lopunnite", "lopunny");
+    public static final MegaStoneItem LUCARIONITE = registerMegaStone("lucarionite", "lucario");
+    public static final MegaStoneItem MANECTITE = registerMegaStone("manectite", "manectric");
+    public static final MegaStoneItem MAWILITE = registerMegaStone("mawilite", "mawile");
+    public static final MegaStoneItem MEDICHAMITE = registerMegaStone("medichamite", "medicham");
+    public static final MegaStoneItem METAGROSSITE = registerMegaStone("metagrossite", "metagross");
+    public static final MegaStoneItem MEWTWONITE_X = registerMegaStone("mewtwonitex", "mewtwo", "mega_x");
+    public static final MegaStoneItem MEWTWONITE_Y = registerMegaStone("mewtwonitey", "mewtwo", "mega_y");
+    public static final MegaStoneItem PIDGEOTITE = registerMegaStone("pidgeotite", "pidgeotite");
+    public static final MegaStoneItem PINSIRITE = registerMegaStone("pinsirite", "pinsir");
+    public static final MegaStoneItem SABLENITE = registerMegaStone("sablenite", "sableye");
+    public static final MegaStoneItem SALAMENCITE = registerMegaStone("salamencite", "salamence");
+    public static final MegaStoneItem SCEPTILITE = registerMegaStone("sceptilite", "sceptile");
+    public static final MegaStoneItem SCIZORITE = registerMegaStone("scizorite", "scizor");
+    public static final MegaStoneItem SHARPEDONITE = registerMegaStone("sharpedonite", "sharpedo");
+    public static final MegaStoneItem SLOWBRONITE = registerMegaStone("slowbronite", "slowbro");
+    public static final MegaStoneItem STEELIXITE = registerMegaStone("steelixite", "steelix");
+    public static final MegaStoneItem SWAMPERTITE = registerMegaStone("swampertite", "swampert");
+    public static final MegaStoneItem TYRANITARITE = registerMegaStone("tyranitarite", "tyranitar");
+    public static final MegaStoneItem VENUSAURITE = registerMegaStone("venusaurite", "venusaur");
 
     // Z-Crystals
     public static final SpeciesZCrystalItem ALORAICHIUM_Z = registerSpeciesZCrystal("aloraichiumz", ElementalTypes.INSTANCE.getELECTRIC());
@@ -236,9 +238,21 @@ public abstract class GTGItems {
 
     // Data-Driven Items
     public static final DataDrivenFusionItem DATA_DRIVEN_FUSION = register("data_driven_fusion", DataDrivenFusionItem::new);
+    public static final DataDrivenToggleItem DATA_DRIVEN_TOGGLE = register("data_driven_toggle", DataDrivenToggleItem::new);
 
-    private static MegaStoneItem registerMegaStone (String name) {
-        return registerShowdownItem(name, MegaStoneItem::new);
+    private static MegaStoneItem registerMegaStone (String name, String species, String megaAspect) {
+        return registerShowdownItem(
+            name,
+            (settings, vanillaBaseItem, modelData) -> new MegaStoneItem(
+                settings.component(GTGItemDataComponents.MEGA_EVOLUTION, MegaEvolution.create(species, "normal", megaAspect)),
+                vanillaBaseItem,
+                modelData
+            )
+        );
+    }
+
+    private static MegaStoneItem registerMegaStone (String name, String species) {
+        return registerMegaStone(name, species, "mega");
     }
 
     private static TypedZCrystalItem registerZCrystal (String name, ElementalType type) {

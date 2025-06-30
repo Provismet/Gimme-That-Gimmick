@@ -1,6 +1,9 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
+import com.provismet.cobblemon.gimmick.datagen.debug.DebugFormToggleGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFusionGenerator;
+import com.provismet.cobblemon.gimmick.datagen.debug.DebugHeldItemGenerator;
+import com.provismet.cobblemon.gimmick.datagen.debug.DebugMegaStoneGenerator;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantments;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
@@ -31,5 +34,8 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 
 	private void debugProviders (FabricDataGenerator.Pack pack) {
 		pack.addProvider(DebugFusionGenerator::new);
+		pack.addProvider(DebugHeldItemGenerator::new);
+		pack.addProvider(DebugMegaStoneGenerator::new);
+		pack.addProvider(DebugFormToggleGenerator::new);
 	}
 }

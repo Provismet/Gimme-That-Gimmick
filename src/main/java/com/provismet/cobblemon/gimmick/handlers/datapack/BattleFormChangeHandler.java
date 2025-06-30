@@ -9,7 +9,7 @@ import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
 import kotlin.Unit;
 
 public class BattleFormChangeHandler {
-    public static Unit formeChanges(FormeChangeEvent formeChangeEvent) {
+    public static Unit formeChanges (FormeChangeEvent formeChangeEvent) {
         if (formeChangeEvent.getFormeName().equals("x") || formeChangeEvent.getFormeName().equals("y")
                 || formeChangeEvent.getFormeName().equals("mega") || formeChangeEvent.getFormeName().equals("tera")) {
             return Unit.INSTANCE;

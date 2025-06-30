@@ -1,7 +1,6 @@
 package com.provismet.cobblemon.gimmick.item.forms;
 
 import com.cobblemon.mod.common.api.callback.PartySelectCallbacks;
-import com.cobblemon.mod.common.api.item.PokemonSelectingItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
@@ -16,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public interface FormChangeFusionItem extends PokemonSelectingItem {
+public interface FormChangeFusionItem extends FormChangeItem {
     @Nullable
     @Override
     default TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack stack, @NotNull Pokemon pokemon) {
@@ -75,10 +74,6 @@ public interface FormChangeFusionItem extends PokemonSelectingItem {
 
     default void postMerge (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon, Pokemon absorbed) {
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.fusion", pokemon.getDisplayName(), absorbed.getDisplayName()), true);
-    }
-
-    default boolean canUseOnPokemon (ItemStack stack, Pokemon pokemon) {
-        return this.canUseOnPokemon(pokemon);
     }
 
     boolean canBeMerged (ItemStack stack, Pokemon other);

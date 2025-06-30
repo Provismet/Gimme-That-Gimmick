@@ -13,14 +13,20 @@
     ],
     "inputPokemon": [
       {
-        "showdownId": "reshiram"
+        "speciesShowdownIds": [
+          "reshiram"
+        ]
       },
       {
-        "showdownId": "zekrom"
+        "speciesShowdownIds": [
+          "zekrom"
+        ]
       }
     ],
     "recipient": {
-      "showdownId": "kyurem"
+      "speciesShowdownIds": [
+        "kyurem"
+      ]
     }
   },
   "item": {

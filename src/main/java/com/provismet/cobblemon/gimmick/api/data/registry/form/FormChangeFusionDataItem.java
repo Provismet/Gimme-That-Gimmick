@@ -1,4 +1,4 @@
-package com.provismet.cobblemon.gimmick.api.data.registry;
+package com.provismet.cobblemon.gimmick.api.data.registry.form;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

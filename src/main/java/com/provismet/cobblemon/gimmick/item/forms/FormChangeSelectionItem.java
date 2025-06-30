@@ -1,7 +1,6 @@
 package com.provismet.cobblemon.gimmick.item.forms;
 
 import com.cobblemon.mod.common.api.callback.PartySelectCallbacks;
-import com.cobblemon.mod.common.api.item.PokemonSelectingItem;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.pokemon.FormData;
 import com.cobblemon.mod.common.pokemon.Pokemon;
@@ -16,11 +15,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public interface FormChangeSelectionItem extends PokemonSelectingItem {
+public interface FormChangeSelectionItem extends FormChangeItem {
     @Nullable
     @Override
     default TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack stack, @NotNull Pokemon pokemon) {
-        if (!this.canUseOnPokemon(pokemon)) return TypedActionResult.fail(stack);
+        if (!this.canUseOnPokemon(stack, pokemon)) return TypedActionResult.fail(stack);
 
         List<Pokemon> forms = pokemon.getSpecies()
             .getForms()

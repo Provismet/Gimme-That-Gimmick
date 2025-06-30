@@ -19,7 +19,7 @@ public class GimmeThatGimmickClient implements ClientModInitializer {
 			GTGItemDataComponents.init();
 			GTGEnchantmentComponents.init();
 			GTGItemGroup.register();
-			//GTGDynamicRegistryKeys.register();
+			GTGDynamicRegistryKeys.register();
 		}
 	}
 }

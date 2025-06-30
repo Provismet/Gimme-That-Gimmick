@@ -90,11 +90,7 @@ public abstract class CobblemonEventHandler {
                 }
             }
             else {
-                new StringSpeciesFeature("mega_evolution", "none").apply(pokemon);
-                if (pokemon.getPersistentData().contains("tempUntradeable")) {
-                    pokemon.setTradeable(true);
-                    pokemon.getPersistentData().remove("tempUntradeable");
-                }
+                MegaHelper.megaDevolve(pokemon);
             }
             // This event triggers twice each time? Just adding a delay.
             pokemon.getPersistentData().putLong("last_mega", world.getTime());
@@ -236,9 +232,7 @@ public abstract class CobblemonEventHandler {
     }
 
     public static void resetBattleForms (Pokemon pokemon) {
-        if (pokemon.getAspects().contains("mega") || pokemon.getAspects().contains("mega_x") || pokemon.getAspects().contains("mega_y")) {
-            pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("mega_evolution"));
-        }
+        MegaHelper.megaDevolve(pokemon);
 
         if (pokemon.getAspects().contains("ultra-fusion")) {
             new StringSpeciesFeature("prism_fusion", pokemon.getPersistentData().getString("prism_fusion")).apply(pokemon);

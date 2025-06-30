@@ -33,18 +33,18 @@ public class RevealGlassItem extends PolymerPokemonSelectingItem implements Form
     }
 
     @Override
-    public boolean shouldApplySpecialForm (Pokemon pokemon) {
+    public boolean shouldApplySpecialForm (ItemStack stack, Pokemon pokemon) {
         return !pokemon.getAspects().contains("therian-forme");
     }
 
     @Override
-    public void applySpecialForm (ServerPlayerEntity player, Pokemon pokemon) {
+    public void applySpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "therian").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mirror.therian", pokemon.getDisplayName()), true);
     }
 
     @Override
-    public void removeSpecialForm (ServerPlayerEntity player, Pokemon pokemon) {
+    public void removeSpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "incarnate").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mirror.incarnate", pokemon.getDisplayName()), true);
     }

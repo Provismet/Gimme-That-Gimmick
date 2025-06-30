@@ -5,16 +5,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 
-import java.util.List;
-import java.util.Map;
-
 public record MegaEvolution (PokemonRequirements pokemon, PokemonFeatures onApply, PokemonFeatures onRemove) {
     public static final MegaEvolution DEFAULT = MegaEvolution.create("none");
 
     public static final Codec<MegaEvolution> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         PokemonRequirements.CODEC.fieldOf("pokemon").forGetter(MegaEvolution::pokemon),
-        PokemonFeatures.CODEC.optionalFieldOf("appliedFeatures", new PokemonFeatures(Map.of("mega_evolution", "mega"))).forGetter(MegaEvolution::onApply),
-        PokemonFeatures.CODEC.optionalFieldOf("defaultFeatures", new PokemonFeatures(Map.of("mega_evolution", "none"))).forGetter(MegaEvolution::onRemove)
+        PokemonFeatures.CODEC.optionalFieldOf("appliedFeatures", PokemonFeatures.single("mega_evolution", "mega")).forGetter(MegaEvolution::onApply),
+        PokemonFeatures.CODEC.optionalFieldOf("defaultFeatures", PokemonFeatures.single("mega_evolution", "none")).forGetter(MegaEvolution::onRemove)
     ).apply(instance, MegaEvolution::new));
 
     public static final PacketCodec<RegistryByteBuf, MegaEvolution> PACKET_CODEC = PacketCodec.tuple(
@@ -28,14 +25,18 @@ public record MegaEvolution (PokemonRequirements pokemon, PokemonFeatures onAppl
     );
 
     public static MegaEvolution create (String speciesId) {
-        return create(speciesId, "mega");
+        return create(speciesId, "normal");
     }
 
-    public static MegaEvolution create (String speciesId, String megaAspect) {
+    public static MegaEvolution create (String speciesId, String formId) {
+        return create(speciesId, formId, "mega");
+    }
+
+    public static MegaEvolution create (String speciesId, String formId, String megaAspect) {
         return new MegaEvolution(
-            new PokemonRequirements(speciesId, List.of(), List.of()),
-            new PokemonFeatures(Map.of("mega_evolution", megaAspect)),
-            new PokemonFeatures(Map.of("mega_evolution", "none"))
+            PokemonRequirements.speciesForm(speciesId, formId),
+            PokemonFeatures.single("mega_evolution", megaAspect),
+            PokemonFeatures.single("mega_evolution", "none")
         );
     }
 }

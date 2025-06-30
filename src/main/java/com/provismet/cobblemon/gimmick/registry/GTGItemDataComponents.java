@@ -3,6 +3,7 @@ package com.provismet.cobblemon.gimmick.registry;
 import com.mojang.serialization.Codec;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.api.data.DataItem;
+import com.provismet.cobblemon.gimmick.api.data.FormToggle;
 import com.provismet.cobblemon.gimmick.api.data.Fusion;
 import com.provismet.cobblemon.gimmick.api.data.MegaEvolution;
 import eu.pb4.polymer.core.api.other.PolymerComponent;
@@ -24,6 +25,7 @@ public abstract class GTGItemDataComponents {
     public static final ComponentType<String> SHOWDOWN_ID = register("showdown_id", builder -> builder.codec(Codec.STRING).packetCodec(PacketCodecs.STRING));
     public static final ComponentType<MegaEvolution> MEGA_EVOLUTION = register("mega_evolution", builder -> builder.codec(MegaEvolution.CODEC).packetCodec(MegaEvolution.PACKET_CODEC));
     public static final ComponentType<Fusion> FUSION = register("fusion", builder -> builder.codec(Fusion.CODEC).packetCodec(Fusion.PACKET_CODEC));
+    public static final ComponentType<FormToggle> FORM_TOGGLE = register("form_toggle", builder -> builder.codec(FormToggle.CODEC).packetCodec(FormToggle.PACKET_CODEC));
 
     private static <T> ComponentType<T> register (String name, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         ComponentType<T> component = Registry.register(Registries.DATA_COMPONENT_TYPE, GimmeThatGimmickMain.identifier(name), builderOperator.apply(ComponentType.builder()).build());

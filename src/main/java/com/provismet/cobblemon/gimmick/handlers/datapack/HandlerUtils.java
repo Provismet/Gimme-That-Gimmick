@@ -1,10 +1,8 @@
 package com.provismet.cobblemon.gimmick.handlers.datapack;
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
-import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.api.data.codec.EffectsData;
-import com.provismet.cobblemon.gimmick.api.data.codec.FusionData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
@@ -19,20 +17,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.Vec3d;
 
 public class HandlerUtils {
-    public static boolean checkEnabled(FusionData fusion, Pokemon pk) {
-        for (String aspects : fusion.fusion_aspects()) {
-            String[] aspectsDiv = aspects.split("=");
-            if (aspectsDiv[1].equals("true") || aspectsDiv[1].equals("false")) {
-                if (pk.getAspects().contains(aspectsDiv[0])) return true;
-            } else {
-                for (String aspect : pk.getAspects()) {
-                    if (aspect.startsWith(aspectsDiv[1])) return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public static EntityHitResult getEntityLookingAt(PlayerEntity player, double distance) {
         Vec3d eyePos = player.getEyePos();
         Vec3d lookVec = player.getRotationVec(1.0F);

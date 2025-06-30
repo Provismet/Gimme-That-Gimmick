@@ -1,19 +1,18 @@
 package com.provismet.cobblemon.gimmick.commands;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.provismet.cobblemon.gimmick.api.data.DataItemStack;
 import com.provismet.cobblemon.gimmick.api.data.codec.FormChangeData;
-import com.provismet.cobblemon.gimmick.api.data.codec.KeyItemData;
-import com.provismet.cobblemon.gimmick.api.data.registry.FormChangeFusionDataItem;
+import com.provismet.cobblemon.gimmick.api.data.registry.form.FormChangeFusionDataItem;
 import com.provismet.cobblemon.gimmick.api.data.registry.HeldItem;
 import com.provismet.cobblemon.gimmick.api.data.registry.MegaStone;
+import com.provismet.cobblemon.gimmick.api.data.registry.form.FormChangeToggleDataItem;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.command.argument.IdentifierArgumentType;
-import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
 import net.minecraft.component.type.LoreComponent;
@@ -41,7 +40,7 @@ public class GTGCommands {
                 .requires(source -> source.hasPermissionLevel(2))
                 .then(CommandManager.literal("give")
                     .then(CommandManager.argument("player", EntityArgumentType.player())
-                        .then(CommandManager.literal("fusion")
+                        .then(CommandManager.literal("fusion_form")
                             .then(CommandManager.argument("item", IdentifierArgumentType.identifier())
                                 .suggests((context, builder) -> {
                                     registryAccess.getWrapperOrThrow(GTGDynamicRegistryKeys.FUSION)
@@ -57,7 +56,7 @@ public class GTGCommands {
                                         .getWrapperOrThrow(GTGDynamicRegistryKeys.FUSION)
                                         .getOptional(FormChangeFusionDataItem.key(itemId));
 
-                                    if (item.isPresent()) return executeGiveFusion(
+                                    if (item.isPresent()) return executeGive(
                                         context,
                                         EntityArgumentType.getPlayer(context, "player"),
                                         item.get().value(),
@@ -74,7 +73,7 @@ public class GTGCommands {
                                             .getWrapperOrThrow(GTGDynamicRegistryKeys.FUSION)
                                             .getOptional(FormChangeFusionDataItem.key(itemId));
 
-                                        if (item.isPresent()) return executeGiveFusion(
+                                        if (item.isPresent()) return executeGive(
                                             context,
                                             EntityArgumentType.getPlayer(context, "player"),
                                             item.get().value(),
@@ -87,27 +86,142 @@ public class GTGCommands {
                                 )
                             )
                         )
-                        .then(CommandManager.argument("item", StringArgumentType.word())
-                            .suggests((context, builder) -> {
-                                for (String item : VALID_ITEMS) {
-                                    builder.suggest(item);
-                                }
-                                return builder.buildFuture();
-                            })
-                            // version with no count
-                            .executes(context -> {
-                                ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-                                String item = StringArgumentType.getString(context, "item");
-                                return executeGive(player, item, 1);
-                            })
-                            // version with count
-                            .then(CommandManager.argument("count", IntegerArgumentType.integer(1))
-                                .executes(context -> {
-                                    ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
-                                    String item = StringArgumentType.getString(context, "item");
-                                    int count = IntegerArgumentType.getInteger(context, "count");
-                                    return executeGive(player, item, count);
+                        .then(CommandManager.literal("toggle_form")
+                            .then(CommandManager.argument("item", IdentifierArgumentType.identifier())
+                                .suggests((context, builder) -> {
+                                    registryAccess.getWrapperOrThrow(GTGDynamicRegistryKeys.FORM_TOGGLE)
+                                        .streamEntries()
+                                        .filter(RegistryEntry.Reference::hasKeyAndValue)
+                                        .forEach(entry -> builder.suggest(entry.getIdAsString()));
+
+                                    return builder.buildFuture();
                                 })
+                                .executes(context -> {
+                                    Identifier itemId = IdentifierArgumentType.getIdentifier(context, "item");
+                                    Optional<RegistryEntry.Reference<FormChangeToggleDataItem>> item = registryAccess
+                                        .getWrapperOrThrow(GTGDynamicRegistryKeys.FORM_TOGGLE)
+                                        .getOptional(FormChangeToggleDataItem.key(itemId));
+
+                                    if (item.isPresent()) return executeGive(
+                                        context,
+                                        EntityArgumentType.getPlayer(context, "player"),
+                                        item.get().value(),
+                                        1
+                                    );
+
+                                    context.getSource().sendFeedback(() -> Text.literal("Form toggle item " + itemId.toString() + " not found."), false);
+                                    return 0;
+                                })
+                                .then(CommandManager.argument("count", IntegerArgumentType.integer(1))
+                                    .executes(context -> {
+                                        Identifier itemId = IdentifierArgumentType.getIdentifier(context, "item");
+                                        Optional<RegistryEntry.Reference<FormChangeToggleDataItem>> item = registryAccess
+                                            .getWrapperOrThrow(GTGDynamicRegistryKeys.FORM_TOGGLE)
+                                            .getOptional(FormChangeToggleDataItem.key(itemId));
+
+                                        if (item.isPresent()) return executeGive(
+                                            context,
+                                            EntityArgumentType.getPlayer(context, "player"),
+                                            item.get().value(),
+                                            IntegerArgumentType.getInteger(context, "count")
+                                        );
+
+                                        context.getSource().sendFeedback(() -> Text.literal("Form toggle item " + itemId.toString() + " not found."), false);
+                                        return 0;
+                                    })
+                                )
+                            )
+                        )
+                        .then(CommandManager.literal("megastone")
+                            .then(CommandManager.argument("item", IdentifierArgumentType.identifier())
+                                .suggests((context, builder) -> {
+                                    registryAccess.getWrapperOrThrow(GTGDynamicRegistryKeys.MEGASTONE)
+                                        .streamEntries()
+                                        .filter(RegistryEntry.Reference::hasKeyAndValue)
+                                        .forEach(entry -> builder.suggest(entry.getIdAsString()));
+
+                                    return builder.buildFuture();
+                                })
+                                .executes(context -> {
+                                    Identifier itemId = IdentifierArgumentType.getIdentifier(context, "item");
+                                    Optional<RegistryEntry.Reference<MegaStone>> item = registryAccess
+                                        .getWrapperOrThrow(GTGDynamicRegistryKeys.MEGASTONE)
+                                        .getOptional(MegaStone.key(itemId));
+
+                                    if (item.isPresent()) return executeGive(
+                                        context,
+                                        EntityArgumentType.getPlayer(context, "player"),
+                                        item.get().value(),
+                                        1
+                                    );
+
+                                    context.getSource().sendFeedback(() -> Text.literal("MegaStone item " + itemId.toString() + " not found."), false);
+                                    return 0;
+                                })
+                                .then(CommandManager.argument("count", IntegerArgumentType.integer(1))
+                                    .executes(context -> {
+                                        Identifier itemId = IdentifierArgumentType.getIdentifier(context, "item");
+                                        Optional<RegistryEntry.Reference<MegaStone>> item = registryAccess
+                                            .getWrapperOrThrow(GTGDynamicRegistryKeys.MEGASTONE)
+                                            .getOptional(MegaStone.key(itemId));
+
+                                        if (item.isPresent()) return executeGive(
+                                            context,
+                                            EntityArgumentType.getPlayer(context, "player"),
+                                            item.get().value(),
+                                            IntegerArgumentType.getInteger(context, "count")
+                                        );
+
+                                        context.getSource().sendFeedback(() -> Text.literal("MegaStone item " + itemId.toString() + " not found."), false);
+                                        return 0;
+                                    })
+                                )
+                            )
+                        )
+                        .then(CommandManager.literal("held_item")
+                            .then(CommandManager.argument("item", IdentifierArgumentType.identifier())
+                                .suggests((context, builder) -> {
+                                    registryAccess.getWrapperOrThrow(GTGDynamicRegistryKeys.HELD_ITEM)
+                                        .streamEntries()
+                                        .filter(RegistryEntry.Reference::hasKeyAndValue)
+                                        .forEach(entry -> builder.suggest(entry.getIdAsString()));
+
+                                    return builder.buildFuture();
+                                })
+                                .executes(context -> {
+                                    Identifier itemId = IdentifierArgumentType.getIdentifier(context, "item");
+                                    Optional<RegistryEntry.Reference<HeldItem>> item = registryAccess
+                                        .getWrapperOrThrow(GTGDynamicRegistryKeys.HELD_ITEM)
+                                        .getOptional(HeldItem.key(itemId));
+
+                                    if (item.isPresent()) return executeGive(
+                                        context,
+                                        EntityArgumentType.getPlayer(context, "player"),
+                                        item.get().value(),
+                                        1
+                                    );
+
+                                    context.getSource().sendFeedback(() -> Text.literal("Held item " + itemId.toString() + " not found."), false);
+                                    return 0;
+                                })
+                                .then(CommandManager.argument("count", IntegerArgumentType.integer(1))
+                                    .executes(context -> {
+                                        Identifier itemId = IdentifierArgumentType.getIdentifier(context, "item");
+                                        Optional<RegistryEntry.Reference<HeldItem>> item = registryAccess
+                                            .getWrapperOrThrow(GTGDynamicRegistryKeys.HELD_ITEM)
+                                            .getOptional(HeldItem.key(itemId));
+
+                                        if (item.isPresent()) return executeGive(
+                                            context,
+                                            EntityArgumentType.getPlayer(context, "player"),
+                                            item.get().value(),
+                                            IntegerArgumentType.getInteger(context, "count")
+                                        );
+
+                                        context.getSource().sendFeedback(() -> Text.literal("Held item " + itemId.toString() + " not found."), false);
+                                        return 0;
+                                    })
+                                )
                             )
                         )
                     )
@@ -116,8 +230,13 @@ public class GTGCommands {
         });
     }
 
-    private static int executeGiveFusion (CommandContext<ServerCommandSource> context, ServerPlayerEntity player, FormChangeFusionDataItem item, int count) {
+    private static int executeGive (CommandContext<ServerCommandSource> context, ServerPlayerEntity player, DataItemStack item, int count) {
         ItemStack stack = item.create();
+        if (stack == null) {
+            context.getSource().sendFeedback(() -> Text.literal("Failed to generate requested item, the data may be malformed."), false);
+            return 0;
+        }
+
         for (int i = 0; i < count; ++i) {
             player.giveItemStack(stack);
         }
@@ -126,58 +245,6 @@ public class GTGCommands {
     }
 
     private static int executeGive(ServerPlayerEntity player, String item, int count) {
-        //MEGA
-        for (MegaStone pokemon : GTGDynamicRegistries.megaRegistry) {
-            if (pokemon.gtg_id().equals(item)) {
-                item = pokemon.item_id();
-                if (VALID_ITEMS.contains(item)) {
-                    player.sendMessage(Text.literal("Invalid item: " + item).formatted(Formatting.RED), false);
-                    return 0;
-                }
-                String[] itemId = item.split(":");
-                Identifier msdItemId = Identifier.of(itemId[0], itemId[1]);
-                Item msdItem = Registries.ITEM.get(msdItemId);
-                ItemStack stack = new ItemStack(msdItem, count);
-                stack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(pokemon.custom_model_data()));
-                stack.set(DataComponentTypes.CUSTOM_NAME, Text.translatable(pokemon.item_name()));
-                List<Text> lore = new ArrayList<>();
-                for (String line : pokemon.item_description()) {
-                    lore.add(Text.translatable(line));
-                }
-                stack.set(DataComponentTypes.LORE, new LoreComponent(lore));
-                player.giveItemStack(stack);
-                player.sendMessage(Text.literal("You received: " + item).formatted(Formatting.GREEN), false);
-
-                return 1;
-            }
-        }
-
-        //HELD ITEMS
-        for (HeldItem items : GTGDynamicRegistries.heldItemsRegistry) {
-            if (items.gtg_id().equals(item)) {
-                item = items.item_id();
-                if (VALID_ITEMS.contains(item)) {
-                    player.sendMessage(Text.literal("Invalid item: " + item).formatted(Formatting.RED), false);
-                    return 0;
-                }
-                String[] itemId = item.split(":");
-                Identifier msdItemId = Identifier.of(itemId[0], itemId[1]);
-                Item msdItem = Registries.ITEM.get(msdItemId);
-                ItemStack stack = new ItemStack(msdItem, count);
-                stack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(items.custom_model_data()));
-                stack.set(DataComponentTypes.CUSTOM_NAME, Text.translatable(items.item_name()));
-                List<Text> lore = new ArrayList<>();
-                for (String line : items.item_description()) {
-                    lore.add(Text.translatable(line));
-                }
-                stack.set(DataComponentTypes.LORE, new LoreComponent(lore));
-                player.giveItemStack(stack);
-                player.sendMessage(Text.literal("You received: " + item).formatted(Formatting.GREEN), false);
-
-                return 1;
-            }
-        }
-
         //FORME CHANGE
         for (FormChangeData items : GTGDynamicRegistries.formChangeRegistry) {
             if (items.gtg_id().equals(item)) {
@@ -194,32 +261,6 @@ public class GTGCommands {
                 stack.set(DataComponentTypes.CUSTOM_NAME, Text.translatable(items.item_name()));
                 List<Text> lore = new ArrayList<>();
                 for (String line : items.item_description()) {
-                    lore.add(Text.translatable(line));
-                }
-                stack.set(DataComponentTypes.LORE, new LoreComponent(lore));
-                player.giveItemStack(stack);
-                player.sendMessage(Text.literal("You received: " + item).formatted(Formatting.GREEN), false);
-
-                return 1;
-            }
-        }
-
-        //KEY ITEMS
-        for (KeyItemData keyItems : GTGDynamicRegistries.keyItemsRegistry) {
-            if (keyItems.gtg_id().equals(item)) {
-                item = keyItems.item_id();
-                if (VALID_ITEMS.contains(item)) {
-                    player.sendMessage(Text.literal("Invalid item: " + item).formatted(Formatting.RED), false);
-                    return 0;
-                }
-                String[] itemId = item.split(":");
-                Identifier msdItemId = Identifier.of(itemId[0], itemId[1]);
-                Item msdItem = Registries.ITEM.get(msdItemId);
-                ItemStack stack = new ItemStack(msdItem, count);
-                stack.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(keyItems.custom_model_data()));
-                stack.set(DataComponentTypes.CUSTOM_NAME, Text.translatable(keyItems.item_name()));
-                List<Text> lore = new ArrayList<>();
-                for (String line : keyItems.item_description()) {
                     lore.add(Text.translatable(line));
                 }
                 stack.set(DataComponentTypes.LORE, new LoreComponent(lore));

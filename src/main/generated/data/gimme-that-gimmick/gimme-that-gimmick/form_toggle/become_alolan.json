@@ -1,0 +1,49 @@
+{
+  "form": {
+    "applyIf": {
+      "formShowdownIds": [
+        "normal"
+      ]
+    },
+    "featuresOnApply": {
+      "alolan": true
+    },
+    "featuresOnRemove": {
+      "alolan": false
+    },
+    "validPokemon": {
+      "formShowdownIds": [
+        "normal",
+        "alola"
+      ],
+      "speciesShowdownIds": [
+        "raichu",
+        "muk",
+        "grimer",
+        "vulpix",
+        "ninetales",
+        "rattata",
+        "raticate",
+        "sandshrew",
+        "sandslash",
+        "diglet",
+        "dugtrio",
+        "meowth",
+        "persian",
+        "geodude",
+        "graveler",
+        "golem",
+        "exeggutor",
+        "marowak"
+      ]
+    }
+  },
+  "item": {
+    "name": "The Alolanator",
+    "rarity": "uncommon",
+    "tooltip": [
+      "Sends your pokemon on vacation."
+    ],
+    "vanillaItem": "minecraft:flint"
+  }
+}
