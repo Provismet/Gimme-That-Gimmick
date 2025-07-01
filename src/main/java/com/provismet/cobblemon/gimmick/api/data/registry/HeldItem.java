@@ -24,6 +24,11 @@ public record HeldItem (DataItem itemData, String showdownId) implements DataIte
     }
 
     @Override
+    public String name () {
+        return this.itemData.name();
+    }
+
+    @Override
     @Nullable
     public ItemStack create () {
         ItemStack stack = this.itemData.create();

@@ -25,6 +25,11 @@ public record MegaStone (DataItem itemData, MegaEvolution megaEvolution, String 
     }
 
     @Override
+    public String name () {
+        return this.itemData.name();
+    }
+
+    @Override
     @Nullable
     public ItemStack create () {
         ItemStack stack = this.itemData.create();

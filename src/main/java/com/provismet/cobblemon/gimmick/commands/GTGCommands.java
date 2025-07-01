@@ -240,7 +240,7 @@ public class GTGCommands {
         for (int i = 0; i < count; ++i) {
             player.giveItemStack(stack);
         }
-        context.getSource().sendFeedback(() -> Text.literal("Gave " + count + " ").append(stack.getName()).append(" to ").append(player.getName()), false);
+        context.getSource().sendFeedback(() -> Text.literal("Gave " + count + " ").append(item.name()).append(" to ").append(player.getName()), false);
         return 1;
     }
 

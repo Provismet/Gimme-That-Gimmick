@@ -6,4 +6,6 @@ import org.jetbrains.annotations.Nullable;
 public interface DataItemStack {
     @Nullable
     ItemStack create ();
+
+    String name ();
 }

@@ -8,8 +8,10 @@ import com.provismet.cobblemon.gimmick.api.data.FormToggle;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public record FormChangeToggleDataItem (DataItem itemData, FormToggle formToggle) implements DataItemStack {
@@ -23,10 +25,16 @@ public record FormChangeToggleDataItem (DataItem itemData, FormToggle formToggle
     }
 
     @Override
+    public String name () {
+        return this.itemData.name();
+    }
+
+    @Override
     public ItemStack create () {
         ItemStack stack = GTGItems.DATA_DRIVEN_TOGGLE.getDefaultStack();
         stack.set(GTGItemDataComponents.FORM_TOGGLE, this.formToggle);
         stack.set(GTGItemDataComponents.DATA_ITEM, this.itemData);
+        stack.set(DataComponentTypes.CUSTOM_NAME, Text.of(this.itemData.name()));
         return stack;
     }
 }
