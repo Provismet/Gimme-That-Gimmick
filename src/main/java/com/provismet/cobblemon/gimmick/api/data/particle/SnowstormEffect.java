@@ -12,6 +12,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Represents a Snowstorm particle effects, as provided by Cobblemon.
+ * <p>
+ * Snowstorm particles are custom data-driven particles that can have complex animations.
+ *
+ * @param id The asset id of the particle.
+ * @param sourceLocators List of source locators as required by Snowstorm.
+ * @param targetLocators Optional list of target locators as required by Snowstorm.
+ *
+ * @see SpawnSnowstormEntityParticlePacket
+ */
 public record SnowstormEffect (Identifier id, List<String> sourceLocators, Optional<List<String>> targetLocators) implements ParticleAnimation {
     public static final MapCodec<SnowstormEffect> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
         Identifier.CODEC.fieldOf("particleId").forGetter(SnowstormEffect::id),

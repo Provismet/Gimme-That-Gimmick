@@ -15,6 +15,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Creates a spray of particles from vanilla types.
+ *
+ * @param layers List of particle layers to apply.
+ */
 public record VanillaParticleEffect (List<VanillaParticleLayer> layers) implements ParticleAnimation {
     public static final MapCodec<VanillaParticleEffect> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
         VanillaParticleLayer.CODEC.listOf().fieldOf("layers").forGetter(VanillaParticleEffect::layers)
@@ -26,6 +31,15 @@ public record VanillaParticleEffect (List<VanillaParticleLayer> layers) implemen
         this.layers.forEach(layer -> layer.run(source));
     }
 
+    /**
+     * A set of particles to spawn around a PokemonEntity.
+     * <p>
+     * This only works with simple particles that do not require additional fields.
+     *
+     * @param id The identifier of the particle type.
+     * @param count The number of particles to spawn.
+     * @param maxDistance How far each particle can be spawned from the Pokémon.
+     */
     public record VanillaParticleLayer (Identifier id, int count, double maxDistance) {
         public static final Codec<VanillaParticleLayer> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Identifier.CODEC.fieldOf("id").forGetter(VanillaParticleLayer::id),

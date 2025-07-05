@@ -24,6 +24,8 @@ import java.util.Optional;
 
 /**
  * Represents the base data for generic items created through data-driven features.
+ * <p>
+ * Used as a component for the data-driven items.
  *
  * @param name The custom item name.
  * @param tooltip A list of tooltip lines.

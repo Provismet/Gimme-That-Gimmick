@@ -16,6 +16,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Represents a form change that a Pokémon might do in battle.
+ *
+ * @param defaultForm The original form of the Pokémon. It will also be reverted to this form when the battle ends.
+ * @param forms Mapping of form name (as provided by the form change event) to transformation.
+ */
 public record BattleForm (PokemonTransformation defaultForm, Map<String, PokemonTransformation> forms) {
     public static final Codec<BattleForm> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         PokemonTransformation.CODEC.fieldOf("default").forGetter(BattleForm::defaultForm),
@@ -50,6 +56,10 @@ public record BattleForm (PokemonTransformation defaultForm, Map<String, Pokemon
         toApply.effectsData.ifPresent(effectId -> EffectsData.run(pokemon, opponent, battle, effectId));
     }
 
+    /**
+     * @param features The features applied to the Pokémon.
+     * @param effectsData Optional identifier of the EffectsData to use for this transformation.
+     */
     public record PokemonTransformation (PokemonFeatures features, Optional<Identifier> effectsData) {
         public static final Codec<PokemonTransformation> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             PokemonFeatures.CODEC.fieldOf("features").forGetter(PokemonTransformation::features),

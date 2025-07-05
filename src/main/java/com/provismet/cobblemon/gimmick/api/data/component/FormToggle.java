@@ -11,6 +11,18 @@ import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 
+/**
+ * A data component used exclusively by the {@link com.provismet.cobblemon.gimmick.item.forms.DataDrivenToggleItem} item.
+ * <p>
+ * Toggles the pokemon between two forms. The fields are labelled under the assumption that the Pokémon as a default state
+ * and a special state, but this is not necessary in practice.
+ *
+ * @param validPokemon Checks if a given Pokémon is valid to have its form toggled.
+ * @param shouldApply Checks if the Pokémon is in its default state. If true the onApply features are used, otherwise the onRemove features are used.
+ * @param onApply Features applied to put the Pokémon in its special state.
+ * @param onRemove Features applied to put the Pokémon in its default state.
+ * @param effects Optional identifier of an EffectsData object.
+ */
 public record FormToggle (PokemonRequirements validPokemon, PokemonRequirements shouldApply, PokemonFeatures onApply, PokemonFeatures onRemove, Optional<Identifier> effects) {
     public static final Codec<FormToggle> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         PokemonRequirements.CODEC.fieldOf("validPokemon").forGetter(FormToggle::validPokemon),

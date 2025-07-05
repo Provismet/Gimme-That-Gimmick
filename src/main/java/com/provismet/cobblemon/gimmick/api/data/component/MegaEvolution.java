@@ -7,6 +7,13 @@ import com.provismet.cobblemon.gimmick.api.data.PokemonRequirements;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 
+/**
+ * Used as a data component by all mega stones, both coded and data-driven ones.
+ *
+ * @param pokemon The Pokémon must fulfil these requirement to use this mega stone.
+ * @param onApply The features applied when the Pokémon mega evolves.
+ * @param onRemove The features applied when the Pokémon mega devolves.
+ */
 public record MegaEvolution (PokemonRequirements pokemon, PokemonFeatures onApply, PokemonFeatures onRemove) {
     public static final MegaEvolution DEFAULT = MegaEvolution.create("none");
 

@@ -5,6 +5,9 @@ import com.mojang.serialization.Codec;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * General interface for data-driven particle effects. Mostly exists for the sake of the codec.
+ */
 public interface ParticleAnimation {
     Codec<ParticleAnimation> CODEC = Codec.STRING.dispatch(
         animation -> {

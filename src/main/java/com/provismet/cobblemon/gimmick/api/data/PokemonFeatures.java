@@ -14,6 +14,9 @@ import net.minecraft.util.dynamic.Codecs;
 
 import java.util.Map;
 
+/**
+ * @param featureMap A mapping of feature name to value. All are applied to the Pokémon when triggered.
+ */
 public record PokemonFeatures (Map<String, FeatureValue> featureMap) {
     public static final Codec<PokemonFeatures> CODEC = Codec.unboundedMap(Codec.STRING, FeatureValue.CODEC).xmap(PokemonFeatures::new, PokemonFeatures::featureMap);
 
@@ -46,6 +49,13 @@ public record PokemonFeatures (Map<String, FeatureValue> featureMap) {
         }
     }
 
+    /**
+     * A wrapper around strings, booleans, and integers. Allowing any of those primitives to be used in the json.
+     * <p>
+     * It is recommended to use the static constructors instead of fiddling with the canonical constructor.
+     *
+     * @param value An Either<> object for the value.
+     */
     public record FeatureValue (Either<String, Either<Boolean, Integer>> value) {
         public static final Codec<FeatureValue> CODEC = Codec.either(
             Codecs.NON_EMPTY_STRING,

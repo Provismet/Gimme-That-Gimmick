@@ -15,6 +15,23 @@ import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Used exclusively by the {@link com.provismet.cobblemon.gimmick.item.forms.DataDrivenFusionItem} item.
+ * <p>
+ * This controls the fusion data used by that item. Allowing custom fusions to take place.
+ * <p>
+ * The indexed fields are connected. If the requirements from index #3 are the first to match, then the features from
+ * index #3 will be applied (or the last indexed feature if the feature list is shorter).
+ *
+ * @param recipient The Pokémon that receives the form change.
+ * @param indexedInputPokemon An indexed list of PokemonRequirements for potential Pokémon to absorb.
+ * @param indexedFusionFeatures An indexed list of features to grant the recipient.
+ * @param defaultFeatures The features to apply to the recipient Pokémon when unfusing.
+ * @param fusionEffect An optional identifier for the EffectData to trigger when fusing.
+ * @param unfusionEffect An optional identifier for the EffectData to trigger when unfusing.
+ *
+ * @implNote The absorbed Pokémon is converted into NBT and saved inside the data of the recipient Pokémon.
+ */
 public record Fusion (
     PokemonRequirements recipient,
     List<PokemonRequirements> indexedInputPokemon,

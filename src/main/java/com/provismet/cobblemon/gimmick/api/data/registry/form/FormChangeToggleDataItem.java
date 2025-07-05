@@ -14,6 +14,12 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+/**
+ * A data-driven item for toggling a Pokémon between forms.
+ *
+ * @param itemData The client-side representation of the item.
+ * @param formToggle The form toggle data.
+ */
 public record FormChangeToggleDataItem (DataItem itemData, FormToggle formToggle) implements DataItemStack {
     public static final Codec<FormChangeToggleDataItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         DataItem.CODEC.fieldOf("item").forGetter(FormChangeToggleDataItem::itemData),

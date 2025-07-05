@@ -10,6 +10,14 @@ import net.minecraft.util.dynamic.Codecs;
 
 import java.util.List;
 
+/**
+ * A predicate to apply to a Pokémon. Allows a Pokémon to be checked in terms of its species, form, and aspects.
+ *
+ * @param speciesShowdownIds List of valid Showdown ids for the species. Ignored if empty.
+ * @param formShowdownIds List of valid Showdown ids for the forms. Ignored if empty.
+ * @param requiredAspects List of aspects the Pokémon must have to pass the test. Ignored if empty.
+ * @param blacklistedAspects List of aspects the Pokémon must not have to pass the test. Ignored if empty.
+ */
 public record PokemonRequirements (List<String> speciesShowdownIds, List<String> formShowdownIds, List<String> requiredAspects, List<String> blacklistedAspects) {
     public static final Codec<PokemonRequirements> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.listOf().optionalFieldOf("speciesShowdownIds", List.of()).forGetter(PokemonRequirements::speciesShowdownIds),

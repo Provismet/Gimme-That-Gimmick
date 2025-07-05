@@ -18,9 +18,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public record EffectsData (ParticleAnimation particles, Optional<String> pokemonAnimation, Optional<Float> formChangeDelay, Optional<SoundEvent> sound) {
+/**
+ * Registerable object containing the data for special effects surrounding a Pokémon.
+ *
+ * @param particles The optional particle animation to play.
+ * @param pokemonAnimation The optional animation to trigger on the Pokémon.
+ * @param formChangeDelay Optional and only triggers in battle, how many seconds to wait until the form change occurs.
+ * @param sound Optional sound to play when the effect is triggered.
+ */
+public record EffectsData (Optional<ParticleAnimation> particles, Optional<String> pokemonAnimation, Optional<Float> formChangeDelay, Optional<SoundEvent> sound) {
     public static final Codec<EffectsData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-        ParticleAnimation.CODEC.fieldOf("particles").forGetter(EffectsData::particles),
+        ParticleAnimation.CODEC.optionalFieldOf("particles").forGetter(EffectsData::particles),
         Codec.STRING.optionalFieldOf("animation").forGetter(EffectsData::pokemonAnimation),
         Codec.FLOAT.optionalFieldOf("formDelaySeconds").forGetter(EffectsData::formChangeDelay),
         SoundEvent.CODEC.optionalFieldOf("sound").forGetter(EffectsData::sound)
@@ -43,13 +51,13 @@ public record EffectsData (ParticleAnimation particles, Optional<String> pokemon
     }
 
     public void run (PokemonEntity pokemon) {
-        this.particles.runParticles(pokemon, null);
+        this.particles.ifPresent(particleAnimation -> particleAnimation.runParticles(pokemon, null));
         this.pokemonAnimation.ifPresent(animation -> this.playAnimation(pokemon, animation));
         this.sound.ifPresent(pokemon::playSound);
     }
 
     public void run (PokemonEntity pokemon, @Nullable PokemonEntity other, PokemonBattle battle) {
-        this.particles.runParticles(pokemon, other);
+        this.particles.ifPresent(particleAnimation -> particleAnimation.runParticles(pokemon, other));
         this.sound.ifPresent(pokemon::playSound);
         this.pokemonAnimation.ifPresent(animation -> battle.dispatchToFront(battle1 -> {
             this.playAnimation(pokemon, animation);

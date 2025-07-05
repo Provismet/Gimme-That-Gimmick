@@ -14,6 +14,12 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+/**
+ * A data-driven item for triggering Pokémon fusions.
+ *
+ * @param itemData The client-side representation of the item.
+ * @param fusion The fusion to trigger with the item.
+ */
 public record FormChangeFusionDataItem (DataItem itemData, Fusion fusion) implements DataItemStack {
     public static final Codec<FormChangeFusionDataItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         DataItem.CODEC.fieldOf("item").forGetter(FormChangeFusionDataItem::itemData),

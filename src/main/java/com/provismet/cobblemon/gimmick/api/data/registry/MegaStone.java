@@ -13,6 +13,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.dynamic.Codecs;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Data-driven implementation of mega stones.
+ *
+ * @param itemData The item to create, both client-side and server-side.
+ * @param megaEvolution The mega data to attach to the item.
+ * @param showdownId The Showdown id of the item.
+ */
 public record MegaStone (DataItem itemData, MegaEvolution megaEvolution, String showdownId) implements DataItemStack {
     public static final Codec<MegaStone> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         DataItem.CODEC.fieldOf("item").forGetter(MegaStone::itemData),

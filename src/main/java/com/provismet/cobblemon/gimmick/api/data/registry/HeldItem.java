@@ -13,6 +13,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.dynamic.Codecs;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * A data-driven implementation of Showdown-compatible items.
+ *
+ * @param itemData The item to create, both client-side and server-side.
+ * @param showdownId The Showdown id to associate with this item.
+ *
+ * @apiNote Bones, snowballs, and leeks should not be used as base items. These items already have Showdown ids and will not work as expected.
+ */
 public record HeldItem (DataItem itemData, String showdownId) implements DataItemStack {
     public static final Codec<HeldItem> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         DataItem.CODEC.fieldOf("item").forGetter(HeldItem::itemData),
