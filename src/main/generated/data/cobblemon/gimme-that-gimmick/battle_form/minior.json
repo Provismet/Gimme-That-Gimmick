@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "meteor_shield": "shield"
+    }
+  },
+  "forms": {
+    "meteor": {
+      "features": {
+        "meteor_shield": "meteor"
+      }
+    }
+  }
+}

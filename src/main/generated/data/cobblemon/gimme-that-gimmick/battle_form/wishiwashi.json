@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "schooling_form": "solo"
+    }
+  },
+  "forms": {
+    "school": {
+      "features": {
+        "schooling_form": "school"
+      }
+    }
+  }
+}

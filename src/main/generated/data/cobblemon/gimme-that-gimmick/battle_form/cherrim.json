@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "blossom_form": "overcast"
+    }
+  },
+  "forms": {
+    "sunshine": {
+      "features": {
+        "blossom_form": "sunshine"
+      }
+    }
+  }
+}

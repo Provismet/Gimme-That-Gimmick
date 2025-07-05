@@ -70,7 +70,7 @@ public class DebugFormToggleGenerator extends FormChangeToggleItemProvider {
                     ),
                     PokemonFeatures.single("alolan", true),
                     PokemonFeatures.single("alolan", false),
-                    Optional.empty()
+                    Optional.of(GimmeThatGimmickMain.identifier("layered_vanilla"))
                 )
             )
         );

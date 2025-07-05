@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "disguise_form": "disguised"
+    }
+  },
+  "forms": {
+    "busted": {
+      "features": {
+        "disguise_form": "busted"
+      }
+    }
+  }
+}

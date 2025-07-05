@@ -4,11 +4,11 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.provismet.cobblemon.gimmick.api.data.codec.EffectsData;
-import com.provismet.cobblemon.gimmick.handlers.datapack.HandlerUtils;
+import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.util.Identifier;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,14 +18,16 @@ public record Fusion (
     List<PokemonRequirements> indexedInputPokemon,
     List<PokemonFeatures> indexedFusionFeatures,
     PokemonFeatures defaultFeatures,
-    Optional<EffectsData> effects
+    Optional<Identifier> fusionEffect,
+    Optional<Identifier> unfusionEffect
 ) {
     public static final Codec<Fusion> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         PokemonRequirements.CODEC.fieldOf("recipient").forGetter(Fusion::recipient),
         PokemonRequirements.CODEC.listOf().fieldOf("inputPokemon").forGetter(Fusion::indexedInputPokemon),
         PokemonFeatures.CODEC.listOf().fieldOf("inputFeatures").forGetter(Fusion::indexedFusionFeatures),
         PokemonFeatures.CODEC.fieldOf("defaultFeatures").forGetter(Fusion::defaultFeatures),
-        EffectsData.CODEC.optionalFieldOf("effects").forGetter(Fusion::effects)
+        Identifier.CODEC.optionalFieldOf("fuseEffect").forGetter(Fusion::fusionEffect),
+        Identifier.CODEC.optionalFieldOf("defuseEffect").forGetter(Fusion::unfusionEffect)
     ).apply(instance, Fusion::new));
 
     public static final PacketCodec<RegistryByteBuf, Fusion> PACKET_CODEC = PacketCodec.tuple(
@@ -37,8 +39,10 @@ public record Fusion (
         Fusion::indexedFusionFeatures,
         PokemonFeatures.PACKET_CODEC,
         Fusion::defaultFeatures,
-        PacketCodecs.optional(EffectsData.PACKET_CODEC),
-        Fusion::effects,
+        PacketCodecs.optional(Identifier.PACKET_CODEC),
+        Fusion::fusionEffect,
+        PacketCodecs.optional(Identifier.PACKET_CODEC),
+        Fusion::unfusionEffect,
         Fusion::new
     );
 
@@ -57,14 +61,16 @@ public record Fusion (
 
         PokemonFeatures features = index >= this.indexedFusionFeatures.size() ? this.indexedFusionFeatures.getLast() : this.indexedFusionFeatures.get(index);
         features.apply(recipient);
-
-        PokemonEntity entity = recipient.getEntity();
-        if (entity != null && this.effects.isPresent()) HandlerUtils.particleEffect(entity, this.effects.get(), true);
     }
 
     public void removeFeatures (Pokemon recipient) {
         this.defaultFeatures.apply(recipient);
-        PokemonEntity entity = recipient.getEntity();
-        if (entity != null && this.effects.isPresent()) HandlerUtils.particleEffect(entity, this.effects.get(), false);
+
+        if (this.unfusionEffect.isPresent()) {
+            PokemonEntity entity = recipient.getEntity();
+            if (entity == null) return;
+
+            EffectsData.run(entity, this.unfusionEffect.get());
+        }
     }
 }

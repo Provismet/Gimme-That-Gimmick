@@ -12,16 +12,16 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.List;
 
 public class MegaHelper {
+    public static final List<String> MEGA_ASPECTS = List.of("mega", "mega_x", "mega_y");
+
     public static boolean checkForMega (ServerPlayerEntity player) {
         PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
         PCStore playerPCStore = Cobblemon.INSTANCE.getStorage().getPC(player);
 
         for (Pokemon pokemon : playerPartyStore) {
-            List<String> targetLabels = List.of("mega", "mega_x", "mega_y");
-
             boolean canHaveAnyMegaForm = pokemon.getSpecies().getForms().stream()
                     .flatMap(form -> form.getLabels().stream())
-                    .anyMatch(targetLabels::contains);
+                    .anyMatch(MEGA_ASPECTS::contains);
 
             if (canHaveAnyMegaForm && hasMegaAspect(pokemon)) {
                 return true;
@@ -29,11 +29,9 @@ public class MegaHelper {
         }
 
         for (Pokemon pokemon : playerPCStore) {
-            List<String> targetLabels = List.of("mega", "mega_x", "mega_y");
-
             boolean canHaveAnyMegaForm = pokemon.getSpecies().getForms().stream()
                 .flatMap(form -> form.getLabels().stream())
-                .anyMatch(targetLabels::contains);
+                .anyMatch(MEGA_ASPECTS::contains);
 
             if (canHaveAnyMegaForm && hasMegaAspect(pokemon)) {
                 return true;
@@ -44,9 +42,7 @@ public class MegaHelper {
     }
 
     public static boolean hasMegaAspect (Pokemon pokemon) {
-        return pokemon.getAspects().contains("mega_x")
-            || pokemon.getAspects().contains("mega_y")
-            || pokemon.getAspects().contains("mega");
+        return pokemon.getAspects().stream().anyMatch(MEGA_ASPECTS::contains);
     }
 
     public static boolean megaEvolve (Pokemon pokemon) {

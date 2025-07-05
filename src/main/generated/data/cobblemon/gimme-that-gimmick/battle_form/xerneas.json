@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "life_mode": "neutral"
+    }
+  },
+  "forms": {
+    "active": {
+      "features": {
+        "life_mode": "active"
+      }
+    }
+  }
+}

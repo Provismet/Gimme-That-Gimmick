@@ -1,0 +1,19 @@
+{
+  "default": {
+    "features": {
+      "missile_form": "none"
+    }
+  },
+  "forms": {
+    "gorging": {
+      "features": {
+        "missile_form": "gorging"
+      }
+    },
+    "gulping": {
+      "features": {
+        "missile_form": "gulping"
+      }
+    }
+  }
+}

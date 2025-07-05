@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
+import com.provismet.cobblemon.gimmick.datagen.debug.DebugEffectsGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFormToggleGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFusionGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugHeldItemGenerator;
@@ -22,6 +23,7 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModelGenerator::new);
 		pack.addProvider(BlockLootTableGenerator::new);
 		pack.addProvider(RecipeGenerator::new);
+		pack.addProvider(BattleFormGenerator::new);
 
 		// Debug Only - disable when making a proper build
 		this.debugProviders(pack);
@@ -33,6 +35,7 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 	}
 
 	private void debugProviders (FabricDataGenerator.Pack pack) {
+		pack.addProvider(DebugEffectsGenerator::new);
 		pack.addProvider(DebugFusionGenerator::new);
 		pack.addProvider(DebugHeldItemGenerator::new);
 		pack.addProvider(DebugMegaStoneGenerator::new);

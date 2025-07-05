@@ -44,6 +44,7 @@ public class DebugFusionGenerator extends FormChangeFusionItemProvider {
                     List.of(PokemonRequirements.species("reshiram"), PokemonRequirements.species("zekrom")),
                     List.of(PokemonFeatures.single("absofusion", "white"), PokemonFeatures.single("absofusion", "black")),
                     PokemonFeatures.single("absofusion", "none"),
+                    Optional.empty(),
                     Optional.empty()
                 )
             )

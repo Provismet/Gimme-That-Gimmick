@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "song_forme": "aria"
+    }
+  },
+  "forms": {
+    "pirouette": {
+      "features": {
+        "song_forme": "pirouette"
+      }
+    }
+  }
+}

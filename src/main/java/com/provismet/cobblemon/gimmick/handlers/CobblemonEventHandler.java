@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.battles.BattleFledEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
+import com.cobblemon.mod.common.api.events.battles.instruction.FormeChangeEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.MegaEvolutionEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.TerastallizationEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.ZMoveUsedEvent;
@@ -27,10 +28,13 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
+import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
+import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import com.provismet.cobblemon.gimmick.util.MegaHelper;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
@@ -52,6 +56,10 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.StreamSupport;
+
 public abstract class CobblemonEventHandler {
     public static void register () {
         CobblemonEvents.MEGA_EVOLUTION.subscribe(Priority.NORMAL, CobblemonEventHandler::megaEvolutionUsed);
@@ -67,6 +75,7 @@ public abstract class CobblemonEventHandler {
         CobblemonEvents.HELD_ITEM_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::heldItemFormChange);
         CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonHealed);
 
+        CobblemonEvents.FORME_CHANGE.subscribe(Priority.NORMAL, CobblemonEventHandler::formeChanges);
         UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
     }
 
@@ -233,6 +242,8 @@ public abstract class CobblemonEventHandler {
 
     public static void resetBattleForms (Pokemon pokemon) {
         MegaHelper.megaDevolve(pokemon);
+        GTGDynamicRegistries.battleForms.getOrEmpty(pokemon.getSpecies().getResourceIdentifier())
+            .ifPresent(form -> form.defaultForm().features().apply(pokemon));
 
         if (pokemon.getAspects().contains("ultra-fusion")) {
             new StringSpeciesFeature("prism_fusion", pokemon.getPersistentData().getString("prism_fusion")).apply(pokemon);
@@ -277,7 +288,34 @@ public abstract class CobblemonEventHandler {
         }
     }
 
-    private static Unit heldItemFormChange(HeldItemEvent.Pre heldItemEvent) {
+    public static Unit formeChanges (FormeChangeEvent formeChangeEvent) {
+        if (formeChangeEvent.getFormeName().equals("x")
+            || formeChangeEvent.getFormeName().equals("y")
+            || formeChangeEvent.getFormeName().equals("mega")
+            || formeChangeEvent.getFormeName().equals("tera")) {
+            return Unit.INSTANCE;
+        }
+
+        Pokemon pokemon = formeChangeEvent.getPokemon().getEffectedPokemon();
+        Optional<PokemonEntity> other = StreamSupport.stream(formeChangeEvent.getBattle().getActivePokemon().spliterator(), false)
+            .map(ActiveBattlePokemon::getBattlePokemon)
+            .filter(active -> formeChangeEvent.getPokemon().getFacedOpponents().contains(active))
+            .filter(Objects::nonNull)
+            .map(BattlePokemon::getEntity)
+            .filter(Objects::nonNull)
+            .findAny();
+
+        if (pokemon.getEntity() != null) {
+            World world = pokemon.getEntity().getWorld();
+            world.getRegistryManager().getOptionalWrapper(GTGDynamicRegistryKeys.BATTLE_FORM)
+                .flatMap(registry -> registry.getOptional(BattleForm.key(pokemon)))
+                .ifPresent(battleForm -> battleForm.value().applyForm(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), formeChangeEvent.getFormeName()));
+        }
+
+        return Unit.INSTANCE;
+    }
+
+    private static Unit heldItemFormChange (HeldItemEvent.Pre heldItemEvent) {
         if (heldItemEvent.getReturning().getItem() instanceof GenericFormChangeHeldItem formChanger) {
             formChanger.removeFromPokemon(heldItemEvent.getPokemon());
         }

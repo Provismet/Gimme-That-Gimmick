@@ -2,14 +2,13 @@ package com.provismet.cobblemon.gimmick.item.forms;
 
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.api.data.FormToggle;
-import com.provismet.cobblemon.gimmick.handlers.datapack.HandlerUtils;
+import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-// TODO: this
 public class DataDrivenToggleItem extends AbstractDataDrivenFormItem implements FormChangeToggleItem {
     public DataDrivenToggleItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
         super(settings, baseVanillaItem, modelData);
@@ -30,8 +29,8 @@ public class DataDrivenToggleItem extends AbstractDataDrivenFormItem implements 
         if (toggle != null) {
             toggle.onApply().apply(pokemon);
 
-            if (pokemon.getEntity() != null) {
-                toggle.effects().ifPresent(effectsData -> HandlerUtils.particleEffect(pokemon.getEntity(), effectsData, true));
+            if (pokemon.getEntity() != null && toggle.effects().isPresent()) {
+                EffectsData.run(pokemon.getEntity(), toggle.effects().get());
             }
         }
     }
@@ -42,8 +41,8 @@ public class DataDrivenToggleItem extends AbstractDataDrivenFormItem implements 
         if (toggle != null) {
             toggle.onRemove().apply(pokemon);
 
-            if (pokemon.getEntity() != null) {
-                toggle.effects().ifPresent(effectsData -> HandlerUtils.particleEffect(pokemon.getEntity(), effectsData, false));
+            if (pokemon.getEntity() != null && toggle.effects().isPresent()) {
+                EffectsData.run(pokemon.getEntity(), toggle.effects().get());
             }
         }
     }

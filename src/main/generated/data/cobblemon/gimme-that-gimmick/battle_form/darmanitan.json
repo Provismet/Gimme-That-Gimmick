@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "blazing_mode": "standard"
+    }
+  },
+  "forms": {
+    "zen": {
+      "features": {
+        "blazing_mode": "zen"
+      }
+    }
+  }
+}

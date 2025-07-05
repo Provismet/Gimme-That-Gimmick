@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "dolphin_form": "zero"
+    }
+  },
+  "forms": {
+    "hero": {
+      "features": {
+        "dolphin_form": "hero"
+      }
+    }
+  }
+}

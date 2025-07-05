@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "penguin_head": "ice_face"
+    }
+  },
+  "forms": {
+    "noice_face": {
+      "features": {
+        "penguin_head": "noice_face"
+      }
+    }
+  }
+}

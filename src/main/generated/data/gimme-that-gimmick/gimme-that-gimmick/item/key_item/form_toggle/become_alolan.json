@@ -5,6 +5,7 @@
         "normal"
       ]
     },
+    "effects": "gimme-that-gimmick:layered_vanilla",
     "featuresOnApply": {
       "alolan": true
     },

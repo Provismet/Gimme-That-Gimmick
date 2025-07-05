@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "stance_forme": "shield"
+    }
+  },
+  "forms": {
+    "blade": {
+      "features": {
+        "stance_forme": "blade"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "default": {
+    "features": {
+      "hunger_mode": "full_belly"
+    }
+  },
+  "forms": {
+    "hangry": {
+      "features": {
+        "hunger_mode": "hangry"
+      }
+    }
+  }
+}

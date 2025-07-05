@@ -1,0 +1,24 @@
+{
+  "default": {
+    "features": {
+      "forecast_form": "normal"
+    }
+  },
+  "forms": {
+    "rainy": {
+      "features": {
+        "forecast_form": "rainy"
+      }
+    },
+    "snowy": {
+      "features": {
+        "forecast_form": "snowy"
+      }
+    },
+    "sunny": {
+      "features": {
+        "forecast_form": "sunny"
+      }
+    }
+  }
+}
