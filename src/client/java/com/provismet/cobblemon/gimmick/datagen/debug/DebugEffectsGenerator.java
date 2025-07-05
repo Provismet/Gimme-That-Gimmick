@@ -28,7 +28,7 @@ public class DebugEffectsGenerator extends EffectsDataProvider {
         consumer.accept(
             GimmeThatGimmickMain.identifier("fake_snowstorm"),
             new EffectsData(
-                new SnowstormEffect(MiscUtilsKt.cobblemonResource("fake_snowstorm"), List.of("target"), Optional.empty()),
+                Optional.of(new SnowstormEffect(MiscUtilsKt.cobblemonResource("fake_snowstorm"), List.of("target"), Optional.empty())),
                 Optional.of("cry"),
                 Optional.of(2f),
                 Optional.of(SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME)
@@ -38,12 +38,12 @@ public class DebugEffectsGenerator extends EffectsDataProvider {
         consumer.accept(
             GimmeThatGimmickMain.identifier("layered_vanilla"),
             new EffectsData(
-                new VanillaParticleEffect(
+                Optional.of(new VanillaParticleEffect(
                     List.of(
                         new VanillaParticleLayer(ParticleTypes.CLOUD, 10, 4),
                         new VanillaParticleLayer(ParticleTypes.HAPPY_VILLAGER, 10, 1)
                     )
-                ),
+                )),
                 Optional.of("cry"),
                 Optional.empty(),
                 Optional.of(SoundEvents.BLOCK_BEACON_ACTIVATE)
