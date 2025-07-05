@@ -9,7 +9,7 @@ import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.pokemon.helditem.CobblemonHeldItemManager;
 import com.cobblemon.mod.common.util.MiscUtilsKt;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
-import com.provismet.cobblemon.gimmick.api.data.MegaEvolution;
+import com.provismet.cobblemon.gimmick.api.data.component.MegaEvolution;
 import com.provismet.cobblemon.gimmick.item.PolymerBlockItemTextured;
 import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DMaxCandyItem;

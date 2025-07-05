@@ -2,9 +2,9 @@ package com.provismet.cobblemon.gimmick.api.data.registry.form;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.provismet.cobblemon.gimmick.api.data.DataItem;
+import com.provismet.cobblemon.gimmick.api.data.component.DataItem;
 import com.provismet.cobblemon.gimmick.api.data.DataItemStack;
-import com.provismet.cobblemon.gimmick.api.data.FormToggle;
+import com.provismet.cobblemon.gimmick.api.data.component.FormToggle;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;

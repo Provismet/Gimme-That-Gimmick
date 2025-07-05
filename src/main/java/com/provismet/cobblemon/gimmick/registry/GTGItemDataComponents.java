@@ -2,10 +2,10 @@ package com.provismet.cobblemon.gimmick.registry;
 
 import com.mojang.serialization.Codec;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
-import com.provismet.cobblemon.gimmick.api.data.DataItem;
-import com.provismet.cobblemon.gimmick.api.data.FormToggle;
-import com.provismet.cobblemon.gimmick.api.data.Fusion;
-import com.provismet.cobblemon.gimmick.api.data.MegaEvolution;
+import com.provismet.cobblemon.gimmick.api.data.component.DataItem;
+import com.provismet.cobblemon.gimmick.api.data.component.FormToggle;
+import com.provismet.cobblemon.gimmick.api.data.component.Fusion;
+import com.provismet.cobblemon.gimmick.api.data.component.MegaEvolution;
 import eu.pb4.polymer.core.api.other.PolymerComponent;
 import net.minecraft.component.ComponentType;
 import net.minecraft.network.codec.PacketCodec;

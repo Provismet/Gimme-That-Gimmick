@@ -1,7 +1,8 @@
-package com.provismet.cobblemon.gimmick.api.data;
+package com.provismet.cobblemon.gimmick.api.data.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.provismet.cobblemon.gimmick.api.data.DataItemStack;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.CustomModelDataComponent;
 import net.minecraft.component.type.LoreComponent;

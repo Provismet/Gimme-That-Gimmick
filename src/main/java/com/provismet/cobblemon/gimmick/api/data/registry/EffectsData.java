@@ -6,7 +6,7 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.net.messages.client.animation.PlayPosableAnimationPacket;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.provismet.cobblemon.gimmick.api.data.ParticleAnimation;
+import com.provismet.cobblemon.gimmick.api.data.particle.ParticleAnimation;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import kotlin.Unit;
 import net.minecraft.registry.RegistryKey;

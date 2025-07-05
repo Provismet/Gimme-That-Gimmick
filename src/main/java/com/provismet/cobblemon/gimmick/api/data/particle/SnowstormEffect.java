@@ -1,4 +1,4 @@
-package com.provismet.cobblemon.gimmick.api.data;
+package com.provismet.cobblemon.gimmick.api.data.particle;
 
 import com.cobblemon.mod.common.CobblemonNetwork;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;

@@ -4,7 +4,7 @@ import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.pc.PCStore;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.provismet.cobblemon.gimmick.api.data.MegaEvolution;
+import com.provismet.cobblemon.gimmick.api.data.component.MegaEvolution;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;

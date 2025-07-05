@@ -1,7 +1,7 @@
 package com.provismet.cobblemon.gimmick.item.forms;
 
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.provismet.cobblemon.gimmick.api.data.DataItem;
+import com.provismet.cobblemon.gimmick.api.data.component.DataItem;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;

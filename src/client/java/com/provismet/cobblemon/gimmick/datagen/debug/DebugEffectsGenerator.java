@@ -2,14 +2,13 @@ package com.provismet.cobblemon.gimmick.datagen.debug;
 
 import com.cobblemon.mod.common.util.MiscUtilsKt;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
-import com.provismet.cobblemon.gimmick.api.data.SnowstormEffect;
-import com.provismet.cobblemon.gimmick.api.data.VanillaParticleEffect;
-import com.provismet.cobblemon.gimmick.api.data.VanillaParticleEffect.VanillaParticleLayer;
+import com.provismet.cobblemon.gimmick.api.data.particle.SnowstormEffect;
+import com.provismet.cobblemon.gimmick.api.data.particle.VanillaParticleEffect;
+import com.provismet.cobblemon.gimmick.api.data.particle.VanillaParticleEffect.VanillaParticleLayer;
 import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.datagen.EffectsDataProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;

@@ -1,7 +1,7 @@
 package com.provismet.cobblemon.gimmick.registry;
 
 import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
-import com.provismet.cobblemon.gimmick.api.data.codec.GmaxData;
+import com.provismet.cobblemon.gimmick.api.data.GmaxData;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.Registry;
 

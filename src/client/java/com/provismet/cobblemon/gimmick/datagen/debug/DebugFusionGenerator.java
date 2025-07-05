@@ -1,8 +1,8 @@
 package com.provismet.cobblemon.gimmick.datagen.debug;
 
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
-import com.provismet.cobblemon.gimmick.api.data.DataItem;
-import com.provismet.cobblemon.gimmick.api.data.Fusion;
+import com.provismet.cobblemon.gimmick.api.data.component.DataItem;
+import com.provismet.cobblemon.gimmick.api.data.component.Fusion;
 import com.provismet.cobblemon.gimmick.api.data.PokemonFeatures;
 import com.provismet.cobblemon.gimmick.api.data.PokemonRequirements;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.FormChangeFusionDataItem;

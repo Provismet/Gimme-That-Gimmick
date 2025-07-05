@@ -1,7 +1,9 @@
-package com.provismet.cobblemon.gimmick.api.data;
+package com.provismet.cobblemon.gimmick.api.data.component;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.provismet.cobblemon.gimmick.api.data.PokemonFeatures;
+import com.provismet.cobblemon.gimmick.api.data.PokemonRequirements;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;

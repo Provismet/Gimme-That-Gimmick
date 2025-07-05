@@ -3,7 +3,7 @@ package com.provismet.cobblemon.gimmick.registry;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
 import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
-import com.provismet.cobblemon.gimmick.api.data.codec.GmaxData;
+import com.provismet.cobblemon.gimmick.api.data.GmaxData;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.FormChangeFusionDataItem;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.FormChangeToggleDataItem;
 import com.provismet.cobblemon.gimmick.api.data.registry.HeldItem;

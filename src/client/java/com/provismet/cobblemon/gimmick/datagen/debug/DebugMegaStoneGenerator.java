@@ -1,8 +1,8 @@
 package com.provismet.cobblemon.gimmick.datagen.debug;
 
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
-import com.provismet.cobblemon.gimmick.api.data.DataItem;
-import com.provismet.cobblemon.gimmick.api.data.MegaEvolution;
+import com.provismet.cobblemon.gimmick.api.data.component.DataItem;
+import com.provismet.cobblemon.gimmick.api.data.component.MegaEvolution;
 import com.provismet.cobblemon.gimmick.api.data.registry.MegaStone;
 import com.provismet.cobblemon.gimmick.api.datagen.MegaStoneItemProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;

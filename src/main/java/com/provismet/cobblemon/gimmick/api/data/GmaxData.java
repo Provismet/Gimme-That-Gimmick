@@ -1,4 +1,4 @@
-package com.provismet.cobblemon.gimmick.api.data.codec;
+package com.provismet.cobblemon.gimmick.api.data;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
