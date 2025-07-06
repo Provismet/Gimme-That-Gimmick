@@ -245,7 +245,12 @@ public abstract class CobblemonEventHandler {
         GTGDynamicRegistries.battleForms.getOrEmpty(pokemon.getSpecies().getResourceIdentifier())
             .ifPresent(form -> form.defaultForm().features().apply(pokemon));
 
-        if (pokemon.getAspects().contains("ultra-fusion")) {
+        if (pokemon.getAspects().contains("complete-percent")) { // Zygarde
+            new StringSpeciesFeature("percent_cells", pokemon.getPersistentData().getString("percent_cells")).apply(pokemon);
+            pokemon.getPersistentData().remove("percent_cells");
+        }
+
+        if (pokemon.getAspects().contains("ultra-fusion")) { // Necrozma
             new StringSpeciesFeature("prism_fusion", pokemon.getPersistentData().getString("prism_fusion")).apply(pokemon);
             pokemon.getPersistentData().remove("prism_fusion");
         }
@@ -254,7 +259,7 @@ public abstract class CobblemonEventHandler {
             pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("dynamax_form"));
         }
 
-        if (pokemon.getAspects().contains("stellar-form") || pokemon.getAspects().contains("terastal-form")) {
+        if (pokemon.getAspects().contains("stellar-form") || pokemon.getAspects().contains("terastal-form")) { // Terapagos
             new StringSpeciesFeature("tera_form", "normal").apply(pokemon);
         }
 
@@ -263,7 +268,7 @@ public abstract class CobblemonEventHandler {
             DynamaxEventHandler.startGradualScaling(pokemon.getEntity(), 1.0f);
         }
 
-        pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect"));
+        pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect")); // Ogerpon
         pokemon.updateAspects();
     }
 
@@ -297,6 +302,19 @@ public abstract class CobblemonEventHandler {
         }
 
         Pokemon pokemon = formeChangeEvent.getPokemon().getEffectedPokemon();
+        if (pokemon.getSpecies().showdownId().equalsIgnoreCase("zygarde") && formeChangeEvent.getFormeName().equalsIgnoreCase("complete")) {
+            formeChangeEvent.getBattle().dispatchToFront(() -> {
+                if (pokemon.getAspects().contains("10-percent")) {
+                    pokemon.getPersistentData().putString("percent_cells", "10");
+                } else {
+                    pokemon.getPersistentData().putString("percent_cells", "50");
+                }
+                new StringSpeciesFeature("percent_cells", "complete").apply(pokemon);
+                return new UntilDispatch(() -> true);
+            });
+            return Unit.INSTANCE;
+        }
+
         Optional<PokemonEntity> other = StreamSupport.stream(formeChangeEvent.getBattle().getActivePokemon().spliterator(), false)
             .map(ActiveBattlePokemon::getBattlePokemon)
             .filter(active -> formeChangeEvent.getPokemon().getFacedOpponents().contains(active))
