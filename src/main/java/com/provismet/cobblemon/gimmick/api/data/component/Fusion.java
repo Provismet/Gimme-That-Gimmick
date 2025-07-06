@@ -84,12 +84,5 @@ public record Fusion (
 
     public void removeFeatures (Pokemon recipient) {
         this.defaultFeatures.apply(recipient);
-
-        if (this.unfusionEffect.isPresent()) {
-            PokemonEntity entity = recipient.getEntity();
-            if (entity == null) return;
-
-            EffectsData.run(entity, this.unfusionEffect.get());
-        }
     }
 }
