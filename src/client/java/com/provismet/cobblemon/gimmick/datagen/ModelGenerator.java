@@ -213,7 +213,6 @@ public class ModelGenerator extends FabricModelProvider {
         register.accept(GTGItems.HEARTHFLAME_MASK);
         register.accept(GTGItems.CORNERSTONE_MASK);
 
-        register.accept(GTGItems.METEORITE);
         register.accept(GTGItems.REIGNS_OF_UNITY);
         register.accept(GTGItems.ROTOM_CATALOG);
         register.accept(GTGItems.GRACIDEA_FLOWER);

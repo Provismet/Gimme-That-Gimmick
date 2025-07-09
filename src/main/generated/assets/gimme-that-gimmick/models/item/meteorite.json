@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "gimme-that-gimmick:item/meteorite"
-  }
+  "parent": "gimme-that-gimmick:block/meteorite"
 }
