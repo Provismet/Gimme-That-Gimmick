@@ -222,5 +222,6 @@ public class ModelGenerator extends FabricModelProvider {
         register.accept(GTGItems.DNA_SPLICERS);
         register.accept(GTGItems.N_LUNARIZER);
         register.accept(GTGItems.N_SOLARIZER);
+        register.accept(GTGItems.ZYGARDE_CUBE);
     }
 }

@@ -27,6 +27,7 @@ import com.provismet.cobblemon.gimmick.item.forms.PrisonBottleItem;
 import com.provismet.cobblemon.gimmick.item.forms.ReinsOfUnityItem;
 import com.provismet.cobblemon.gimmick.item.forms.RevealGlassItem;
 import com.provismet.cobblemon.gimmick.item.forms.RotomCatalogItem;
+import com.provismet.cobblemon.gimmick.item.forms.ZygardeCubeItem;
 import com.provismet.cobblemon.gimmick.item.mega.MegaStoneItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraOrbItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraShardItem;
@@ -175,6 +176,7 @@ public abstract class GTGItems {
     public static final PrisonBottleItem PRISON_BOTTLE = register("prison_bottle", PrisonBottleItem::new);
     public static final NLunarizerItem N_LUNARIZER = register("n_lunarizer", NLunarizerItem::new);
     public static final NSolarizerItem N_SOLARIZER = register("n_solarizer", NSolarizerItem::new);
+    public static final ZygardeCubeItem ZYGARDE_CUBE = register("zygarde_cube", ZygardeCubeItem::new);
 
     // Form Change Held Items
     public static final GenericFormChangeHeldItem ADAMANT_CRYSTAL = registerFormChangeChoice("adamantcrystal", "dialga", "orb_forme", "origin", "altered", 1);

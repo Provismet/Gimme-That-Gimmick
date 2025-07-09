@@ -136,6 +136,7 @@ public abstract class GTGItemGroup {
             entries.add(GTGItems.DNA_SPLICERS);
             entries.add(GTGItems.GRACIDEA_FLOWER);
             entries.add(GTGItems.PRISON_BOTTLE);
+            entries.add(GTGItems.ZYGARDE_CUBE);
             entries.add(GTGItems.N_LUNARIZER);
             entries.add(GTGItems.N_SOLARIZER);
             entries.add(GTGItems.ROTOM_CATALOG);

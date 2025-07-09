@@ -473,6 +473,9 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.unbound", "Your %1$s has been released into its Unbound forme.");
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.confined", "Your %1$s has been restrained into its Confined forme.");
 
+        translationBuilder.add("message.overlay.gimme-that-gimmick.zygarde.50", "Your %1$s has gained cells.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.zygarde.10", "Your %1$s has lost cells.");
+
         addItemWithTooltip(translationBuilder, GTGItems.ADAMANT_CRYSTAL, "Adamant Crystal", "Boosts Steel- and Dragon-type attacks of Dialga");
         addItemWithTooltip(translationBuilder, GTGItems.LUSTROUS_GLOBE, "Lustrous Globe", "Boosts Water- and Dragon-type attacks of Palkia");
         addItemWithTooltip(translationBuilder, GTGItems.GRISEOUS_CORE, "Griseous Core", "Boosts Ghost- and Dragon-type attacks of Giratina");
@@ -537,6 +540,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.METEORITE, "Meteorite", "A meteorite that enables Deoxys to change its form");
         addItemWithTooltip(translationBuilder, GTGItems.REIGNS_OF_UNITY, "Reigns of Unity", "Used to unite Calyrex with its steed");
         addItemWithTooltip(translationBuilder, GTGItems.ROTOM_CATALOG, "Rotom Catalog", "A catalog of appliances for Rotom to possess");
+        addItemWithTooltip(translationBuilder, GTGItems.ZYGARDE_CUBE, "Zygarde Cube", "Changes the amount of cells Zygarde has.");
     }
     
     private static String[] zCrystalTooltip (String type) {
