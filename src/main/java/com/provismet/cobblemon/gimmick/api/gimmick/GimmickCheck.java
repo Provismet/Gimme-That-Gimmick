@@ -6,6 +6,9 @@ import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 
+/**
+ * Utility interface for checking if an item should be considered a gimmick item.
+ */
 public interface GimmickCheck {
     static boolean isKeyStone (ItemStack item) {
         return item.isIn(GTGItemTags.KEY_STONES)
