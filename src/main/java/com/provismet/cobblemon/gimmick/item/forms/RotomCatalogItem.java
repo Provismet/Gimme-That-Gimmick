@@ -3,6 +3,8 @@ package com.provismet.cobblemon.gimmick.item.forms;
 import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
 import com.cobblemon.mod.common.pokemon.FormData;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
@@ -23,5 +25,9 @@ public class RotomCatalogItem extends PolymerPokemonSelectingItem implements For
     public void applyForm (ServerPlayerEntity player, Pokemon pokemon, FormData form) {
         String appliance = (form == null || form.formOnlyShowdownId().equals("normal")) ? "none" : form.formOnlyShowdownId();
         new StringSpeciesFeature("appliance", appliance).apply(pokemon);
+
+        if (pokemon.getEntity() != null) {
+            EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("rotom_catalog"));
+        }
     }
 }

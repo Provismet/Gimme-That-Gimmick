@@ -2,6 +2,8 @@ package com.provismet.cobblemon.gimmick.item.forms;
 
 import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
@@ -28,12 +30,20 @@ public class PrisonBottleItem extends PolymerPokemonSelectingItem implements For
     public void applySpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "unbound").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.unbound", pokemon.getDisplayName()), true);
+
+        if (pokemon.getEntity() != null) {
+            EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("prison_bottle_apply"));
+        }
     }
 
     @Override
     public void removeSpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "confined").apply(pokemon);
         player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.confined", pokemon.getDisplayName()), true);
+
+        if (pokemon.getEntity() != null) {
+            EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("prison_bottle_remove"));
+        }
     }
 
     @Override

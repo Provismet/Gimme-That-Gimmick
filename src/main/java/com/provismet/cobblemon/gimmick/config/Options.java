@@ -21,6 +21,9 @@ public abstract class Options {
     private static int powerSpotRange = 30;
     private static int dynamaxScaleFactor = 4;
     private static boolean breakableTeraOrbs = true;
+    private static boolean applyBasicZGlow = true;
+    private static boolean applyBasicDynamaxGlow = true;
+    private static boolean applyBasicTeraGlow = true;
 
     static {
         load();
@@ -46,6 +49,18 @@ public abstract class Options {
         return breakableTeraOrbs;
     }
 
+    public static boolean shouldApplyBasicZGlow () {
+        return applyBasicZGlow;
+    }
+
+    public static boolean shouldApplyBasicDynamaxGlow () {
+        return applyBasicDynamaxGlow;
+    }
+
+    public static boolean shouldApplyBasicTeraGlow () {
+        return applyBasicTeraGlow;
+    }
+
     public static void save () {
         JsonObject json = new JsonBuilder()
             .append("override_showdown", overrideShowdown)
@@ -53,6 +68,9 @@ public abstract class Options {
             .append("dynamax_power_spot_required", powerSpotRequired)
             .append("dynamax_scale_factor", dynamaxScaleFactor)
             .append("breakable_tera_orbs", breakableTeraOrbs)
+            .append("use_default_z_glow_visual", applyBasicZGlow)
+            .append("use_default_dynamax_glow_visual", applyBasicDynamaxGlow)
+            .append("use_default_tera_glow_visual", applyBasicTeraGlow)
             .getJson();
 
         try (FileWriter writer = new FileWriter(FILE)) {
@@ -73,6 +91,9 @@ public abstract class Options {
                 reader.getBoolean("dynamax_power_spot_required").ifPresent(val -> powerSpotRequired = val);
                 reader.getInteger("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
                 reader.getBoolean("breakable_tera_orbs").ifPresent(val -> breakableTeraOrbs = val);
+                reader.getBoolean("use_default_z_glow_visual").ifPresent(val -> applyBasicZGlow = val);
+                reader.getBoolean("use_default_dynamax_glow_visual").ifPresent(val -> applyBasicDynamaxGlow = val);
+                reader.getBoolean("use_default_tera_glow_visual").ifPresent(val -> applyBasicTeraGlow = val);
             }
         }
         catch (FileNotFoundException e) {

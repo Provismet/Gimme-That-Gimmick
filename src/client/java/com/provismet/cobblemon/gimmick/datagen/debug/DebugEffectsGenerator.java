@@ -49,5 +49,20 @@ public class DebugEffectsGenerator extends EffectsDataProvider {
                 Optional.of(SoundEvents.BLOCK_BEACON_ACTIVATE)
             )
         );
+
+        consumer.accept(
+            GimmeThatGimmickMain.identifier("mega_evolution"),
+            new EffectsData(
+                Optional.of(new VanillaParticleEffect(
+                    List.of(
+                        new VanillaParticleLayer(ParticleTypes.HEART, 3, 1),
+                        new VanillaParticleLayer(ParticleTypes.CRIT, 50, 3)
+                    )
+                )),
+                Optional.of("cry"),
+                Optional.of(2.5f),
+                Optional.of(SoundEvents.ITEM_TOTEM_USE)
+            )
+        );
     }
 }

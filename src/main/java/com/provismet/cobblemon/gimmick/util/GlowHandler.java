@@ -40,7 +40,7 @@ public class GlowHandler {
         }
     }
 
-    public static void applyTeraGlow(PokemonEntity pokemon) {
+    public static void applyTeraGlow (PokemonEntity pokemon) {
         if (pokemon.getWorld() instanceof ServerWorld serverLevel) {
             pokemon.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, Integer.MAX_VALUE, 0, false, false));
             ServerScoreboard scoreboard = serverLevel.getScoreboard();
@@ -58,7 +58,7 @@ public class GlowHandler {
         }
     }
 
-    public static void applyZGlow(PokemonEntity pokemon) {
+    public static void applyZGlow (PokemonEntity pokemon) {
         ElementalType type;
         if (pokemon.getPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal) {
             type = crystal.type;

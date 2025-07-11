@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
 import com.cobblemon.mod.common.pokemon.FormData;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingBlockItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.block.Block;
@@ -29,6 +30,10 @@ public class MeteoriteItem extends PolymerPokemonSelectingBlockItem implements F
     public void applyForm (ServerPlayerEntity player, Pokemon pokemon, FormData form) {
         String formName = form == null ? "normal" : form.formOnlyShowdownId();
         new StringSpeciesFeature("meteorite_forme", formName).apply(pokemon);
+
+        if (pokemon.getEntity() != null) {
+            EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("meteorite"));
+        }
     }
 
     @Override

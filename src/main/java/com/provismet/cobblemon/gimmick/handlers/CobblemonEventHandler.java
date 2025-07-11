@@ -13,6 +13,7 @@ import com.cobblemon.mod.common.api.events.battles.instruction.TerastallizationE
 import com.cobblemon.mod.common.api.events.battles.instruction.ZMoveUsedEvent;
 import com.cobblemon.mod.common.api.events.pokemon.HeldItemEvent;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonCapturedEvent;
+import com.cobblemon.mod.common.api.events.pokemon.PokemonSentPostEvent;
 import com.cobblemon.mod.common.api.events.pokemon.healing.PokemonHealedEvent;
 import com.cobblemon.mod.common.api.item.HealingSource;
 import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeature;
@@ -28,11 +29,15 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.cobblemon.mod.common.util.MiscUtilsKt;
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
+import com.provismet.cobblemon.gimmick.item.zmove.TypedZCrystalItem;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
@@ -46,16 +51,19 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -74,6 +82,7 @@ public abstract class CobblemonEventHandler {
 
         CobblemonEvents.HELD_ITEM_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::heldItemFormChange);
         CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonHealed);
+        CobblemonEvents.POKEMON_SENT_POST.subscribe(Priority.NORMAL, CobblemonEventHandler::pokemonSentOut);
 
         CobblemonEvents.FORME_CHANGE.subscribe(Priority.NORMAL, CobblemonEventHandler::formeChanges);
         UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
@@ -93,7 +102,21 @@ public abstract class CobblemonEventHandler {
                     return ActionResult.SUCCESS;
                 }
 
-                if (!MegaHelper.megaEvolve(pokemon)) {
+                if (MegaHelper.megaEvolve(pokemon)) {
+                    List<String> prioritisedEffects = List.of(
+                        "mega_evolution_outside" + pokemon.showdownId(),
+                        "mega_evolution_outside"
+                    );
+
+                    for (String id : prioritisedEffects) {
+                        Optional<RegistryEntry.Reference<EffectsData>> effectsData = EffectsData.get(pokemonEntity.getRegistryManager(), GimmeThatGimmickMain.identifier(id));
+                        if (effectsData.isPresent()) {
+                            effectsData.get().value().run(pokemonEntity);
+                            break;
+                        }
+                    }
+                }
+                else {
                     player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.no_stone").formatted(Formatting.RED), true);
                     return ActionResult.FAIL;
                 }
@@ -110,7 +133,31 @@ public abstract class CobblemonEventHandler {
 
     private static Unit zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
         PokemonEntity pokemonEntity = zMoveUsedEvent.getPokemon().getEntity();
-        if (pokemonEntity != null) GlowHandler.applyZGlow(pokemonEntity);
+        if (pokemonEntity != null) {
+            if (Options.shouldApplyBasicZGlow()) GlowHandler.applyZGlow(pokemonEntity);
+
+            List<String> prioritisedEffects = List.of(
+                "z_move_" + (zMoveUsedEvent.getPokemon().getEffectedPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal ? crystal.type.getName() : zMoveUsedEvent.getPokemon().getEffectedPokemon().getPrimaryType().getName()),
+                "z_move"
+            );
+
+            for (String effectName : prioritisedEffects) {
+                Identifier key = GimmeThatGimmickMain.identifier(effectName);
+                Optional<RegistryEntry.Reference<EffectsData>> effect = EffectsData.get(pokemonEntity.getRegistryManager(), key);
+                if (effect.isPresent()) {
+                    Optional<PokemonEntity> other = StreamSupport.stream(zMoveUsedEvent.getBattle().getActivePokemon().spliterator(), false)
+                        .map(ActiveBattlePokemon::getBattlePokemon)
+                        .filter(active -> zMoveUsedEvent.getPokemon().getFacedOpponents().contains(active))
+                        .filter(Objects::nonNull)
+                        .map(BattlePokemon::getEntity)
+                        .filter(Objects::nonNull)
+                        .findAny();
+
+                    effect.get().value().run(pokemonEntity, other.orElse(null), zMoveUsedEvent.getBattle());
+                    break;
+                }
+            }
+        }
         return Unit.INSTANCE;
     }
 
@@ -176,7 +223,6 @@ public abstract class CobblemonEventHandler {
     }
 
     private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
-        // Allows sidemods to dispatch animations before the transformation triggers.
         megaEvent.getBattle().dispatchToFront(() -> {
             MegaHelper.megaEvolve(megaEvent.getPokemon().getEffectedPokemon());
             megaEvent.getPokemon().sendUpdate();
@@ -184,6 +230,32 @@ public abstract class CobblemonEventHandler {
 
             return new UntilDispatch(() -> true);
         });
+
+        Pokemon pokemon = megaEvent.getPokemon().getEffectedPokemon();
+        if (pokemon.getEntity() != null) {
+            List<String> prioritisedEffects = List.of(
+                "mega_evolution_" + megaEvent.getPokemon().getEffectedPokemon().showdownId(),
+                "mega_evolution"
+            );
+
+            for (String effectName : prioritisedEffects) {
+                Identifier key = GimmeThatGimmickMain.identifier(effectName);
+                Optional<RegistryEntry.Reference<EffectsData>> effect = EffectsData.get(pokemon.getEntity().getRegistryManager(), key);
+                if (effect.isPresent()) {
+                    Optional<PokemonEntity> other = StreamSupport.stream(megaEvent.getBattle().getActivePokemon().spliterator(), false)
+                        .map(ActiveBattlePokemon::getBattlePokemon)
+                        .filter(active -> megaEvent.getPokemon().getFacedOpponents().contains(active))
+                        .filter(Objects::nonNull)
+                        .map(BattlePokemon::getEntity)
+                        .filter(Objects::nonNull)
+                        .findAny();
+
+                    effect.get().value().run(pokemon.getEntity(), other.orElse(null), megaEvent.getBattle());
+                    break;
+                }
+            }
+        }
+
         return Unit.INSTANCE;
     }
 
@@ -216,7 +288,34 @@ public abstract class CobblemonEventHandler {
             });
         }
 
-        if (pokemon.getEntity() != null) GlowHandler.applyTeraGlow(pokemon.getEntity());
+        if (pokemon.getEntity() != null) {
+            if (Options.shouldApplyBasicTeraGlow()) {
+                GlowHandler.applyTeraGlow(pokemon.getEntity());
+                pokemon.getPersistentData().putBoolean("tera", true);
+            }
+
+            List<String> prioritisedEffects = List.of(
+                "terastallization_" + pokemon.getTeraType().showdownId(),
+                "terastallization"
+            );
+
+            for (String effectName : prioritisedEffects) {
+                Identifier key = GimmeThatGimmickMain.identifier(effectName);
+                Optional<RegistryEntry.Reference<EffectsData>> effect = EffectsData.get(pokemon.getEntity().getRegistryManager(), key);
+                if (effect.isPresent()) {
+                    Optional<PokemonEntity> other = StreamSupport.stream(terastallizationEvent.getBattle().getActivePokemon().spliterator(), false)
+                        .map(ActiveBattlePokemon::getBattlePokemon)
+                        .filter(active -> terastallizationEvent.getPokemon().getFacedOpponents().contains(active))
+                        .filter(Objects::nonNull)
+                        .map(BattlePokemon::getEntity)
+                        .filter(Objects::nonNull)
+                        .findAny();
+
+                    effect.get().value().run(pokemon.getEntity(), other.orElse(null), terastallizationEvent.getBattle());
+                    break;
+                }
+            }
+        }
         return Unit.INSTANCE;
     }
 
@@ -242,6 +341,7 @@ public abstract class CobblemonEventHandler {
 
     public static void resetBattleForms (Pokemon pokemon) {
         MegaHelper.megaDevolve(pokemon);
+        pokemon.getPersistentData().remove("is_tera");
         GTGDynamicRegistries.battleForms.getOrEmpty(pokemon.getSpecies().getResourceIdentifier())
             .ifPresent(form -> form.defaultForm().features().apply(pokemon));
 
@@ -301,6 +401,14 @@ public abstract class CobblemonEventHandler {
             return Unit.INSTANCE;
         }
 
+        Optional<PokemonEntity> other = StreamSupport.stream(formeChangeEvent.getBattle().getActivePokemon().spliterator(), false)
+            .map(ActiveBattlePokemon::getBattlePokemon)
+            .filter(active -> formeChangeEvent.getPokemon().getFacedOpponents().contains(active))
+            .filter(Objects::nonNull)
+            .map(BattlePokemon::getEntity)
+            .filter(Objects::nonNull)
+            .findAny();
+
         Pokemon pokemon = formeChangeEvent.getPokemon().getEffectedPokemon();
         if (pokemon.getSpecies().showdownId().equalsIgnoreCase("zygarde") && formeChangeEvent.getFormeName().equalsIgnoreCase("complete")) {
             formeChangeEvent.getBattle().dispatchToFront(() -> {
@@ -312,16 +420,12 @@ public abstract class CobblemonEventHandler {
                 new StringSpeciesFeature("percent_cells", "complete").apply(pokemon);
                 return new UntilDispatch(() -> true);
             });
+
+            if (pokemon.getEntity() != null) {
+                EffectsData.run(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), MiscUtilsKt.cobblemonResource("zygarde_complete"));
+            }
             return Unit.INSTANCE;
         }
-
-        Optional<PokemonEntity> other = StreamSupport.stream(formeChangeEvent.getBattle().getActivePokemon().spliterator(), false)
-            .map(ActiveBattlePokemon::getBattlePokemon)
-            .filter(active -> formeChangeEvent.getPokemon().getFacedOpponents().contains(active))
-            .filter(Objects::nonNull)
-            .map(BattlePokemon::getEntity)
-            .filter(Objects::nonNull)
-            .findAny();
 
         if (pokemon.getEntity() != null) {
             World world = pokemon.getEntity().getWorld();
@@ -354,6 +458,13 @@ public abstract class CobblemonEventHandler {
                 item.setDamage(0);
                 break;
             }
+        }
+        return Unit.INSTANCE;
+    }
+
+    private static Unit pokemonSentOut (PokemonSentPostEvent event) {
+        if (Options.shouldApplyBasicTeraGlow() && event.getPokemon().getPersistentData().contains("is_tera")) {
+            GlowHandler.applyTeraGlow(event.getPokemonEntity());
         }
         return Unit.INSTANCE;
     }

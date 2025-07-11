@@ -9,7 +9,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.provismet.cobblemon.gimmick.api.data.particle.ParticleAnimation;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import kotlin.Unit;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
@@ -38,16 +40,17 @@ public record EffectsData (Optional<ParticleAnimation> particles, Optional<Strin
         return RegistryKey.of(GTGDynamicRegistryKeys.EFFECTS, id);
     }
 
+    public static Optional<RegistryEntry.Reference<EffectsData>> get (DynamicRegistryManager registryManager, Identifier id) {
+        return registryManager.getOptionalWrapper(GTGDynamicRegistryKeys.EFFECTS)
+            .flatMap(registry -> registry.getOptional(EffectsData.key(id)));
+    }
+
     public static void run (PokemonEntity pokemon, Identifier id) {
-        pokemon.getWorld().getRegistryManager().getOptionalWrapper(GTGDynamicRegistryKeys.EFFECTS)
-            .flatMap(registry -> registry.getOptional(EffectsData.key(id)))
-            .ifPresent(reference -> reference.value().run(pokemon));
+        EffectsData.get(pokemon.getRegistryManager(), id).ifPresent(reference -> reference.value().run(pokemon));
     }
 
     public static void run (PokemonEntity pokemon, @Nullable PokemonEntity other, PokemonBattle battle, Identifier id) {
-        pokemon.getWorld().getRegistryManager().getOptionalWrapper(GTGDynamicRegistryKeys.EFFECTS)
-            .flatMap(registry -> registry.getOptional(EffectsData.key(id)))
-            .ifPresent(reference -> reference.value().run(pokemon, other, battle));
+        EffectsData.get(pokemon.getRegistryManager(), id).ifPresent(reference -> reference.value().run(pokemon, other, battle));
     }
 
     public void run (PokemonEntity pokemon) {

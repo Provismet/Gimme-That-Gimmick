@@ -13,13 +13,9 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.scoreboard.ServerScoreboard;
-import net.minecraft.scoreboard.Team;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Formatting;
 
 import java.util.*;
 
@@ -46,6 +42,7 @@ public abstract class DynamaxEventHandler {
             });
         }
         PokemonEntity pokemonEntity = pokemon.getEntity();
+        if (pokemonEntity == null) return;
 
         if (server == null && pokemonEntity.getWorld() instanceof ServerWorld serverWorld) {
             server = serverWorld.getServer();
@@ -53,7 +50,7 @@ public abstract class DynamaxEventHandler {
 
         startGradualScaling(pokemon.getEntity(), Options.getDynamaxScaleFactor());
 
-        GlowHandler.applyDynamaxGlow(pokemonEntity);
+        if (Options.shouldApplyBasicDynamaxGlow()) GlowHandler.applyDynamaxGlow(pokemonEntity);
     }
 
     private static void endDynamax (PokemonBattle pokemonBattle, BattlePokemon pokemon) {
@@ -63,6 +60,8 @@ public abstract class DynamaxEventHandler {
             return new UntilDispatch(() -> true);
         });
         PokemonEntity pokemonEntity = pokemon.getEntity();
+        if (pokemonEntity == null) return;
+
         pokemonEntity.removeStatusEffect(StatusEffects.GLOWING);
 
         if (server == null && pokemonEntity.getWorld() instanceof ServerWorld serverWorld) {
