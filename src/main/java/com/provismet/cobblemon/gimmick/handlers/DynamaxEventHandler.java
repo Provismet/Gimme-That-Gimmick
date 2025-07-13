@@ -2,9 +2,12 @@ package com.provismet.cobblemon.gimmick.handlers;
 
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
+import com.cobblemon.mod.common.battles.ActiveBattlePokemon;
 import com.cobblemon.mod.common.battles.dispatch.UntilDispatch;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
+import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.event.DynamaxEvents;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
@@ -14,10 +17,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 public abstract class DynamaxEventHandler {
     private static final Map<UUID, ScalingData> activeScalingAnimations = new HashMap<>();
@@ -43,6 +49,27 @@ public abstract class DynamaxEventHandler {
         }
         PokemonEntity pokemonEntity = pokemon.getEntity();
         if (pokemonEntity == null) return;
+
+        List<String> prioritisedEffects = List.of(
+            "dynamax_" + pokemon.getEffectedPokemon().getSpecies().showdownId(),
+            "dynamax"
+        );
+
+        for (String effectName : prioritisedEffects) {
+            Identifier key = GimmeThatGimmickMain.identifier(effectName);
+            Optional<RegistryEntry.Reference<EffectsData>> effect = EffectsData.get(pokemonEntity.getRegistryManager(), key);
+            if (effect.isPresent()) {
+                Optional<PokemonEntity> other = StreamSupport.stream(pokemonBattle.getActivePokemon().spliterator(), false)
+                    .map(ActiveBattlePokemon::getBattlePokemon)
+                    .filter(active -> pokemon.getFacedOpponents().contains(active))
+                    .filter(Objects::nonNull)
+                    .map(BattlePokemon::getEntity)
+                    .filter(Objects::nonNull)
+                    .findAny();
+
+                effect.get().value().run(pokemonEntity, other.orElse(null), pokemonBattle);
+            }
+        }
 
         if (server == null && pokemonEntity.getWorld() instanceof ServerWorld serverWorld) {
             server = serverWorld.getServer();
