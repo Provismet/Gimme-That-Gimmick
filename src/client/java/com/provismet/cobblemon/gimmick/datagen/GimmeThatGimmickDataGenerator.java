@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugEffectsGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFormToggleGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFusionGenerator;
@@ -8,6 +9,7 @@ import com.provismet.cobblemon.gimmick.datagen.debug.DebugMegaStoneGenerator;
 import com.provismet.cobblemon.gimmick.registry.GTGEnchantments;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.registry.RegistryBuilder;
 import net.minecraft.registry.RegistryKeys;
 
@@ -26,7 +28,7 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(BattleFormGenerator::new);
 
 		// Debug Only - disable when making a proper build
-		this.debugProviders(pack);
+		//this.debugProviders(pack);
 	}
 
 	@Override
