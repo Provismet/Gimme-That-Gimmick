@@ -11,8 +11,7 @@ import net.minecraft.item.ItemStack;
  */
 public interface GimmickCheck {
     static boolean isKeyStone (ItemStack item) {
-        return item.isIn(GTGItemTags.KEY_STONES)
-            || item.get(GTGItemDataComponents.KEY_STONE) != null
+        return isUnenchantedKeyStone(item)
             || EnchantmentHelper.hasAnyEnchantmentsWith(item, GTGEnchantmentComponents.KEY_STONE);
     }
 
@@ -34,5 +33,9 @@ public interface GimmickCheck {
         return item.isIn(GTGItemTags.TERA_ORBS)
             || item.get(GTGItemDataComponents.TERA_ORB) != null
             || EnchantmentHelper.hasAnyEnchantmentsWith(item, GTGEnchantmentComponents.TERA_ORB);
+    }
+
+    static boolean isUnenchantedKeyStone (ItemStack item) {
+        return item.isIn(GTGItemTags.KEY_STONES) || item.get(GTGItemDataComponents.KEY_STONE) != null;
     }
 }

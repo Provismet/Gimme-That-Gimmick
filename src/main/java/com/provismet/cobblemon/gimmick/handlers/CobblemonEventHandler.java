@@ -89,7 +89,7 @@ public abstract class CobblemonEventHandler {
     }
 
     private static ActionResult megaEvolveOutside (PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
-        if (player.getStackInHand(hand).isIn(GTGItemTags.KEY_STONES) && entity instanceof PokemonEntity pokemonEntity && !player.isSneaking()) {
+        if (GimmickCheck.isUnenchantedKeyStone(player.getStackInHand(hand)) && entity instanceof PokemonEntity pokemonEntity && !player.isSneaking()) {
             Pokemon pokemon = pokemonEntity.getPokemon();
             if (pokemon.getPersistentData().contains("last_mega", NbtElement.LONG_TYPE) && Math.abs(world.getTime() - pokemon.getPersistentData().getLong("last_mega")) < 20) {
                 return ActionResult.FAIL;
