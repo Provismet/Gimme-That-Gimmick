@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.battles.BattleFledEvent;
+import com.cobblemon.mod.common.api.events.battles.BattleStartedPostEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.FormeChangeEvent;
@@ -75,8 +76,7 @@ public abstract class CobblemonEventHandler {
         CobblemonEvents.ZPOWER_USED.subscribe(Priority.NORMAL, CobblemonEventHandler::zmoveUsed);
 
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, CobblemonEventHandler::battleStarted);
-        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, CobblemonEventHandler::postBattleVictory);
-        CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL, CobblemonEventHandler::postBattleFlee);
+        CobblemonEvents.BATTLE_STARTED_POST.subscribe(Priority.NORMAL, CobblemonEventHandler::battleEndHandler);
 
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.NORMAL, CobblemonEventHandler::fixTeraTyping);
 
@@ -170,11 +170,29 @@ public abstract class CobblemonEventHandler {
             boolean hasZRing = false;
             boolean hasDynamax = false;
             boolean hasTeraOrb = false;
+            ItemStack teraOrb = null;
             for (ItemStack item : player.getEquippedItems()) {
                 if (GimmickCheck.isKeyStone(item)) hasKeyStone = true;
                 if (GimmickCheck.isZRing(item)) hasZRing = true;
                 if (GimmickCheck.isDynamaxBand(item)) hasDynamax = true;
-                if (GimmickCheck.isTeraOrb(item)) hasTeraOrb = true;
+                if (GimmickCheck.isTeraOrb(item)) {
+                    hasTeraOrb = true;
+                    teraOrb = item;
+                }
+            }
+            if(hasTeraOrb){
+                PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
+                boolean hasTerapagos = false;
+                for(Pokemon partyMons: playerPartyStore){
+                    if(partyMons.getSpecies().getName().equals("Terapagos")){
+                        hasTerapagos = true;
+                        break;
+                    }
+                }
+
+                if(hasTerapagos){
+                    teraOrb.setDamage(0);
+                }
             }
 
             if (hasKeyStone) data.getKeyItems().add(Gimmicks.KEY_STONE);
@@ -194,6 +212,14 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
+    private static Unit battleEndHandler(BattleStartedPostEvent battleStartedPostEvent) {
+        battleStartedPostEvent.getBattle().getOnEndHandlers().add(battle -> {
+            battle.getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
+            return Unit.INSTANCE;
+        });
+        return Unit.INSTANCE;
+    }
+
     private static boolean isBlockNearby(ServerPlayerEntity player, int radius) {
         BlockPos playerPos = player.getBlockPos();
         ServerWorld world = player.getServerWorld();
@@ -210,16 +236,6 @@ public abstract class CobblemonEventHandler {
         }
 
         return false; // Not found
-    }
-
-    public static Unit postBattleVictory (BattleVictoryEvent battleVictoryEvent) {
-        battleVictoryEvent.getBattle().getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
-        return Unit.INSTANCE;
-    }
-
-    public static Unit postBattleFlee (BattleFledEvent battleFledEvent) {
-        battleFledEvent.getBattle().getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
-        return Unit.INSTANCE;
     }
 
     private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
@@ -264,10 +280,21 @@ public abstract class CobblemonEventHandler {
         ServerPlayerEntity player = pokemon.getOwnerPlayer();
 
         if (Options.canBreakTeraOrb() && player != null) {
-            for (ItemStack item : player.getEquippedItems()) {
-                if (item.isIn(GTGItemTags.BREAKABLE_TERA_ORBS)) {
-                    item.setDamage(item.getDamage() + 20);
+            PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
+            boolean hasTerapagos = false;
+            for(Pokemon partyMons: playerPartyStore){
+                if(partyMons.getSpecies().getName().equals("Terapagos")){
+                    hasTerapagos = true;
                     break;
+                }
+            }
+
+            if(!hasTerapagos){
+                for (ItemStack item : player.getEquippedItems()) {
+                    if (item.isIn(GTGItemTags.BREAKABLE_TERA_ORBS)) {
+                        item.setDamage(item.getDamage() + 20);
+                        break;
+                    }
                 }
             }
         }
