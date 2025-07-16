@@ -21,6 +21,7 @@ import com.provismet.cobblemon.gimmick.item.forms.DataDrivenToggleItem;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.forms.GracideaFlowerItem;
 import com.provismet.cobblemon.gimmick.item.forms.MeteoriteItem;
+import com.provismet.cobblemon.gimmick.item.forms.MoveChangingFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.forms.NLunarizerItem;
 import com.provismet.cobblemon.gimmick.item.forms.NSolarizerItem;
 import com.provismet.cobblemon.gimmick.item.forms.PrisonBottleItem;
@@ -43,6 +44,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.Unit;
+
+import java.util.List;
 
 public abstract class GTGItems {
     // Key Items
@@ -186,8 +189,8 @@ public abstract class GTGItems {
     public static final GenericFormChangeHeldItem BLUE_ORB = registerFormChangeChoice("blueorb", "kyogre", "reversion_state", "primal", "standard", 1);
     public static final GenericFormChangeHeldItem RED_ORB = registerFormChangeChoice("redorb", "groudon", "reversion_state", "primal", "standard", 1);
 
-    public static final GenericFormChangeHeldItem RUSTED_SWORD = registerFormChangeChoice("rustedsword", "zacian", "behemoth_warrior", "crowned", "hero", 1);
-    public static final GenericFormChangeHeldItem RUSTED_SHIELD = registerFormChangeChoice("rustedshield", "zamazenta", "behemoth_warrior", "crowned", "hero", 1);
+    public static final GenericFormChangeHeldItem RUSTED_SWORD = registerFormChangeChoiceWithMoves("rustedsword", "zacian", "behemoth_warrior", "crowned", "hero", 1, List.of("behemothblade"), List.of("ironhead"), List.of("ironhead"), List.of("behemothblade"));
+    public static final GenericFormChangeHeldItem RUSTED_SHIELD = registerFormChangeChoiceWithMoves("rustedshield", "zamazenta", "behemoth_warrior", "crowned", "hero", 1, List.of("behemothbash"), List.of("ironhead"), List.of("ironhead"), List.of("behemothbash"));
 
     // Arceus Plates
     public static final GenericFormChangeHeldItem DRACO_PLATE = registerArceus("dracoplate", "dragon");
@@ -293,6 +296,10 @@ public abstract class GTGItems {
 
     private static GenericFormChangeHeldItem registerArceus (String name, String type) {
         return registerFormChangeChoice(name, "arceus", "multitype", type, "normal", 1);
+    }
+
+    private static MoveChangingFormChangeHeldItem registerFormChangeChoiceWithMoves (String name, String species, String propertyName, String appliedChoice, String defaultChoice, int tooltipLines, List<String> movesGainedOnGive, List<String> movesLostOnGive, List<String> movesGainedOnTake, List<String> movesLostOnTake) {
+        return registerShowdownItem(name, (settings, item, modelData) -> new MoveChangingFormChangeHeldItem(settings, item, modelData, tooltipLines, MiscUtilsKt.cobblemonResource(species), new StringSpeciesFeature(propertyName, appliedChoice), new StringSpeciesFeature(propertyName, defaultChoice), movesGainedOnGive, movesLostOnGive, movesGainedOnTake, movesLostOnTake));
     }
 
     private static GenericFormChangeHeldItem registerFormChangeChoice (String name, String species, String propertyName, String appliedChoice, String defaultChoice, int tooltipLines) {
