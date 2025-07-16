@@ -10,32 +10,50 @@ import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.event.DynamaxEvents;
 import com.provismet.cobblemon.gimmick.config.Options;
+import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
 import java.util.stream.StreamSupport;
 
 public abstract class DynamaxEventHandler {
-    private static final Map<UUID, ScalingData> activeScalingAnimations = new HashMap<>();
-    private static final WeakHashMap<UUID, LivingEntity> entityCache = new WeakHashMap<>();
-    private static MinecraftServer server;
+    private static final List<ScalingData> scalingData = new LinkedList<>();
 
     public static void register () {
         DynamaxEvents.DYNAMAX_START.register(Event.DEFAULT_PHASE, DynamaxEventHandler::startDynamax);
         DynamaxEvents.DYNAMAX_END.register(Event.DEFAULT_PHASE, DynamaxEventHandler::endDynamax);
-        ServerTickEvents.END_SERVER_TICK.register(serverInstance -> {
-            server = serverInstance;
-            updateScalingAnimations();
+        ServerTickEvents.START_SERVER_TICK.register(server -> DynamaxEventHandler.updateScalingAnimations());
+    }
+
+    public static void scaleDownDynamax (PokemonEntity pokemonEntity) {
+        scalingData.add(new ScalingData(Options.getDynamaxScaleDuration()) {
+            @Override
+            protected void function () {
+                if (!pokemonEntity.isRemoved() && pokemonEntity.hasStatusEffect(GTGStatusEffects.DYNAMAX)) {
+                    pokemonEntity.setStatusEffect(
+                        new StatusEffectInstance(
+                            GTGStatusEffects.DYNAMAX,
+                            Integer.MAX_VALUE,
+                            (this.maxAge - this.age),
+                            true,
+                            true,
+                            true
+                        ),
+                        null
+                    );
+                }
+                else {
+                    this.age = this.maxAge;
+                }
+
+                if (this.age == this.maxAge) pokemonEntity.removeStatusEffect(StatusEffects.GLOWING);
+            }
         });
     }
 
@@ -71,11 +89,26 @@ public abstract class DynamaxEventHandler {
             }
         }
 
-        if (server == null && pokemonEntity.getWorld() instanceof ServerWorld serverWorld) {
-            server = serverWorld.getServer();
-        }
-
-        startGradualScaling(pokemon.getEntity(), Options.getDynamaxScaleFactor());
+        scalingData.add(new ScalingData(Options.getDynamaxScaleDuration()) {
+            @Override
+            protected void function () {
+                if (!pokemonEntity.isRemoved()) {
+                    pokemonEntity.addStatusEffect(
+                        new StatusEffectInstance(
+                            GTGStatusEffects.DYNAMAX,
+                            Integer.MAX_VALUE,
+                            this.age,
+                            true,
+                            true,
+                            true
+                        )
+                    );
+                }
+                else {
+                    this.age = this.maxAge;
+                }
+            }
+        });
 
         if (Options.shouldApplyBasicDynamaxGlow()) GlowHandler.applyDynamaxGlow(pokemonEntity);
     }
@@ -89,99 +122,32 @@ public abstract class DynamaxEventHandler {
         PokemonEntity pokemonEntity = pokemon.getEntity();
         if (pokemonEntity == null) return;
 
-        pokemonEntity.removeStatusEffect(StatusEffects.GLOWING);
-
-        if (server == null && pokemonEntity.getWorld() instanceof ServerWorld serverWorld) {
-            server = serverWorld.getServer();
-        }
-
-        startGradualScaling(pokemonEntity, 1.0f);
+        scaleDownDynamax(pokemonEntity);
     }
 
-    public static void startGradualScaling(LivingEntity entity, float targetScale) {
-        UUID entityId = entity.getUuid();
-        EntityAttributeInstance scaleAttribute = entity.getAttributeInstance(EntityAttributes.GENERIC_SCALE);
-
-        if (scaleAttribute != null) {
-            entityCache.put(entityId, entity);
-
-            float startScale = (float) scaleAttribute.getBaseValue();
-
-            int durationTicks = 60;
-
-            ScalingData scalingData = new ScalingData(
-                    entity.getWorld().getRegistryKey().toString(),
-                    entityId,
-                    startScale,
-                    targetScale,
-                    durationTicks,
-                    0
-            );
-
-            activeScalingAnimations.put(entityId, scalingData);
-        }
+    private static void updateScalingAnimations () {
+        scalingData.removeIf(ScalingData::isDone);
+        scalingData.forEach(ScalingData::run);
     }
 
-    private static void updateScalingAnimations() {
-        if (server == null) return;
+    private static abstract class ScalingData {
+        protected final int maxAge;
+        protected int age;
 
-        Iterator<Map.Entry<UUID, ScalingData>> iterator = activeScalingAnimations.entrySet().iterator();
-
-        while (iterator.hasNext()) {
-            Map.Entry<UUID, ScalingData> entry = iterator.next();
-            UUID entityId = entry.getKey();
-            ScalingData data = entry.getValue();
-
-            data.currentTick++;
-
-            LivingEntity entity = entityCache.get(entityId);
-
-            if (entity == null || entity.isRemoved()) {
-                for (ServerWorld world : server.getWorlds()) {
-                    entity = (LivingEntity) world.getEntity(entityId);
-                    if (entity != null) {
-                        entityCache.put(entityId, entity);
-                        break;
-                    }
-                }
-            }
-
-            // If entity exists, update its scale
-            if (entity != null && !entity.isRemoved()) {
-                EntityAttributeInstance scaleAttribute = entity.getAttributeInstance(EntityAttributes.GENERIC_SCALE);
-                if (scaleAttribute != null) {
-                    float progress = Math.min(1.0f, (float) data.currentTick / data.durationTicks);
-                    float newScale = data.startScale + (data.targetScale - data.startScale) * progress;
-
-                    scaleAttribute.setBaseValue(newScale);
-                }
-
-                if (data.currentTick >= data.durationTicks) {
-                    iterator.remove();
-                    entityCache.remove(entityId);
-                }
-            } else {
-                iterator.remove();
-                entityCache.remove(entityId);
-            }
+        public ScalingData (int maxAge) {
+            this.age = 0;
+            this.maxAge = maxAge;
         }
-    }
 
-    private static class ScalingData {
-        final String worldId;
-        final UUID entityId;
-        final float startScale;
-        final float targetScale;
-        final int durationTicks;
-        int currentTick;
-
-        public ScalingData(String worldId, UUID entityId, float startScale, float targetScale, int durationTicks, int currentTick) {
-            this.worldId = worldId;
-            this.entityId = entityId;
-            this.startScale = startScale;
-            this.targetScale = targetScale;
-            this.durationTicks = durationTicks;
-            this.currentTick = currentTick;
+        public void run () {
+            this.function();
+            ++this.age;
         }
+
+        public boolean isDone () {
+            return this.age > this.maxAge;
+        }
+
+        protected abstract void function ();
     }
 }

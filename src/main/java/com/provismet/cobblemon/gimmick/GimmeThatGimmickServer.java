@@ -11,6 +11,7 @@ import com.provismet.cobblemon.gimmick.registry.GTGEnchantmentComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemGroup;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
+import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -27,6 +28,7 @@ public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
         GTGBlocks.init();
         GTGItemDataComponents.init();
         GTGEnchantmentComponents.init();
+        GTGStatusEffects.init();
         GTGItemGroup.register();
         GTGCommands.register();
 

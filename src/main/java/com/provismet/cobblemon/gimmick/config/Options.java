@@ -19,7 +19,7 @@ public abstract class Options {
     private static boolean overrideShowdown = true;
     private static boolean powerSpotRequired = true;
     private static int powerSpotRange = 30;
-    private static int dynamaxScaleFactor = 4;
+    private static float dynamaxScaleFactor = 4;
     private static boolean breakableTeraOrbs = true;
     private static boolean applyBasicZGlow = true;
     private static boolean applyBasicDynamaxGlow = true;
@@ -41,8 +41,8 @@ public abstract class Options {
         return powerSpotRequired;
     }
 
-    public static int getDynamaxScaleFactor () {
-        return dynamaxScaleFactor;
+    public static int getDynamaxScaleDuration () {
+        return (int)(dynamaxScaleFactor / 0.1f);
     }
 
     public static boolean canBreakTeraOrb () {
@@ -89,7 +89,7 @@ public abstract class Options {
                 reader.getBoolean("override_showdown").ifPresent(val -> overrideShowdown = val);
                 reader.getInteger("dynamax_power_spot_range").ifPresent(val -> powerSpotRange = val);
                 reader.getBoolean("dynamax_power_spot_required").ifPresent(val -> powerSpotRequired = val);
-                reader.getInteger("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
+                reader.getFloat("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
                 reader.getBoolean("breakable_tera_orbs").ifPresent(val -> breakableTeraOrbs = val);
                 reader.getBoolean("use_default_z_glow_visual").ifPresent(val -> applyBasicZGlow = val);
                 reader.getBoolean("use_default_dynamax_glow_visual").ifPresent(val -> applyBasicDynamaxGlow = val);

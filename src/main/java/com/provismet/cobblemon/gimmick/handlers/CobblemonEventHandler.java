@@ -391,8 +391,7 @@ public abstract class CobblemonEventHandler {
         }
 
         if (pokemon.getEntity() != null) {
-            pokemon.getEntity().removeStatusEffect(StatusEffects.GLOWING);
-            DynamaxEventHandler.startGradualScaling(pokemon.getEntity(), 1.0f);
+            DynamaxEventHandler.scaleDownDynamax(pokemon.getEntity());
         }
 
         pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect")); // Ogerpon
