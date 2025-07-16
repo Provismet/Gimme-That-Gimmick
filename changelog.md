@@ -15,23 +15,30 @@ However, users may create their items entirely though GTG's data-driven system i
   - Both the block and the item can be used to open the form change menu.
 - Rotom Catalog
 - Gracidea Flowers
-- Fusion mechanics for Calyrex, Kyurem, and Necrozma.
-- Added data-driven systems.
-  - In-battle form changes.
-  - Fusion items.
-  - Form changing items.
-  - Mega Stones.
+- Fusion mechanics for Calyrex, Kyurem, and Necrozma
+- Data-driven systems
+  - In-battle form changes
+  - Fusion items
+  - Form changing items
+  - Mega Stones
   - Special Effects
     - Particles
     - Animations
     - Sounds
-  - Held items.
+  - Held items
   - All of the above come with data generators.
 - Dynamax Level now appears as a progress bar in the summary.
 - Max Mushrooms are now growable crops.
-- Added basic glowing effect for Z-Moves, Tera, and Dynamax.
-- Added size changing for Dynamax.
-- Out of combat mega evolution.
+- Basic glowing effect for Z-Moves, Tera, and Dynamax.
+- Size changing for Dynamax.
+  - Including a Dynamax status effect 
+- Out of combat mega evolution
+- Translations for (the superior) British English
+- Optional durability mechanic for Tera Orbs
+  - Togglable in the config
+
+## Changes
+- Rewrote most item tooltips to be more concise and take up less space. 
 
 ### Data Components
 New data components have been added to grant more power to servers.
