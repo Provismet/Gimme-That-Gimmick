@@ -14,7 +14,7 @@ public class TypedZCrystalItem extends GenericFormChangeHeldItem {
     public final ElementalType type;
 
     public TypedZCrystalItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, ElementalType type) {
-        this(settings, baseVanillaItem, modelData, 2, type);
+        this(settings, baseVanillaItem, modelData, 1, type);
     }
 
     public TypedZCrystalItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines, ElementalType type) {

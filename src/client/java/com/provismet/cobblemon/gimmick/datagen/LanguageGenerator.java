@@ -11,6 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class LanguageGenerator extends LilyLanguageProvider {
     protected LanguageGenerator (FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
@@ -49,7 +50,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("gimmethatgimmick.itemGroup.name", "Gimme That Gimmick");
     }
 
-    private static <T extends Item & NumericalTooltipItem> void addItemWithTooltip (TranslationBuilder translationBuilder, T item, String name, String... tooltip) {
+    public static <T extends Item & NumericalTooltipItem> void addItemWithTooltip (TranslationBuilder translationBuilder, T item, String name, String... tooltip) {
         translationBuilder.add(item, name);
         for (int i = 0; i < tooltip.length; ++i) {
             translationBuilder.add(item.getTooltipTranslationKey(i + 1), tooltip[i]);
@@ -57,10 +58,10 @@ public class LanguageGenerator extends LilyLanguageProvider {
     }
 
     private void keyItems (TranslationBuilder translationBuilder) {
-        addItemWithTooltip(translationBuilder, GTGItems.MEGA_BRACELET, "Mega Bracelet", "Hold this in your hand to gain access to Mega Evolution.");
-        addItemWithTooltip(translationBuilder, GTGItems.Z_RING, "Z-Ring", "Hold this in your hand to gain access to Z-Moves.");
-        addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_BAND, "Dynamax Band", "Hold this in your hand to gain access to Dynamax.");
-        addItemWithTooltip(translationBuilder, GTGItems.TERA_ORB, "Tera Orb", "Hold this in your hand to gain access to Terastallization.");
+        addItemWithTooltip(translationBuilder, GTGItems.MEGA_BRACELET, "Mega Bracelet", "Hold this in your hand to gain access to Mega Evolution");
+        addItemWithTooltip(translationBuilder, GTGItems.Z_RING, "Z-Ring", "Hold this in your hand to gain access to Z-Moves");
+        addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_BAND, "Dynamax Band", "Hold this in your hand to gain access to Dynamax");
+        addItemWithTooltip(translationBuilder, GTGItems.TERA_ORB, "Tera Orb", "Hold this in your hand to gain access to Terastallization");
         translationBuilder.add(GTGBlocks.POWER_SPOT, "Power Spot");
 
         this.addEnchantment(translationBuilder, GTGEnchantments.KEY_STONE, "Key Stone", "Grants access to Mega Evolution.");
@@ -70,55 +71,57 @@ public class LanguageGenerator extends LilyLanguageProvider {
     }
 
     private void megaStones (TranslationBuilder translationBuilder) {
+        Function<String, String[]> megaTooltip = pokemon -> new String[] {"Grants " + pokemon + " the power to Mega Evolve"};
+
         translationBuilder.add("message.overlay.gimme-that-gimmick.mega_exists", "You already have a Mega Pokémon.");
         translationBuilder.add("message.overlay.gimme-that-gimmick.no_stone", "Your Pokémon is not holding its Mega Stone.");
-        addItemWithTooltip(translationBuilder, GTGItems.ABOMASITE, "Abomasite", "One of a variety of mysterious Mega Stones.", "Have Abomasnow hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.ABSOLITE, "Absolite", "One of a variety of mysterious Mega Stones.", "Have Absol hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.AERODACTYLITE, "Aerodactylite", "One of a variety of mysterious Mega Stones.", "Have Aerodactyl hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.AGGRONITE, "Aggronite", "One of a variety of mysterious Mega Stones.", "Have Aggron hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.ALAKAZITE, "Alakazite", "One of a variety of mysterious Mega Stones.", "Have Alakazam hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.ALTARIANITE, "Altarianite", "One of a variety of mysterious Mega Stones.", "Have Altaria hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.AMPHAROSITE, "Ampharosite", "One of a variety of mysterious Mega Stones.", "Have Ampharos hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.AUDINITE, "Audinite", "One of a variety of mysterious Mega Stones.", "Have Audino hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.BANETTITE, "Banettite", "One of a variety of mysterious Mega Stones.", "Have Banette hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.BEEDRILLITE, "Beedrillite", "One of a variety of mysterious Mega Stones.", "Have Beedrill hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.BLASTOISINITE, "Blastoisinite", "One of a variety of mysterious Mega Stones.", "Have Blastoise hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.BLAZIKENITE, "Blazikenite", "One of a variety of mysterious Mega Stones.", "Have Blaziken hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.CAMERUPTITE, "Cameruptite", "One of a variety of mysterious Mega Stones.", "Have Camerupt hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.CHARIZARDITE_X, "Charizardite X", "One of a variety of mysterious Mega Stones.", "Have Charizard hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.CHARIZARDITE_Y, "Charizardite Y", "One of a variety of mysterious Mega Stones.", "Have Charizard hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.DIANCITE, "Diancite", "One of a variety of mysterious Mega Stones.", "Have Diancie hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.GALLADITE, "Galladite", "One of a variety of mysterious Mega Stones.", "Have Gallade hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.GARCHOMPITE, "Garchompite", "One of a variety of mysterious Mega Stones.", "Have Garchomp hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.GARDEVOIRITE, "Gardevoirite", "One of a variety of mysterious Mega Stones.", "Have Gardevoir hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.GENGARITE, "Gengarite", "One of a variety of mysterious Mega Stones.", "Have Gengar hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.GLALITITE, "Glalitite", "One of a variety of mysterious Mega Stones.", "Have Glalie hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.GYARADOSITE, "Gyaradosite", "One of a variety of mysterious Mega Stones.", "Have Gyarados hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.HERACRONITE, "Heracronite", "One of a variety of mysterious Mega Stones.", "Have Heracross hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.HOUNDOOMINITE, "Houndoominite", "One of a variety of mysterious Mega Stones.", "Have Houndoom hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.KANGASKHANITE, "Kangaskhanite", "One of a variety of mysterious Mega Stones.", "Have Kangaskhan hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.LATIASITE, "Latiasite", "One of a variety of mysterious Mega Stones.", "Have Latias hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.LATIOSITE, "Latiosite", "One of a variety of mysterious Mega Stones.", "Have Latios hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.LOPUNNITE, "Lopunnite", "One of a variety of mysterious Mega Stones.", "Have Lopunny hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.LUCARIONITE, "Lucarionite", "One of a variety of mysterious Mega Stones.", "Have Lucario hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.MANECTITE, "Manectite", "One of a variety of mysterious Mega Stones.", "Have Manectric hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.MAWILITE, "Mawilite", "One of a variety of mysterious Mega Stones.", "Have Mawile hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.MEDICHAMITE, "Medichamite", "One of a variety of mysterious Mega Stones.", "Have Medicham hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.METAGROSSITE, "Metagrossite", "One of a variety of mysterious Mega Stones.", "Have Metagross hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.MEWTWONITE_X, "Mewtwonite X", "One of a variety of mysterious Mega Stones.", "Have Mewtwo hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.MEWTWONITE_Y, "Mewtwonite Y", "One of a variety of mysterious Mega Stones.", "Have Mewtwo hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.PIDGEOTITE, "Pidgeotite", "One of a variety of mysterious Mega Stones.", "Have Pidgeot hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.PINSIRITE, "Pinsirite", "One of a variety of mysterious Mega Stones.", "Have Pinsir hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.SABLENITE, "Sablenite", "One of a variety of mysterious Mega Stones.", "Have Sableye hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.SALAMENCITE, "Salamencite", "One of a variety of mysterious Mega Stones.", "Have Salamence hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.SCEPTILITE, "Sceptilite", "One of a variety of mysterious Mega Stones.", "Have Sceptile hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.SCIZORITE, "Scizorite", "One of a variety of mysterious Mega Stones.", "Have Scizor hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.SHARPEDONITE, "Sharpedonite", "One of a variety of mysterious Mega Stones.", "Have Sharpedo hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.SLOWBRONITE, "Slowbronite", "One of a variety of mysterious Mega Stones.", "Have Slowbro hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.STEELIXITE, "Steelixite", "One of a variety of mysterious Mega Stones.", "Have Steelix hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.SWAMPERTITE, "Swampertite", "One of a variety of mysterious Mega Stones.", "Have Swampert hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.TYRANITARITE, "Tyranitarite", "One of a variety of mysterious Mega Stones.", "Have Tyranitar hold it, and this stone will enable it to Mega Evolve during battle.");
-        addItemWithTooltip(translationBuilder, GTGItems.VENUSAURITE, "Venusaurite", "One of a variety of mysterious Mega Stones.", "Have Venusaur hold it, and this stone will enable it to Mega Evolve during battle.");
+        addItemWithTooltip(translationBuilder, GTGItems.ABOMASITE, "Abomasite", megaTooltip.apply("Abomasnow"));
+        addItemWithTooltip(translationBuilder, GTGItems.ABSOLITE, "Absolite", megaTooltip.apply("Absol"));
+        addItemWithTooltip(translationBuilder, GTGItems.AERODACTYLITE, "Aerodactylite", megaTooltip.apply("Aerodactyl"));
+        addItemWithTooltip(translationBuilder, GTGItems.AGGRONITE, "Aggronite", megaTooltip.apply("Aggron"));
+        addItemWithTooltip(translationBuilder, GTGItems.ALAKAZITE, "Alakazite", megaTooltip.apply("Alakazam"));
+        addItemWithTooltip(translationBuilder, GTGItems.ALTARIANITE, "Altarianite", megaTooltip.apply("Altaria"));
+        addItemWithTooltip(translationBuilder, GTGItems.AMPHAROSITE, "Ampharosite", megaTooltip.apply("Ampharos"));
+        addItemWithTooltip(translationBuilder, GTGItems.AUDINITE, "Audinite", megaTooltip.apply("Audino"));
+        addItemWithTooltip(translationBuilder, GTGItems.BANETTITE, "Banettite", megaTooltip.apply("Banette"));
+        addItemWithTooltip(translationBuilder, GTGItems.BEEDRILLITE, "Beedrillite", megaTooltip.apply("Beedrill"));
+        addItemWithTooltip(translationBuilder, GTGItems.BLASTOISINITE, "Blastoisinite", megaTooltip.apply("Blastoise"));
+        addItemWithTooltip(translationBuilder, GTGItems.BLAZIKENITE, "Blazikenite", megaTooltip.apply("Blaziken"));
+        addItemWithTooltip(translationBuilder, GTGItems.CAMERUPTITE, "Cameruptite", megaTooltip.apply("Camerupt"));
+        addItemWithTooltip(translationBuilder, GTGItems.CHARIZARDITE_X, "Charizardite X", megaTooltip.apply("Charizard"));
+        addItemWithTooltip(translationBuilder, GTGItems.CHARIZARDITE_Y, "Charizardite Y", megaTooltip.apply("Charizard"));
+        addItemWithTooltip(translationBuilder, GTGItems.DIANCITE, "Diancite", megaTooltip.apply("Diancie"));
+        addItemWithTooltip(translationBuilder, GTGItems.GALLADITE, "Galladite", megaTooltip.apply("Gallade"));
+        addItemWithTooltip(translationBuilder, GTGItems.GARCHOMPITE, "Garchompite", megaTooltip.apply("Garchomp"));
+        addItemWithTooltip(translationBuilder, GTGItems.GARDEVOIRITE, "Gardevoirite", megaTooltip.apply("Gardevoir"));
+        addItemWithTooltip(translationBuilder, GTGItems.GENGARITE, "Gengarite", megaTooltip.apply("Gengar"));
+        addItemWithTooltip(translationBuilder, GTGItems.GLALITITE, "Glalitite", megaTooltip.apply("Glalie"));
+        addItemWithTooltip(translationBuilder, GTGItems.GYARADOSITE, "Gyaradosite", megaTooltip.apply("Gyarados"));
+        addItemWithTooltip(translationBuilder, GTGItems.HERACRONITE, "Heracronite", megaTooltip.apply("Heracross"));
+        addItemWithTooltip(translationBuilder, GTGItems.HOUNDOOMINITE, "Houndoominite", megaTooltip.apply("Houndoom"));
+        addItemWithTooltip(translationBuilder, GTGItems.KANGASKHANITE, "Kangaskhanite", megaTooltip.apply("Kangaskhan"));
+        addItemWithTooltip(translationBuilder, GTGItems.LATIASITE, "Latiasite", megaTooltip.apply("Latias"));
+        addItemWithTooltip(translationBuilder, GTGItems.LATIOSITE, "Latiosite", megaTooltip.apply("Latios"));
+        addItemWithTooltip(translationBuilder, GTGItems.LOPUNNITE, "Lopunnite", megaTooltip.apply("Lopunny"));
+        addItemWithTooltip(translationBuilder, GTGItems.LUCARIONITE, "Lucarionite", megaTooltip.apply("Lucario"));
+        addItemWithTooltip(translationBuilder, GTGItems.MANECTITE, "Manectite", megaTooltip.apply("Manectric"));
+        addItemWithTooltip(translationBuilder, GTGItems.MAWILITE, "Mawilite", megaTooltip.apply("Mawile"));
+        addItemWithTooltip(translationBuilder, GTGItems.MEDICHAMITE, "Medichamite", megaTooltip.apply("Medicham"));
+        addItemWithTooltip(translationBuilder, GTGItems.METAGROSSITE, "Metagrossite", megaTooltip.apply("Metagross"));
+        addItemWithTooltip(translationBuilder, GTGItems.MEWTWONITE_X, "Mewtwonite X", megaTooltip.apply("Mewtwo"));
+        addItemWithTooltip(translationBuilder, GTGItems.MEWTWONITE_Y, "Mewtwonite Y", megaTooltip.apply("Mewtwo"));
+        addItemWithTooltip(translationBuilder, GTGItems.PIDGEOTITE, "Pidgeotite", megaTooltip.apply("Pidgeot"));
+        addItemWithTooltip(translationBuilder, GTGItems.PINSIRITE, "Pinsirite", megaTooltip.apply("Pinsir"));
+        addItemWithTooltip(translationBuilder, GTGItems.SABLENITE, "Sablenite", megaTooltip.apply("Sableye"));
+        addItemWithTooltip(translationBuilder, GTGItems.SALAMENCITE, "Salamencite", megaTooltip.apply("Salamence"));
+        addItemWithTooltip(translationBuilder, GTGItems.SCEPTILITE, "Sceptilite", megaTooltip.apply("Sceptile"));
+        addItemWithTooltip(translationBuilder, GTGItems.SCIZORITE, "Scizorite", megaTooltip.apply("Scizor"));
+        addItemWithTooltip(translationBuilder, GTGItems.SHARPEDONITE, "Sharpedonite", megaTooltip.apply("Sharpedo"));
+        addItemWithTooltip(translationBuilder, GTGItems.SLOWBRONITE, "Slowbronite", megaTooltip.apply("Slowbro"));
+        addItemWithTooltip(translationBuilder, GTGItems.STEELIXITE, "Steelixite", megaTooltip.apply("Steelix"));
+        addItemWithTooltip(translationBuilder, GTGItems.SWAMPERTITE, "Swampertite", megaTooltip.apply("Swampert"));
+        addItemWithTooltip(translationBuilder, GTGItems.TYRANITARITE, "Tyranitarite", megaTooltip.apply("Tyranitar"));
+        addItemWithTooltip(translationBuilder, GTGItems.VENUSAURITE, "Venusaurite", megaTooltip.apply("Venusaur"));
     }
 
     private void zCrystals (TranslationBuilder translationBuilder) {
@@ -133,12 +136,12 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.MEWNIUM_Z, "Mewnium-Z", zCrystalTooltip("Mew", "Psychic"));
         addItemWithTooltip(translationBuilder, GTGItems.MIMIKIUM_Z, "Mimikium-Z", zCrystalTooltip("Mimikyu", "Play Rough"));
         addItemWithTooltip(translationBuilder, GTGItems.PIKANIUM_Z, "Pikanium-Z", zCrystalTooltip("Pikachu", "Volt Tackle"));
-        addItemWithTooltip(translationBuilder, GTGItems.PIKASHUNIUM_Z, "Pikashunium-Z", "This is a crystallized form of Z-Power.", "It upgrades Thunderbolt to a Z-Move when used by a Pikachu wearing a cap.");
+        addItemWithTooltip(translationBuilder, GTGItems.PIKASHUNIUM_Z, "Pikashunium-Z", "Upgrades Thunderbolt to a Z-Move when used by a Pikachu wearing a cap");
         addItemWithTooltip(translationBuilder, GTGItems.PRIMARIUM_Z, "Primarium-Z", zCrystalTooltip("Primarina", "Sparkling Aria"));
         addItemWithTooltip(translationBuilder, GTGItems.SNORLIUM_Z, "Snorlium-Z", zCrystalTooltip("Snorlax", "Giga Impact"));
         addItemWithTooltip(translationBuilder, GTGItems.SOLGANIUM_Z, "Solganium-Z", zCrystalTooltip("Solgaleo", "Sunsteel Strike"));
         addItemWithTooltip(translationBuilder, GTGItems.TAPUNIUM_Z, "Tapunium-Z", zCrystalTooltip("the tapu", "Nature's Madness"));
-        addItemWithTooltip(translationBuilder, GTGItems.ULTRANECROZIUM_Z, "Ultranecrozium-Z", "It's a crystal that turns Necrozma fused with Solgaleo or Lunala into a new form.", "Also upgrades Photon Geyser to a Z-Move when used by Ultra Necrozma");
+        addItemWithTooltip(translationBuilder, GTGItems.ULTRANECROZIUM_Z, "Ultranecrozium-Z", "Grants a new form to a fused Necrozma", "Upgrades Photon Geyser to a Z-Move when used by Ultra Necrozma");
 
         addItemWithTooltip(translationBuilder, GTGItems.BUGINIUM_Z, "Buginium-Z", zCrystalTooltip("Bug"));
         addItemWithTooltip(translationBuilder, GTGItems.DARKINIUM_Z, "Darkinium-Z", zCrystalTooltip("Dark"));
@@ -161,8 +164,8 @@ public class LanguageGenerator extends LilyLanguageProvider {
     }
 
     private void dynamax (TranslationBuilder translationBuilder) {
-        addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_CANDY, "Dynamax Candy", "A candy that is packed with energy. If consumed, it raises the Dynamax Level of a Pokémon by one.", "A higher level means higher HP when Dynamaxed. ");
-        addItemWithTooltip(translationBuilder, GTGItems.MAX_SOUP, "Max Soup", "Grants the Gigantamax factor to eligible Pokemon or removes it if already present.");
+        addItemWithTooltip(translationBuilder, GTGItems.DYNAMAX_CANDY, "Dynamax Candy", "Raises the Dynamax Level of a Pokémon by one,", "increasing the Pokémon's HP when Dynamaxed");
+        addItemWithTooltip(translationBuilder, GTGItems.MAX_SOUP, "Max Soup", "Grants the Gigantamax factor to eligible Pokémon or removes it if already present");
         translationBuilder.add(GTGBlocks.MAX_MUSHROOM, "Max Mushroom");
 
         translationBuilder.add("message.overlay.gimmethatgimmick.dynamax", "DMax Level: %1$s, GMax: %2$s");
@@ -540,24 +543,24 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.METEORITE, "Meteorite", "A meteorite that enables Deoxys to change its form");
         addItemWithTooltip(translationBuilder, GTGItems.REIGNS_OF_UNITY, "Reigns of Unity", "Used to unite Calyrex with its steed");
         addItemWithTooltip(translationBuilder, GTGItems.ROTOM_CATALOG, "Rotom Catalog", "A catalog of appliances for Rotom to possess");
-        addItemWithTooltip(translationBuilder, GTGItems.ZYGARDE_CUBE, "Zygarde Cube", "Changes the amount of cells Zygarde has.");
+        addItemWithTooltip(translationBuilder, GTGItems.ZYGARDE_CUBE, "Zygarde Cube", "Changes the amount of cells Zygarde has");
     }
     
-    private static String[] zCrystalTooltip (String type) {
-        return new String[]{"This is a crystallized form of Z-Power.", "It upgrades " + type + "-type moves to Z-Moves."};
+    public static String[] zCrystalTooltip (String type) {
+        return new String[]{"Upgrades a " + type + "-type move to a Z-Move"};
     }
 
-    private static String[] zCrystalTooltip (String pokemon, String move) {
-        return new String[]{"This is a crystallized form of Z-Power.", "It upgrades " + pokemon + "'s " + move + " to a Z-Move."};
+    public static String[] zCrystalTooltip (String pokemon, String move) {
+        return new String[]{"Upgrades " + pokemon + "'s " + move + " to a Z-Move"};
     }
 
-    private static void zMove (TranslationBuilder translationBuilder, String moveId, String name, String description) {
+    public static void zMove (TranslationBuilder translationBuilder, String moveId, String name, String description) {
         String moveTranslationKey = "cobblemon.move." + moveId;
         translationBuilder.add(moveTranslationKey, name);
         translationBuilder.add(moveTranslationKey + ".desc", description);
     }
 
-    private static void gmax (TranslationBuilder translationBuilder, String moveId, String sideStart, String damage, String end) {
+    public static void gmax (TranslationBuilder translationBuilder, String moveId, String sideStart, String damage, String end) {
         if (sideStart != null) translationBuilder.add("cobblemon.battle.sidestart." + moveId, sideStart);
         if (damage != null) translationBuilder.add("cobblemon.battle.damage." + moveId, damage);
         if (end != null) translationBuilder.add("cobblemon.battle.end." + moveId, end);

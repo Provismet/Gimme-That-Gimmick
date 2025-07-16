@@ -9,7 +9,7 @@ import net.minecraft.item.Item;
  */
 public class MegaStoneItem extends PolymerHeldItem {
     public MegaStoneItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
-        this(settings, baseVanillaItem, modelData, 2);
+        this(settings, baseVanillaItem, modelData, 1);
     }
 
     public MegaStoneItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData, int tooltipLines) {
