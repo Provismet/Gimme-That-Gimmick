@@ -24,6 +24,7 @@ public abstract class Options {
     private static boolean applyBasicZGlow = true;
     private static boolean applyBasicDynamaxGlow = true;
     private static boolean applyBasicTeraGlow = true;
+    private static boolean showDynamaxLevel = true;
 
     static {
         load();
@@ -61,6 +62,10 @@ public abstract class Options {
         return applyBasicTeraGlow;
     }
 
+    public static boolean shouldShowDynamaxLevel () {
+        return showDynamaxLevel;
+    }
+
     public static void save () {
         JsonObject json = new JsonBuilder()
             .append("override_showdown", overrideShowdown)
@@ -71,6 +76,7 @@ public abstract class Options {
             .append("use_default_z_glow_visual", applyBasicZGlow)
             .append("use_default_dynamax_glow_visual", applyBasicDynamaxGlow)
             .append("use_default_tera_glow_visual", applyBasicTeraGlow)
+            .append("show_dynamax_level", showDynamaxLevel)
             .getJson();
 
         try (FileWriter writer = new FileWriter(FILE)) {
@@ -94,6 +100,7 @@ public abstract class Options {
                 reader.getBoolean("use_default_z_glow_visual").ifPresent(val -> applyBasicZGlow = val);
                 reader.getBoolean("use_default_dynamax_glow_visual").ifPresent(val -> applyBasicDynamaxGlow = val);
                 reader.getBoolean("use_default_tera_glow_visual").ifPresent(val -> applyBasicTeraGlow = val);
+                reader.getBoolean("show_dynamax_level").ifPresent(val -> showDynamaxLevel = val);
             }
         }
         catch (FileNotFoundException e) {

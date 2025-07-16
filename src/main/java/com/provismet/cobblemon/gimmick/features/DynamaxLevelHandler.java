@@ -3,11 +3,12 @@ package com.provismet.cobblemon.gimmick.features;
 import com.cobblemon.mod.common.api.pokemon.feature.IntSpeciesFeature;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.SpeciesFeatureUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.provismet.cobblemon.gimmick.config.Options;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 public class DynamaxLevelHandler {
     public static void update (Pokemon pokemon, ServerPlayerEntity player) {
-        if (pokemon.getSpecies().getDynamaxBlocked()) return;
+        if (!Options.shouldShowDynamaxLevel() || pokemon.getSpecies().getDynamaxBlocked()) return;
 
         IntSpeciesFeature dmaxLevel = pokemon.getFeature("dynamax_level");
         if (dmaxLevel == null) {
