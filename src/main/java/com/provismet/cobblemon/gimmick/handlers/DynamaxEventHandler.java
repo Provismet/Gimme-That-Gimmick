@@ -12,6 +12,7 @@ import com.provismet.cobblemon.gimmick.api.event.DynamaxEvents;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
+import kotlin.Unit;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -86,6 +87,7 @@ public abstract class DynamaxEventHandler {
                     .findAny();
 
                 effect.get().value().run(pokemonEntity, other.orElse(null), pokemonBattle);
+                break;
             }
         }
 
@@ -109,6 +111,7 @@ public abstract class DynamaxEventHandler {
                 }
             }
         });
+        pokemonBattle.dispatchWaitingToFront(Options.getDynamaxScaleDuration() / 20f, () -> Unit.INSTANCE);
 
         if (Options.shouldApplyBasicDynamaxGlow()) GlowHandler.applyDynamaxGlow(pokemonEntity);
     }
