@@ -11,10 +11,10 @@ import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.event.DynamaxEvents;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
+import com.provismet.cobblemon.gimmick.util.DelayedTicker;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import kotlin.Unit;
 import net.fabricmc.fabric.api.event.Event;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -24,16 +24,13 @@ import java.util.*;
 import java.util.stream.StreamSupport;
 
 public abstract class DynamaxEventHandler {
-    private static final List<ScalingData> scalingData = new LinkedList<>();
-
     public static void register () {
         DynamaxEvents.DYNAMAX_START.register(Event.DEFAULT_PHASE, DynamaxEventHandler::startDynamax);
         DynamaxEvents.DYNAMAX_END.register(Event.DEFAULT_PHASE, DynamaxEventHandler::endDynamax);
-        ServerTickEvents.START_SERVER_TICK.register(server -> DynamaxEventHandler.updateScalingAnimations());
     }
 
     public static void scaleDownDynamax (PokemonEntity pokemonEntity) {
-        scalingData.add(new ScalingData(Options.getDynamaxScaleDuration()) {
+        DelayedTicker.add(new DelayedTicker(Options.getDynamaxScaleDuration()) {
             @Override
             protected void function () {
                 if (!pokemonEntity.isRemoved() && pokemonEntity.hasStatusEffect(GTGStatusEffects.DYNAMAX)) {
@@ -91,7 +88,7 @@ public abstract class DynamaxEventHandler {
             }
         }
 
-        scalingData.add(new ScalingData(Options.getDynamaxScaleDuration()) {
+        DelayedTicker.add(new DelayedTicker(Options.getDynamaxScaleDuration()) {
             @Override
             protected void function () {
                 if (!pokemonEntity.isRemoved()) {
@@ -126,31 +123,5 @@ public abstract class DynamaxEventHandler {
         if (pokemonEntity == null) return;
 
         scaleDownDynamax(pokemonEntity);
-    }
-
-    private static void updateScalingAnimations () {
-        scalingData.removeIf(ScalingData::isDone);
-        scalingData.forEach(ScalingData::run);
-    }
-
-    private static abstract class ScalingData {
-        protected final int maxAge;
-        protected int age;
-
-        public ScalingData (int maxAge) {
-            this.age = 0;
-            this.maxAge = maxAge;
-        }
-
-        public void run () {
-            this.function();
-            ++this.age;
-        }
-
-        public boolean isDone () {
-            return this.age > this.maxAge;
-        }
-
-        protected abstract void function ();
     }
 }
