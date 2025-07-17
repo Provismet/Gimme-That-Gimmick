@@ -41,6 +41,7 @@ import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.zmove.TypedZCrystalItem;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
+import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import com.provismet.cobblemon.gimmick.util.MegaHelper;
 import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
@@ -392,6 +393,9 @@ public abstract class CobblemonEventHandler {
 
         if (pokemon.getEntity() != null) {
             DynamaxEventHandler.scaleDownDynamax(pokemon.getEntity());
+            if (!pokemon.getEntity().hasStatusEffect(GTGStatusEffects.DYNAMAX)) { // DMax glow should only be removed after shrinking, only clear tera glow
+                pokemon.getEntity().removeStatusEffect(StatusEffects.GLOWING);
+            }
         }
 
         pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect")); // Ogerpon
