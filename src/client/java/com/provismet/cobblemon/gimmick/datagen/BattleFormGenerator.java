@@ -43,8 +43,23 @@ public class BattleFormGenerator extends BattleFormProvider {
             )
         );
         this.createBasic(consumer, "cherrim", "blossom_form", "overcast", "sunshine");
-        this.createBasic(consumer, "darmanitan", "blazing_mode", "standard", "zen");
-        this.createBasic(consumer, "eiscue", "penguin_head", "ice_face", "noice_face");
+        consumer.accept(
+            MiscUtilsKt.cobblemonResource("darmanitan"),
+            new BattleForm(
+                PokemonTransformation.of(PokemonFeatures.single("blazing_mode", "standard")),
+                Map.of(
+                    "zen", PokemonTransformation.of(PokemonFeatures.single("blazing_mode", "zen")),
+                    "", PokemonTransformation.of(PokemonFeatures.single("blazing_mode", "standard")) // Happens if HP goes back above 50%.
+                )
+            )
+        );
+        consumer.accept(
+            MiscUtilsKt.cobblemonResource("eiscue"),
+            new BattleForm(
+                PokemonTransformation.of(PokemonFeatures.single("penguin_head", "ice_face")),
+                Map.of("noice", PokemonTransformation.of(PokemonFeatures.single("penguin_head", "noice_face")))
+            )
+        );
         this.createBasic(consumer, "meloetta", "song_forme", "aria", "pirouette");
         this.createBasic(consumer, "mimikyu", "disguise_form", "disguised", "busted");
         this.createBasic(consumer, "minior", "meteor_shield", "shield", "meteor");

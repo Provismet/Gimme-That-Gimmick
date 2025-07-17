@@ -29,6 +29,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         zMoves(translationBuilder);
         gmaxEffects(translationBuilder);
         formChanges(translationBuilder);
+        battleMessages(translationBuilder);
 
         translationBuilder.add(GTGItemTags.GIMMICK_KEY_ITEMS, "Gimmick Key Items");
         translationBuilder.add(GTGItemTags.KEY_STONES, "Grants Mega Evolution");
@@ -544,6 +545,11 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.REIGNS_OF_UNITY, "Reigns of Unity", "Used to unite Calyrex with its steed");
         addItemWithTooltip(translationBuilder, GTGItems.ROTOM_CATALOG, "Rotom Catalog", "A catalog of appliances for Rotom to possess");
         addItemWithTooltip(translationBuilder, GTGItems.ZYGARDE_CUBE, "Zygarde Cube", "Changes the amount of cells Zygarde has");
+    }
+
+    private void battleMessages (TranslationBuilder translationBuilder) {
+        translationBuilder.add("cobblemon.battle.formechange.default.temporary.end", "%1$s changed to its base form.");
+        translationBuilder.add("cobblemon.battle.activate.zerotohero", "%1$s underwent a heroic transformation!");
     }
     
     public static String[] zCrystalTooltip (String type) {

@@ -5,7 +5,7 @@
     }
   },
   "forms": {
-    "noice_face": {
+    "noice": {
       "features": {
         "penguin_head": "noice_face"
       }

@@ -5,6 +5,11 @@
     }
   },
   "forms": {
+    "": {
+      "features": {
+        "blazing_mode": "standard"
+      }
+    },
     "zen": {
       "features": {
         "blazing_mode": "zen"
