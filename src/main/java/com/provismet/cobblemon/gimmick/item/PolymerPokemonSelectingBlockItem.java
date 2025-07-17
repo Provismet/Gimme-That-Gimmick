@@ -92,4 +92,9 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
     public TypedActionResult<ItemStack> interactGeneralBattle (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull BattleActor battleActor) {
         return TypedActionResult.fail(itemStack);
     }
+
+    @Override
+    public String getTooltipTranslationKey (int lineNumber) {
+        return this.getTranslationKey() + ".tooltip." + lineNumber;
+    }
 }

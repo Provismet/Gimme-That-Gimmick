@@ -38,4 +38,9 @@ public class PolymerHeldItem extends SimplePolymerItem implements NumericalToolt
             tooltip.add(Text.translatable(this.getTooltipTranslationKey(i)).formatted(Formatting.GRAY));
         }
     }
+
+    @Override
+    public String getTooltipTranslationKey (int lineNumber) {
+        return this.getTranslationKey() + ".tooltip." + lineNumber;
+    }
 }
