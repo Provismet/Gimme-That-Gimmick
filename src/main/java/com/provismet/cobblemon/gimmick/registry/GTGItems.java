@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.types.tera.TeraType;
 import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.pokemon.helditem.CobblemonHeldItemManager;
 import com.cobblemon.mod.common.util.MiscUtilsKt;
+import com.mojang.datafixers.util.Pair;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.api.data.component.MegaEvolution;
 import com.provismet.cobblemon.gimmick.item.PolymerBlockItemTextured;
@@ -37,6 +38,7 @@ import com.provismet.cobblemon.gimmick.item.zmove.TypedZCrystalItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -328,6 +330,11 @@ public abstract class GTGItems {
 
     public static void init () {
         CobblemonHeldItemManager.INSTANCE.registerStackRemap(stack -> stack.get(GTGItemDataComponents.SHOWDOWN_ID));
+        CobblemonHeldItemManager.INSTANCE.registerStackRemap(stack -> {
+            Pair<String, Integer> id = EnchantmentHelper.getEffectListAndLevel(stack, GTGEnchantmentComponents.SHOWDOWN_ID);
+            if (id == null) return null;
+            return id.getFirst();
+        });
     }
 
     @FunctionalInterface

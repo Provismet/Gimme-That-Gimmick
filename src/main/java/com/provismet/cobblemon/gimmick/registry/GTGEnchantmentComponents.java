@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick.registry;
 
+import com.mojang.serialization.Codec;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import eu.pb4.polymer.core.api.other.PolymerComponent;
 import net.minecraft.component.ComponentType;
@@ -14,6 +15,7 @@ public abstract class GTGEnchantmentComponents {
     public static final ComponentType<Unit> Z_RING = register("z_ring", builder -> builder.codec(Unit.CODEC));
     public static final ComponentType<Unit> DYNAMAX_BAND = register("dynamax_band", builder -> builder.codec(Unit.CODEC));
     public static final ComponentType<Unit> TERA_ORB = register("tera_orb", builder -> builder.codec(Unit.CODEC));
+    public static final ComponentType<String> SHOWDOWN_ID = register("showdown_id", builder -> builder.codec(Codec.STRING));
 
     private static <T> ComponentType<T> register (String path, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
         ComponentType<T> type = Registry.register(Registries.ENCHANTMENT_EFFECT_COMPONENT_TYPE, GimmeThatGimmickMain.identifier(path), builderOperator.apply(ComponentType.builder()).build());

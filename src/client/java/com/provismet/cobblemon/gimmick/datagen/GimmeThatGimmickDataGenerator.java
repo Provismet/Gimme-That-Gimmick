@@ -1,6 +1,7 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugEffectsGenerator;
+import com.provismet.cobblemon.gimmick.datagen.debug.DebugEnchantmentGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFormToggleGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFusionGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugHeldItemGenerator;
@@ -41,5 +42,6 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(DebugHeldItemGenerator::new);
 		pack.addProvider(DebugMegaStoneGenerator::new);
 		pack.addProvider(DebugFormToggleGenerator::new);
+		pack.addProvider(DebugEnchantmentGenerator::new);
 	}
 }
