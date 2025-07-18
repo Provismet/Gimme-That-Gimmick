@@ -12,9 +12,11 @@ import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemGroup;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
+import com.provismet.cobblemon.gimmick.util.DelayedTicker;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
 public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
     @Override
@@ -39,5 +41,7 @@ public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             GTGDynamicRegistries.loadRegistries(server.getRegistryManager());
         });
+
+        ServerTickEvents.START_SERVER_TICK.register(server -> DelayedTicker.runAll());
     }
 }

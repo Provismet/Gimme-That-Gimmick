@@ -4,29 +4,24 @@ import com.cobblemon.mod.common.api.pokemon.feature.IntSpeciesFeature;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.SpeciesFeatureUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.config.Options;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 public class DynamaxLevelHandler {
-    public static void update (Pokemon pokemon, ServerPlayerEntity player) {
-        if (!Options.shouldShowDynamaxLevel() || pokemon.getSpecies().getDynamaxBlocked()) return;
-
+    public static void update (Pokemon pokemon) {
         IntSpeciesFeature dmaxLevel = pokemon.getFeature("dynamax_level");
         if (dmaxLevel == null) {
-            dmaxLevel = new IntSpeciesFeature("dynamax_level", pokemon.getDmaxLevel());
-            pokemon.getFeatures().add(dmaxLevel);
-            pokemon.updateAspects();
+            pokemon.getFeatures().add(new IntSpeciesFeature("dynamax_level", pokemon.getDmaxLevel()));
         }
         else {
             dmaxLevel.setValue(pokemon.getDmaxLevel());
         }
-        pokemon.notify(new SpeciesFeatureUpdatePacket(() -> pokemon, pokemon.getSpecies().resourceIdentifier, dmaxLevel));
+        pokemon.updateAspects();
 
-        if (player != null) {
-            new SpeciesFeatureUpdatePacket(() -> pokemon, pokemon.getSpecies().resourceIdentifier, dmaxLevel).sendToPlayer(player);
+        if (Options.shouldShowDynamaxLevel()) {
+            pokemon.notify(new SpeciesFeatureUpdatePacket(
+                () -> pokemon,
+                pokemon.getSpecies().resourceIdentifier,
+                new IntSpeciesFeature("dynamax_level", pokemon.getDmaxLevel())
+            ));
         }
-    }
-
-    public static void update (Pokemon pokemon) {
-        update(pokemon, null);
     }
 }

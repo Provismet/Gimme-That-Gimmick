@@ -8,10 +8,10 @@
         "MoveActionResponseMixin",
         "PokemonBattleMixin",
         "PokemonMixin",
-        "PartyStoreMixin",
         "ShowdownActionRequestMixin",
         "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",
+        "SpeciesFeaturesMixin",
         "instructions.EndInstructionMixin",
         "instructions.StartInstructionMixin"
     ],
