@@ -30,15 +30,14 @@ However, users may create their items entirely though GTG's data-driven system i
 - Dynamax Level now appears as a progress bar in the summary.
 - Max Mushrooms are now growable crops.
 - Basic glowing effect for Z-Moves, Tera, and Dynamax.
-- Size changing for Dynamax.
+  - Toggleable in the config
+- Size changing for Dynamax
   - Including a Dynamax status effect 
 - Out of combat mega evolution
 - Translations for (the superior) British English
 - Optional durability mechanic for Tera Orbs
-  - Togglable in the config
-
-## Changes
-- Rewrote most item tooltips to be more concise and take up less space. 
+  - Toggleable in the config
+- Enchantment component for creating held items via enchanting
 
 ### Data Components
 New data components have been added to grant more power to servers.
@@ -61,6 +60,15 @@ Used exclusively by the `gimme-that-gimmick:data_driven_fusion` item. This compo
 
 `gimme-that-gimmick:form_toggle`  
 Used exclusively by the `gimme-that-gimmick:data_driven_toggle` item. This component describes the procedure for toggling a Pokémon between two forms.
+
+### Enchantment Components
+New component for enchantments.
+
+`gimme-that-gimmick:showdown_id`  
+Shares the same name as the item component version and has the same effect.
+
+## Changes
+- Rewrote most item tooltips to be more concise and take up less space.
 
 ## Bugfixes
 - Z-Crystals now change Arceus' type.
