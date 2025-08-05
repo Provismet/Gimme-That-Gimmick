@@ -50,7 +50,7 @@ public interface FormChangeFusionItem extends FormChangeItem {
                 }
             );
         }
-
+        pokemon.getAnyChangeObservable().emit(pokemon);
         return TypedActionResult.success(stack);
     }
 
