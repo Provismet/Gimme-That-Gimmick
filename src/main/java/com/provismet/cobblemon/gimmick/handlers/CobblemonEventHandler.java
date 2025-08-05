@@ -394,6 +394,10 @@ public abstract class CobblemonEventHandler {
             pokemon.getPersistentData().remove("prism_fusion");
         }
 
+        if (pokemon.getSpecies().showdownId().equalsIgnoreCase("greninja") && pokemon.getAspects().contains("ash")) {
+            new StringSpeciesFeature("battle_bond", "bond");
+        }
+
         if (pokemon.getAspects().contains("gmax")) {
             pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("dynamax_form"));
         }
@@ -465,6 +469,17 @@ public abstract class CobblemonEventHandler {
 
             if (pokemon.getEntity() != null) {
                 EffectsData.run(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), MiscUtilsKt.cobblemonResource("zygarde_complete"));
+            }
+            return Unit.INSTANCE;
+        }
+        if (pokemon.getSpecies().showdownId().equalsIgnoreCase("greninja") && formeChangeEvent.getFormeName().equalsIgnoreCase("ash")) {
+            formeChangeEvent.getBattle().dispatchToFront(() -> {
+                new StringSpeciesFeature("battle_bond", "ash").apply(pokemon);
+                return new UntilDispatch(() -> true);
+            });
+
+            if (pokemon.getEntity() != null) {
+                EffectsData.run(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), MiscUtilsKt.cobblemonResource("greninja_ash"));
             }
             return Unit.INSTANCE;
         }

@@ -17,6 +17,7 @@ const CobblemonCache = require("./sim/cobblemon-cache");
 const BagItems = require("./sim/bag-items");
 
 const moves = require("./data/moves");
+const abilities = require("./data/abilities");
 
 function startBattle(graalShowdown, battleId, requestMessages) {
   const battleStream = new BS.BattleStream();
@@ -123,4 +124,22 @@ moves.Moves["terablast"] = {
   secondary: null,
   target: "normal",
   type: "Normal",
+};
+
+abilities.Abilities["battlebond"] = {
+  onSourceAfterFaint(length, target, source, effect) {
+    if (effect?.effectType !== "Move")
+      return;
+    if (source.abilityState.battleBondTriggered)
+      return;
+    if (source.species.id === "greninjabond" && source.hp && !source.transformed && source.side.foePokemonLeft()) {
+      this.boost({ atk: 1, spa: 1, spe: 1 }, source, source, this.effect);
+      source.formeChange("Greninja-Ash")
+      source.abilityState.battleBondTriggered = true;
+    }
+  },
+  flags: { failroleplay: 1, noreceiver: 1, noentrain: 1, notrace: 1, failskillswap: 1, cantsuppress: 1 },
+  name: "Battle Bond",
+  rating: 3.5,
+  num: 210
 };
