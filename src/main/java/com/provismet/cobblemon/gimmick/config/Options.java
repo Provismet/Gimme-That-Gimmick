@@ -25,6 +25,7 @@ public abstract class Options {
     private static boolean applyBasicDynamaxGlow = true;
     private static boolean applyBasicTeraGlow = true;
     private static boolean showDynamaxLevel = true;
+    private static boolean allowMultipleMega = false;
 
     static {
         load();
@@ -66,6 +67,10 @@ public abstract class Options {
         return showDynamaxLevel;
     }
 
+    public static boolean shouldAllowMultipleOutOfCombatMegas () {
+        return allowMultipleMega;
+    }
+
     public static void save () {
         JsonObject json = new JsonBuilder()
             .append("override_showdown", overrideShowdown)
@@ -77,6 +82,7 @@ public abstract class Options {
             .append("use_default_dynamax_glow_visual", applyBasicDynamaxGlow)
             .append("use_default_tera_glow_visual", applyBasicTeraGlow)
             .append("show_dynamax_level", showDynamaxLevel)
+            .append("allow_multiple_out_of_battle_megas", allowMultipleMega)
             .getJson();
 
         try (FileWriter writer = new FileWriter(FILE)) {
@@ -101,6 +107,7 @@ public abstract class Options {
                 reader.getBoolean("use_default_dynamax_glow_visual").ifPresent(val -> applyBasicDynamaxGlow = val);
                 reader.getBoolean("use_default_tera_glow_visual").ifPresent(val -> applyBasicTeraGlow = val);
                 reader.getBoolean("show_dynamax_level").ifPresent(val -> showDynamaxLevel = val);
+                reader.getBoolean("allow_multiple_out_of_battle_megas").ifPresent(val -> allowMultipleMega = val);
             }
         }
         catch (FileNotFoundException e) {

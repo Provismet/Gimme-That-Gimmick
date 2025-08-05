@@ -7,6 +7,8 @@ import com.provismet.cobblemon.gimmick.api.data.PokemonRequirements;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 
+import java.util.List;
+
 /**
  * Used as a data component by all mega stones, both coded and data-driven ones.
  *
@@ -16,6 +18,18 @@ import net.minecraft.network.codec.PacketCodec;
  */
 public record MegaEvolution (PokemonRequirements pokemon, PokemonFeatures onApply, PokemonFeatures onRemove) {
     public static final MegaEvolution DEFAULT = MegaEvolution.create("none");
+    public static final MegaEvolution RAYQUAZA = new MegaEvolution(
+        new PokemonRequirements(
+            List.of("rayquaza"),
+            List.of(),
+            List.of(),
+            List.of(),
+            List.of("dragonascent"),
+            List.of()
+        ),
+        PokemonFeatures.single("mega_evolution", "mega"),
+        PokemonFeatures.single("mega_evolution", "none")
+    );
 
     public static final Codec<MegaEvolution> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         PokemonRequirements.CODEC.fieldOf("pokemon").forGetter(MegaEvolution::pokemon),

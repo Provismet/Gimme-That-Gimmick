@@ -49,11 +49,11 @@ public class MegaHelper {
         return pokemon.getAspects().stream().anyMatch(MEGA_ASPECTS::contains) || pokemon.getPersistentData().contains("is_mega");
     }
 
-    public static boolean megaEvolve (Pokemon pokemon) {
+    public static boolean megaEvolve (Pokemon pokemon, boolean inBattle) {
         ItemStack megaStone = pokemon.heldItem();
         MegaEvolution mega = megaStone.getOrDefault(GTGItemDataComponents.MEGA_EVOLUTION, MegaEvolution.DEFAULT);
 
-        if (mega.pokemon().matches(pokemon)) {
+        if (inBattle || mega.pokemon().matches(pokemon) || MegaEvolution.RAYQUAZA.pokemon().matches(pokemon)) {
             mega.onApply().apply(pokemon);
             pokemon.getPersistentData().putBoolean("is_mega", true);
 

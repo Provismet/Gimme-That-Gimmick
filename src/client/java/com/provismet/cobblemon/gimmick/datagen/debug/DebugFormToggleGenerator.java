@@ -60,11 +60,15 @@ public class DebugFormToggleGenerator extends FormChangeToggleItemProvider {
                         ),
                         List.of("normal", "alola"),
                         List.of(),
+                        List.of(),
+                        List.of(),
                         List.of()
                     ),
                     new PokemonRequirements(
                         List.of(),
                         List.of("normal"),
+                        List.of(),
+                        List.of(),
                         List.of(),
                         List.of()
                     ),

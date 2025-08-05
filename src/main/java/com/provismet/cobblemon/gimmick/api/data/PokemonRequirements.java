@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick.api.data;
 
+import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -18,12 +19,21 @@ import java.util.List;
  * @param requiredAspects List of aspects the Pokémon must have to pass the test. Ignored if empty.
  * @param blacklistedAspects List of aspects the Pokémon must not have to pass the test. Ignored if empty.
  */
-public record PokemonRequirements (List<String> speciesShowdownIds, List<String> formShowdownIds, List<String> requiredAspects, List<String> blacklistedAspects) {
+public record PokemonRequirements (
+    List<String> speciesShowdownIds,
+    List<String> formShowdownIds,
+    List<String> requiredAspects,
+    List<String> blacklistedAspects,
+    List<String> requiredMoves,
+    List<String> blacklistedMoves
+) {
     public static final Codec<PokemonRequirements> CODEC = RecordCodecBuilder.create(instance -> instance.group(
         Codec.STRING.listOf().optionalFieldOf("speciesShowdownIds", List.of()).forGetter(PokemonRequirements::speciesShowdownIds),
         Codec.STRING.listOf().optionalFieldOf("formShowdownIds", List.of()).forGetter(PokemonRequirements::formShowdownIds),
         Codecs.NON_EMPTY_STRING.listOf().optionalFieldOf("requiredAspects", List.of()).forGetter(PokemonRequirements::requiredAspects),
-        Codecs.NON_EMPTY_STRING.listOf().optionalFieldOf("blacklistedAspects", List.of()).forGetter(PokemonRequirements::blacklistedAspects)
+        Codecs.NON_EMPTY_STRING.listOf().optionalFieldOf("blacklistedAspects", List.of()).forGetter(PokemonRequirements::blacklistedAspects),
+        Codecs.NON_EMPTY_STRING.listOf().optionalFieldOf("requiredMoves", List.of()).forGetter(PokemonRequirements::requiredMoves),
+        Codecs.NON_EMPTY_STRING.listOf().optionalFieldOf("blacklistedMoves", List.of()).forGetter(PokemonRequirements::blacklistedMoves)
     ).apply(instance, PokemonRequirements::new));
 
     public static final PacketCodec<RegistryByteBuf, PokemonRequirements> PACKET_CODEC = PacketCodec.tuple(
@@ -35,18 +45,22 @@ public record PokemonRequirements (List<String> speciesShowdownIds, List<String>
         PokemonRequirements::requiredAspects,
         PacketCodecs.STRING.collect(PacketCodecs.toList()),
         PokemonRequirements::blacklistedAspects,
+        PacketCodecs.STRING.collect(PacketCodecs.toList()),
+        PokemonRequirements::requiredMoves,
+        PacketCodecs.STRING.collect(PacketCodecs.toList()),
+        PokemonRequirements::blacklistedMoves,
         PokemonRequirements::new
     );
 
-    public static final PokemonRequirements TRUE = new PokemonRequirements(List.of(), List.of(), List.of(), List.of());
-    public static final PokemonRequirements FALSE = new PokemonRequirements(List.of("IMPOSSIBLE_ID"), List.of(), List.of(), List.of()); // Ids are always lowercase.
+    public static final PokemonRequirements TRUE = new PokemonRequirements(List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
+    public static final PokemonRequirements FALSE = new PokemonRequirements(List.of("IMPOSSIBLE_ID"), List.of(), List.of(), List.of(), List.of(), List.of()); // Ids are always lowercase.
 
     public static PokemonRequirements species (String speciesId) {
-        return new PokemonRequirements(List.of(speciesId), List.of(), List.of(), List.of());
+        return new PokemonRequirements(List.of(speciesId), List.of(), List.of(), List.of(), List.of(), List.of());
     }
 
     public static PokemonRequirements speciesForm (String speciesId, String formId) {
-        return new PokemonRequirements(List.of(speciesId), List.of(formId), List.of(), List.of());
+        return new PokemonRequirements(List.of(speciesId), List.of(formId), List.of(), List.of(), List.of(), List.of());
     }
 
     public boolean matches (Pokemon pokemon) {
@@ -58,6 +72,21 @@ public record PokemonRequirements (List<String> speciesShowdownIds, List<String>
         }
         for (String aspect : this.blacklistedAspects) {
             if (pokemon.getAspects().contains(aspect)) return false;
+        }
+        for (String moveName : this.requiredMoves) {
+            boolean hasMove = false;
+            for (Move move : pokemon.getMoveSet()) {
+                if (move.getName().equalsIgnoreCase(moveName)) {
+                    hasMove = true;
+                    break;
+                }
+            }
+            if (!hasMove) return false;
+        }
+        for (String moveName : this.blacklistedMoves) {
+            for (Move move : pokemon.getMoveSet()) {
+                if (move.getName().equalsIgnoreCase(moveName)) return false;
+            }
         }
 
         return true;
