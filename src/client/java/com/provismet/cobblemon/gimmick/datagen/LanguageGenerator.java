@@ -550,7 +550,6 @@ public class LanguageGenerator extends LilyLanguageProvider {
     private void battleMessages (TranslationBuilder translationBuilder) {
         translationBuilder.add("cobblemon.battle.formechange.default.temporary.end", "%1$s changed to its base form.");
         translationBuilder.add("cobblemon.battle.activate.zerotohero", "%1$s underwent a heroic transformation!");
-        translationBuilder.add("cobblemon.battle.activate.battlebond", "%1$s is resonating with its trainer!");
     }
     
     public static String[] zCrystalTooltip (String type) {
