@@ -94,7 +94,7 @@ public abstract class GTGItems {
     public static final MegaStoneItem METAGROSSITE = registerMegaStone("metagrossite", "metagross");
     public static final MegaStoneItem MEWTWONITE_X = registerMegaStone("mewtwonitex", "mewtwo", "mega_x");
     public static final MegaStoneItem MEWTWONITE_Y = registerMegaStone("mewtwonitey", "mewtwo", "mega_y");
-    public static final MegaStoneItem PIDGEOTITE = registerMegaStone("pidgeotite", "pidgeotite");
+    public static final MegaStoneItem PIDGEOTITE = registerMegaStone("pidgeotite", "pidgeot");
     public static final MegaStoneItem PINSIRITE = registerMegaStone("pinsirite", "pinsir");
     public static final MegaStoneItem SABLENITE = registerMegaStone("sablenite", "sableye");
     public static final MegaStoneItem SALAMENCITE = registerMegaStone("salamencite", "salamence");
