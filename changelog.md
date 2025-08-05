@@ -2,6 +2,7 @@
 - Added aspects for tera types.
   - Makes tera models possible for servers.
 - PokemonRequirements now accepts conditions for the moveset.
+- Added transformation for Ash-Greninja.
 
 ## Bugfixes
 - Fixed mega evolution data on Pidgeotite.
