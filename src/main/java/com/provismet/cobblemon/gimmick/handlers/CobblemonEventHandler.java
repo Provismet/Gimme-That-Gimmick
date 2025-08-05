@@ -28,6 +28,8 @@ import com.cobblemon.mod.common.net.messages.client.battle.BattleTransformPokemo
 import com.cobblemon.mod.common.net.messages.client.battle.BattleUpdateTeamPokemonPacket;
 import com.cobblemon.mod.common.net.messages.client.pokemon.update.AbilityUpdatePacket;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.cobblemon.mod.common.pokemon.properties.AspectPropertyType;
+import com.cobblemon.mod.common.pokemon.properties.UnaspectPropertyType;
 import com.cobblemon.mod.common.util.MiscUtilsKt;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
@@ -96,12 +98,12 @@ public abstract class CobblemonEventHandler {
 
             player.swingHand(hand, true);
             if (!MegaHelper.hasMegaAspect(pokemon)) {
-                if (MegaHelper.checkForMega((ServerPlayerEntity) player)) {
+                if (!Options.shouldAllowMultipleOutOfCombatMegas() && MegaHelper.checkForMega((ServerPlayerEntity) player)) {
                     player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_exists").formatted(Formatting.RED), true);
                     return ActionResult.SUCCESS;
                 }
 
-                if (MegaHelper.megaEvolve(pokemon)) {
+                if (MegaHelper.megaEvolve(pokemon, false)) {
                     List<String> prioritisedEffects = List.of(
                         "mega_evolution_outside" + pokemon.showdownId(),
                         "mega_evolution_outside"
@@ -239,7 +241,7 @@ public abstract class CobblemonEventHandler {
 
     private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
         megaEvent.getBattle().dispatchToFront(() -> {
-            MegaHelper.megaEvolve(megaEvent.getPokemon().getEffectedPokemon());
+            MegaHelper.megaEvolve(megaEvent.getPokemon().getEffectedPokemon(), true);
             megaEvent.getPokemon().sendUpdate();
             updatePokemonPackets(megaEvent.getBattle(), megaEvent.getPokemon(), true);
 
@@ -319,6 +321,12 @@ public abstract class CobblemonEventHandler {
                 GlowHandler.applyTeraGlow(pokemon.getEntity());
                 pokemon.getPersistentData().putBoolean("tera", true);
             }
+            String teraAspect = "tera_" + pokemon.getTeraType().showdownId();
+            pokemon.getPersistentData().putString("tera_aspect", teraAspect);
+            terastallizationEvent.getBattle().dispatchToFront(() -> {
+                AspectPropertyType.INSTANCE.fromString(teraAspect).apply(pokemon);
+                return new UntilDispatch(() -> true);
+            });
 
             List<String> prioritisedEffects = List.of(
                 "terastallization_" + pokemon.getTeraType().showdownId(),
@@ -368,6 +376,11 @@ public abstract class CobblemonEventHandler {
     public static void resetBattleForms (Pokemon pokemon) {
         MegaHelper.megaDevolve(pokemon);
         pokemon.getPersistentData().remove("is_tera");
+        if (pokemon.getPersistentData().contains("tera_aspect")) {
+            String aspect = pokemon.getPersistentData().getString("tera_aspect");
+            UnaspectPropertyType.INSTANCE.fromString(aspect).apply(pokemon);
+        }
+
         GTGDynamicRegistries.battleForms.getOrEmpty(pokemon.getSpecies().getResourceIdentifier())
             .ifPresent(form -> form.defaultForm().features().apply(pokemon));
 
@@ -398,6 +411,7 @@ public abstract class CobblemonEventHandler {
 
         pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect")); // Ogerpon
         pokemon.updateAspects();
+        pokemon.getAnyChangeObservable().emit(pokemon);
     }
 
     public static void updatePokemonPackets (PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
