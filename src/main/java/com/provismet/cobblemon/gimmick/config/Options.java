@@ -5,18 +5,21 @@ import com.google.gson.JsonObject;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.lilylib.util.json.JsonBuilder;
 import com.provismet.lilylib.util.json.JsonReader;
+import net.fabricmc.loader.api.FabricLoader;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 public abstract class Options {
-    private static final String FILE = "./config/gimme-that-gimmick.json";
+    private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("gimme-that-gimmick.json");
 
     private static boolean overrideShowdown = true;
+    private static boolean megaEvolution = true;
+    private static boolean zMoves = true;
+    private static boolean dynamax = true;
+    private static boolean terastal = true;
     private static boolean powerSpotRequired = true;
     private static int powerSpotRange = 30;
     private static float dynamaxScaleFactor = 4;
@@ -33,6 +36,22 @@ public abstract class Options {
 
     public static boolean shouldOverrideShowdown () {
         return overrideShowdown;
+    }
+
+    public static boolean enabledMegaEvolution () {
+        return megaEvolution;
+    }
+
+    public static boolean enabledZMoves () {
+        return zMoves;
+    }
+
+    public static boolean enabledDynamax () {
+        return dynamax;
+    }
+
+    public static boolean enabledTerastal () {
+        return terastal;
     }
 
     public static int getPowerSpotRange () {
@@ -74,6 +93,10 @@ public abstract class Options {
     public static void save () {
         JsonObject json = new JsonBuilder()
             .append("override_showdown", overrideShowdown)
+            .append("enable_mega_evolution", megaEvolution)
+            .append("enable_z-moves", zMoves)
+            .append("enable_dynamax", dynamax)
+            .append("enable_terastallization", terastal)
             .append("dynamax_power_spot_range", powerSpotRange)
             .append("dynamax_power_spot_required", powerSpotRequired)
             .append("dynamax_scale_factor", dynamaxScaleFactor)
@@ -85,8 +108,7 @@ public abstract class Options {
             .append("allow_multiple_out_of_battle_megas", allowMultipleMega)
             .getJson();
 
-        try (FileWriter writer = new FileWriter(FILE)) {
-            Files.createDirectories(Path.of("./config"));
+        try (FileWriter writer = new FileWriter(FILE.toFile())) {
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(json));
         }
         catch (IOException e) {
@@ -96,9 +118,13 @@ public abstract class Options {
 
     public static void load () {
         try {
-            JsonReader reader = JsonReader.file(new File(FILE));
+            JsonReader reader = JsonReader.file(FILE.toFile());
             if (reader != null) {
                 reader.getBoolean("override_showdown").ifPresent(val -> overrideShowdown = val);
+                reader.getBoolean("enable_mega_evolution").ifPresent(val -> megaEvolution = val);
+                reader.getBoolean("enable_z-moves").ifPresent(val -> zMoves = val);
+                reader.getBoolean("enable_dynamax").ifPresent(val -> dynamax = val);
+                reader.getBoolean("enable_terastallization").ifPresent(val -> terastal = val);
                 reader.getInteger("dynamax_power_spot_range").ifPresent(val -> powerSpotRange = val);
                 reader.getBoolean("dynamax_power_spot_required").ifPresent(val -> powerSpotRequired = val);
                 reader.getFloat("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);

@@ -3,6 +3,7 @@ package com.provismet.cobblemon.gimmick.handlers;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
+import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.events.battles.BattleStartedPostEvent;
 import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
@@ -21,6 +22,7 @@ import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.player.GeneralPlayerData;
 import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.battles.ActiveBattlePokemon;
+import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.dispatch.UntilDispatch;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
@@ -163,6 +165,11 @@ public abstract class CobblemonEventHandler {
     }
 
     private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
+        for (BattleActor actor : battleEvent.getBattle().getActors()) {
+            if (!(actor instanceof PlayerBattleActor)) continue;
+            actor.getPokemonList().forEach(battlePokemon -> CobblemonEventHandler.resetBattleForms(battlePokemon.getEffectedPokemon()));
+        }
+
         for (ServerPlayerEntity player : battleEvent.getBattle().getPlayers()) {
             CobblemonEventHandler.resetBattlePokemon(player);
             GeneralPlayerData data = Cobblemon.INSTANCE.getPlayerDataManager().getGenericData(player);
@@ -173,26 +180,21 @@ public abstract class CobblemonEventHandler {
             boolean hasTeraOrb = false;
             ItemStack teraOrb = null;
             for (ItemStack item : player.getEquippedItems()) {
-                if (GimmickCheck.isKeyStone(item)) hasKeyStone = true;
-                if (GimmickCheck.isZRing(item)) hasZRing = true;
-                if (GimmickCheck.isDynamaxBand(item)) hasDynamax = true;
-                if (GimmickCheck.isTeraOrb(item)) {
+                if (Options.enabledMegaEvolution() && GimmickCheck.isKeyStone(item)) hasKeyStone = true;
+                if (Options.enabledZMoves() && GimmickCheck.isZRing(item)) hasZRing = true;
+                if (Options.enabledDynamax() && GimmickCheck.isDynamaxBand(item)) hasDynamax = true;
+                if (Options.enabledTerastal() && GimmickCheck.isTeraOrb(item)) {
                     hasTeraOrb = true;
                     teraOrb = item;
                 }
             }
-            if(hasTeraOrb){
+            if (hasTeraOrb) {
                 PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
-                boolean hasTerapagos = false;
-                for(Pokemon partyMons: playerPartyStore){
-                    if(partyMons.getSpecies().getName().equals("Terapagos")){
-                        hasTerapagos = true;
+                for (Pokemon partyMons: playerPartyStore) {
+                    if (partyMons.getSpecies().getName().equals("Terapagos")) {
+                        teraOrb.setDamage(0);
                         break;
                     }
-                }
-
-                if(hasTerapagos){
-                    teraOrb.setDamage(0);
                 }
             }
 
@@ -202,8 +204,8 @@ public abstract class CobblemonEventHandler {
             if (hasZRing) data.getKeyItems().add(Gimmicks.Z_RING);
             else data.getKeyItems().remove(Gimmicks.Z_RING);
 
-            boolean powerSpotPossible = !Options.isPowerSpotRequired() || isBlockNearby(player, Options.getPowerSpotRange());
-            if (hasDynamax && !hasTeraOrb && powerSpotPossible) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
+            hasDynamax = hasDynamax && (!Options.isPowerSpotRequired() || isPowerSpotNearby(player, Options.getPowerSpotRange()));
+            if (hasDynamax && !hasTeraOrb) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
             else data.getKeyItems().remove(Gimmicks.DYNAMAX_BAND);
 
             if (hasTeraOrb) data.getKeyItems().add(Gimmicks.TERA_ORB);
@@ -221,7 +223,7 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static boolean isBlockNearby(ServerPlayerEntity player, int radius) {
+    private static boolean isPowerSpotNearby (ServerPlayerEntity player, int radius) {
         BlockPos playerPos = player.getBlockPos();
         ServerWorld world = player.getServerWorld();
 
