@@ -1,10 +1,8 @@
 ## Additions
-- Added aspects for tera types.
-  - Makes tera models possible for servers.
-- PokemonRequirements now accepts conditions for the moveset.
-- Added transformation for Ash-Greninja.
+- Added reload command to reload the config without rebooting the server.
+- Added config options to disable certain gimmicks.
+- Added grass and podzol to the block tag for Max Mushroom planting.
 
 ## Bugfixes
-- Fixed mega evolution data on Pidgeotite.
-- In-battle mega evolutions will now apply a default `mega_evolution=mega` when the Pokemon's held item has no mega data.
-- Rayquaza with Dragon Ascent can now mega evolve out of combat.
+- Fixed Tera Orb not repairing itself when using a healer.
+- Fixed weird targeting error when Mega Evolving Rayquaza on the same turn as using Outrage. (Likely fixes more similar issues.)
