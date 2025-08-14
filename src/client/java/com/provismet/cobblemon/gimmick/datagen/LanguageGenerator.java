@@ -49,6 +49,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("message.overlay.gimmethatgimmick.no", "No");
 
         translationBuilder.add("gimmethatgimmick.itemGroup.name", "Gimme That Gimmick");
+        translationBuilder.add("command.gimme-that-gimmick.reload.success", "Reloaded Gimme That Gimmick config.");
     }
 
     public static <T extends Item & NumericalTooltipItem> void addItemWithTooltip (TranslationBuilder translationBuilder, T item, String name, String... tooltip) {
