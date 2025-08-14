@@ -509,7 +509,7 @@ public abstract class CobblemonEventHandler {
 
     private static Unit pokemonHealed (PokemonHealedEvent pokemonHealedEvent) {
         ServerPlayerEntity player = pokemonHealedEvent.getPokemon().getOwnerPlayer();
-        if (player != null && pokemonHealedEvent.getSource() != HealingSource.Force.INSTANCE) {
+        if (player != null && pokemonHealedEvent.getSource() == HealingSource.Force.INSTANCE) {
             for (ItemStack item : player.getEquippedItems()) {
                 if (item.isIn(GTGItemTags.BREAKABLE_TERA_ORBS)) {
                     item.setDamage(0);
