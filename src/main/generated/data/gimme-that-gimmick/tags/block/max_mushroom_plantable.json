@@ -6,6 +6,8 @@
     },
     "minecraft:moss_block",
     "minecraft:mycelium",
+    "minecraft:grass_block",
+    "minecraft:podzol",
     "gimme-that-gimmick:power_spot"
   ]
 }

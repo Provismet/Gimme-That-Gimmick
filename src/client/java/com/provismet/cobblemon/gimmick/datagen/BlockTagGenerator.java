@@ -28,6 +28,8 @@ public class BlockTagGenerator extends FabricTagProvider.BlockTagProvider {
             .addOptionalTag(BlockTags.NYLIUM)
             .add(Blocks.MOSS_BLOCK)
             .add(Blocks.MYCELIUM)
+            .add(Blocks.GRASS_BLOCK)
+            .add(Blocks.PODZOL)
             .add(GTGBlocks.POWER_SPOT);
     }
 }
