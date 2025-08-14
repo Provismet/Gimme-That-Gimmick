@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.battles.InBattleMove;
 import com.cobblemon.mod.common.battles.MoveActionResponse;
 import com.cobblemon.mod.common.battles.MoveTarget;
 import com.cobblemon.mod.common.battles.ShowdownMoveset;
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,20 +47,22 @@ public abstract class MoveActionResponseMixin {
         }
 
         MoveTarget moveTarget = (gimmickID != null && gimmickMove != null) ? gimmickMove.getTarget() : move.getTarget();
-        if (moveTarget == null) moveTarget = move.getTarget();
 
         List<?> availableTargets = moveTarget.getTargetList().invoke(activeBattlePokemon);
-        if (availableTargets == null || availableTargets.isEmpty()) return true;
+        if (availableTargets == null || availableTargets.isEmpty()) {
+            GimmeThatGimmickMain.LOGGER.info("no available targets");
+            return true;
+        }
+        GimmeThatGimmickMain.LOGGER.info("Number of available targets: {}", availableTargets.size());
 
-        boolean isGimmickAOEInSingles =
-            ("terastal".equals(gimmickID) || "dynamax".equals(gimmickID)) &&
-                (moveTarget == MoveTarget.allAdjacent ||
-                    moveTarget == MoveTarget.allAdjacentFoes ||
-                    moveTarget == MoveTarget.adjacentFoe) &&
-                activeBattlePokemon.getBattle().getFormat().getBattleType() == BattleTypes.INSTANCE.getSINGLES();
+        boolean isGimmickAOEInSingles = ("terastal".equals(gimmickID) || "dynamax".equals(gimmickID))
+            && (moveTarget == MoveTarget.allAdjacent || moveTarget == MoveTarget.allAdjacentFoes || moveTarget == MoveTarget.adjacentFoe)
+            && activeBattlePokemon.getBattle().getFormat().getBattleType() == BattleTypes.INSTANCE.getSINGLES();
 
 
         if (targetPnx == null) {
+            GimmeThatGimmickMain.LOGGER.info("targetPnx is null");
+            GimmeThatGimmickMain.LOGGER.info("moveTarget = {}", moveTarget.name());
             if (activeBattlePokemon.getBattle().getFormat().getBattleType() != BattleTypes.INSTANCE.getSINGLES()
                 && moveTarget == MoveTarget.adjacentFoe) {
                 return true;
@@ -67,6 +70,7 @@ public abstract class MoveActionResponseMixin {
 
             return isGimmickAOEInSingles;
         }
+        GimmeThatGimmickMain.LOGGER.info("targetPnx = {}", targetPnx);
 
         var pair = activeBattlePokemon.getActor().getBattle().getActorAndActiveSlotFromPNX(targetPnx);
         var targetPokemon = pair.getSecond();
