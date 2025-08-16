@@ -50,7 +50,10 @@ public abstract class DynamaxEventHandler {
                     this.age = this.maxAge;
                 }
 
-                if (this.age == this.maxAge) pokemonEntity.removeStatusEffect(StatusEffects.GLOWING);
+                if (this.age == this.maxAge) {
+                    pokemonEntity.removeStatusEffect(StatusEffects.GLOWING);
+                    pokemonEntity.removeStatusEffect(GTGStatusEffects.DYNAMAX);
+                }
             }
         });
     }
