@@ -397,7 +397,7 @@ public abstract class CobblemonEventHandler {
         }
 
         if (pokemon.getSpecies().showdownId().equalsIgnoreCase("greninja") && pokemon.getAspects().contains("ash")) {
-            new StringSpeciesFeature("battle_bond", "bond");
+            new StringSpeciesFeature("battle_bond", "bond").apply(pokemon);
         }
 
         if (pokemon.getAspects().contains("gmax")) {
