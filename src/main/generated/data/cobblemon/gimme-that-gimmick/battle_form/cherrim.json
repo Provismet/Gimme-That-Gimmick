@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:cherrim_base",
     "features": {
       "blossom_form": "overcast"
     }
   },
   "forms": {
     "sunshine": {
+      "effect": "cobblemon:cherrim_sunshine",
       "features": {
         "blossom_form": "sunshine"
       }

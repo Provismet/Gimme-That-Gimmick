@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:wishiwashi_base",
     "features": {
       "schooling_form": "solo"
     }
   },
   "forms": {
     "school": {
+      "effect": "cobblemon:wishiwashi_school",
       "features": {
         "schooling_form": "school"
       }

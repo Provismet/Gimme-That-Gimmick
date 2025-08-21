@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:eiscue_base",
     "features": {
       "penguin_head": "ice_face"
     }
   },
   "forms": {
     "noice": {
+      "effect": "cobblemon:eiscue_noice",
       "features": {
         "penguin_head": "noice_face"
       }

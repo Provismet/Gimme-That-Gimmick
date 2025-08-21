@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:meloetta_base",
     "features": {
       "song_forme": "aria"
     }
   },
   "forms": {
     "pirouette": {
+      "effect": "cobblemon:meloetta_pirouette",
       "features": {
         "song_forme": "pirouette"
       }

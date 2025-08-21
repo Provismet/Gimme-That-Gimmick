@@ -1,16 +1,19 @@
 {
   "default": {
+    "effect": "cobblemon:cramorant_base",
     "features": {
       "missile_form": "none"
     }
   },
   "forms": {
     "gorging": {
+      "effect": "cobblemon:cramorant_gorging",
       "features": {
         "missile_form": "gorging"
       }
     },
     "gulping": {
+      "effect": "cobblemon:cramorant_gulping",
       "features": {
         "missile_form": "gulping"
       }

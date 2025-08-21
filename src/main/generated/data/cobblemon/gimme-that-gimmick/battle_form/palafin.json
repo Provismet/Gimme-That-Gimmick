@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:palafin_base",
     "features": {
       "dolphin_form": "zero"
     }
   },
   "forms": {
     "hero": {
+      "effect": "cobblemon:palafin_hero",
       "features": {
         "dolphin_form": "hero"
       }

@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:mimikyu_base",
     "features": {
       "disguise_form": "disguised"
     }
   },
   "forms": {
     "busted": {
+      "effect": "cobblemon:mimikyu_busted",
       "features": {
         "disguise_form": "busted"
       }

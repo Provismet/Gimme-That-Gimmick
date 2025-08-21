@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:minior_base",
     "features": {
       "meteor_shield": "shield"
     }
   },
   "forms": {
     "meteor": {
+      "effect": "cobblemon:minior_meteor",
       "features": {
         "meteor_shield": "meteor"
       }

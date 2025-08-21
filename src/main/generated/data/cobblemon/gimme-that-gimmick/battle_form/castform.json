@@ -1,21 +1,25 @@
 {
   "default": {
+    "effect": "cobblemon:castform_base",
     "features": {
       "forecast_form": "normal"
     }
   },
   "forms": {
     "rainy": {
+      "effect": "cobblemon:castform_rainy",
       "features": {
         "forecast_form": "rainy"
       }
     },
     "snowy": {
+      "effect": "cobblemon:castform_snowy",
       "features": {
         "forecast_form": "snowy"
       }
     },
     "sunny": {
+      "effect": "cobblemon:castform_sunny",
       "features": {
         "forecast_form": "sunny"
       }

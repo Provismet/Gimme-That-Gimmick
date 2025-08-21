@@ -69,5 +69,9 @@ public record BattleForm (PokemonTransformation defaultForm, Map<String, Pokemon
         public static PokemonTransformation of (PokemonFeatures features) {
             return new PokemonTransformation(features, Optional.empty());
         }
+
+        public static PokemonTransformation of (PokemonFeatures features, Identifier effectData) {
+            return new PokemonTransformation(features, Optional.of(effectData));
+        }
     }
 }

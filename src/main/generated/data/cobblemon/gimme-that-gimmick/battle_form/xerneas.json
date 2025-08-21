@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:xerneas_base",
     "features": {
       "life_mode": "neutral"
     }
   },
   "forms": {
     "active": {
+      "effect": "cobblemon:xerneas_active",
       "features": {
         "life_mode": "active"
       }

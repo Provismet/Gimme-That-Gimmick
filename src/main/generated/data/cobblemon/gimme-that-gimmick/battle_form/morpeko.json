@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:morpeko_base",
     "features": {
       "hunger_mode": "full_belly"
     }
   },
   "forms": {
     "hangry": {
+      "effect": "cobblemon:morpeko_hangry",
       "features": {
         "hunger_mode": "hangry"
       }

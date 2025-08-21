@@ -1,11 +1,13 @@
 {
   "default": {
+    "effect": "cobblemon:aegislash_base",
     "features": {
       "stance_forme": "shield"
     }
   },
   "forms": {
     "blade": {
+      "effect": "cobblemon:aegislash_blade",
       "features": {
         "stance_forme": "blade"
       }

@@ -12,6 +12,7 @@ import net.minecraft.util.Identifier;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class BattleFormGenerator extends BattleFormProvider {
     public BattleFormGenerator (FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
@@ -21,44 +22,36 @@ public class BattleFormGenerator extends BattleFormProvider {
     @Override
     protected void generate (RegistryWrapper.WrapperLookup wrapperLookup, BiConsumer<Identifier, BattleForm> consumer) {
         this.createBasic(consumer, "aegislash", "stance_forme", "shield", "blade");
-        consumer.accept(
-            MiscUtilsKt.cobblemonResource("castform"),
-            new BattleForm(
-                PokemonTransformation.of(PokemonFeatures.single("forecast_form", "normal")),
-                Map.of(
-                    "sunny", PokemonTransformation.of(PokemonFeatures.single("forecast_form", "sunny")),
-                    "rainy", PokemonTransformation.of(PokemonFeatures.single("forecast_form", "rainy")),
-                    "snowy", PokemonTransformation.of(PokemonFeatures.single("forecast_form", "snowy"))
-                )
+        this.createComplex(consumer,
+            "castform",
+            PokemonFeatures.single("forecast_form", "normal"),
+            Map.of(
+                "sunny", PokemonFeatures.single("forecast_form", "sunny"),
+                "rainy", PokemonFeatures.single("forecast_form", "rainy"),
+                "snowy", PokemonFeatures.single("forecast_form", "snowy")
             )
         );
-        consumer.accept(
-            MiscUtilsKt.cobblemonResource("cramorant"),
-            new BattleForm(
-                PokemonTransformation.of(PokemonFeatures.single("missile_form", "none")),
-                Map.of(
-                    "gulping", PokemonTransformation.of(PokemonFeatures.single("missile_form", "gulping")),
-                    "gorging", PokemonTransformation.of(PokemonFeatures.single("missile_form", "gorging"))
-                )
+        this.createComplex(consumer,
+            "cramorant",
+            PokemonFeatures.single("missile_form", "none"),
+            Map.of(
+                "gulping", PokemonFeatures.single("missile_form", "gulping"),
+                "gorging", PokemonFeatures.single("missile_form", "gorging")
             )
         );
         this.createBasic(consumer, "cherrim", "blossom_form", "overcast", "sunshine");
-        consumer.accept(
-            MiscUtilsKt.cobblemonResource("darmanitan"),
-            new BattleForm(
-                PokemonTransformation.of(PokemonFeatures.single("blazing_mode", "standard")),
-                Map.of(
-                    "zen", PokemonTransformation.of(PokemonFeatures.single("blazing_mode", "zen")),
-                    "", PokemonTransformation.of(PokemonFeatures.single("blazing_mode", "standard")) // Happens if HP goes back above 50%.
-                )
+        this.createComplex(consumer,
+            "darmanitan",
+            PokemonFeatures.single("blazing_mode", "standard"),
+            Map.of(
+                "zen", PokemonFeatures.single("blazing_mode", "zen"),
+                "", PokemonFeatures.single("blazing_mode", "standard") // Happens if HP goes back above 50%.
             )
         );
-        consumer.accept(
-            MiscUtilsKt.cobblemonResource("eiscue"),
-            new BattleForm(
-                PokemonTransformation.of(PokemonFeatures.single("penguin_head", "ice_face")),
-                Map.of("noice", PokemonTransformation.of(PokemonFeatures.single("penguin_head", "noice_face")))
-            )
+        this.createComplex(consumer,
+            "eiscue",
+            PokemonFeatures.single("penguin_head", "ice_face"),
+            Map.of("noice", PokemonFeatures.single("penguin_head", "noice_face"))
         );
         this.createBasic(consumer, "meloetta", "song_forme", "aria", "pirouette");
         this.createBasic(consumer, "mimikyu", "disguise_form", "disguised", "busted");
@@ -70,11 +63,25 @@ public class BattleFormGenerator extends BattleFormProvider {
     }
 
     private void createBasic (BiConsumer<Identifier, BattleForm> consumer, String speciesId, String featureName, String defaultValue, String formValue) {
+        Identifier pokemonId = MiscUtilsKt.cobblemonResource(speciesId);
         consumer.accept(
-            MiscUtilsKt.cobblemonResource(speciesId),
+            pokemonId,
             new BattleForm(
-                PokemonTransformation.of(PokemonFeatures.single(featureName, defaultValue)),
-                Map.of(formValue, PokemonTransformation.of(PokemonFeatures.single(featureName, formValue)))
+                PokemonTransformation.of(PokemonFeatures.single(featureName, defaultValue), pokemonId.withSuffixedPath("_base")),
+                Map.of(formValue, PokemonTransformation.of(PokemonFeatures.single(featureName, formValue), pokemonId.withSuffixedPath("_" + formValue)))
+            )
+        );
+    }
+
+    private void createComplex (BiConsumer<Identifier, BattleForm> consumer, String speciesId, PokemonFeatures defaultForm, Map<String, PokemonFeatures> alternateForms) {
+        Identifier pokemonId = MiscUtilsKt.cobblemonResource(speciesId);
+        consumer.accept(
+            pokemonId,
+            new BattleForm(
+                PokemonTransformation.of(defaultForm, pokemonId.withSuffixedPath("_base")),
+                alternateForms.entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, val -> PokemonTransformation.of(val.getValue(), pokemonId.withSuffixedPath("_" + val.getKey()))))
             )
         );
     }

@@ -1,16 +1,19 @@
 {
   "default": {
+    "effect": "cobblemon:darmanitan_base",
     "features": {
       "blazing_mode": "standard"
     }
   },
   "forms": {
     "": {
+      "effect": "cobblemon:darmanitan_",
       "features": {
         "blazing_mode": "standard"
       }
     },
     "zen": {
+      "effect": "cobblemon:darmanitan_zen",
       "features": {
         "blazing_mode": "zen"
       }
