@@ -9,7 +9,10 @@ import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class RotomCatalogItem extends PolymerPokemonSelectingItem implements FormChangeSelectionItem {
     public RotomCatalogItem (Settings settings, Item polymerItem, PolymerModelData modelData) {
@@ -27,7 +30,16 @@ public class RotomCatalogItem extends PolymerPokemonSelectingItem implements For
         new StringSpeciesFeature("appliance", appliance).apply(pokemon);
 
         if (pokemon.getEntity() != null) {
-            EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("rotom_catalog"));
+            if (pokemon.getEntity() != null) {
+                List<String> effects = List.of("rotom_catalog_" + appliance, "rotom_catalog");
+                for (String effectName : effects) {
+                    Identifier id = GimmeThatGimmickMain.identifier(effectName);
+                    if (EffectsData.get(pokemon.getEntity().getRegistryManager(), id).isPresent()) {
+                        EffectsData.run(pokemon.getEntity(), id);
+                        break;
+                    }
+                }
+            }
         }
     }
 }
