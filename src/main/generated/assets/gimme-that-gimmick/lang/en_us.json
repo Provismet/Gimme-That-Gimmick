@@ -4,6 +4,8 @@
   "block.gimme-that-gimmick.meteorite.tooltip.1": "A meteorite that enables Deoxys to change its form",
   "block.gimme-that-gimmick.power_spot": "Power Spot",
   "cobblemon.battle.activate.gmaxcentiferno": "%1$s became trapped in the fiery vortex!",
+  "cobblemon.battle.activate.terashell": "%1$s made its shell gleam! It's distorting type matchups!",
+  "cobblemon.battle.activate.terashift": "A glow surrounds %1$s!",
   "cobblemon.battle.activate.zerotohero": "%1$s underwent a heroic transformation!",
   "cobblemon.battle.damage.gmaxcannonade": "%1$s is hurt by the vortex!",
   "cobblemon.battle.damage.gmaxcentiferno": "%1$s is hurt by fiery vortex!",
