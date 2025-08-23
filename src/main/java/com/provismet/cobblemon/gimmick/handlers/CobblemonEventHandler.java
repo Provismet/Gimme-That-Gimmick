@@ -139,8 +139,12 @@ public abstract class CobblemonEventHandler {
         if (pokemonEntity != null) {
             if (Options.shouldApplyBasicZGlow()) GlowHandler.applyZGlow(pokemonEntity);
 
+            String type = (zMoveUsedEvent.getPokemon().getEffectedPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal ? crystal.type.getName() : zMoveUsedEvent.getPokemon().getEffectedPokemon().getPrimaryType().getName());
+            String species = zMoveUsedEvent.getPokemon().getEffectedPokemon().getSpecies().showdownId();
             List<String> prioritisedEffects = List.of(
-                "z_move_" + (zMoveUsedEvent.getPokemon().getEffectedPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal ? crystal.type.getName() : zMoveUsedEvent.getPokemon().getEffectedPokemon().getPrimaryType().getName()),
+                "z_move_" + species + "_" + type,
+                "z_move_" + species,
+                "z_move_" + type,
                 "z_move"
             );
 
@@ -331,6 +335,8 @@ public abstract class CobblemonEventHandler {
             });
 
             List<String> prioritisedEffects = List.of(
+                "terastallization_" + pokemon.getSpecies().showdownId() + "_" + pokemon.getTeraType().showdownId(),
+                "terastallization_" + pokemon.getSpecies().showdownId(),
                 "terastallization_" + pokemon.getTeraType().showdownId(),
                 "terastallization"
             );
