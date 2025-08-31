@@ -50,7 +50,7 @@ public interface FormChangeFusionItem extends FormChangeItem {
                 }
             );
         }
-        pokemon.getAnyChangeObservable().emit(pokemon);
+        pokemon.onChange(null);
         return TypedActionResult.success(stack);
     }
 
@@ -73,7 +73,7 @@ public interface FormChangeFusionItem extends FormChangeItem {
     }
 
     default void postMerge (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon, Pokemon absorbed) {
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.fusion", pokemon.getDisplayName(), absorbed.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.fusion", pokemon.getDisplayName(false), absorbed.getDisplayName(false)), true);
     }
 
     boolean canBeMerged (ItemStack stack, Pokemon other);

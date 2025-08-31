@@ -7,7 +7,6 @@ import com.cobblemon.mod.common.api.item.PokemonSelectingItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.ItemStackExtensionsKt;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
-import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import kotlin.Unit;
 import kotlin.collections.CollectionsKt;
 import net.minecraft.item.ItemStack;
@@ -38,10 +37,5 @@ public interface FormChangeItem extends PokemonSelectingItem {
         );
 
         return TypedActionResult.success(itemStack);
-    }
-
-    default boolean canUseOnPokemon (ItemStack stack, Pokemon pokemon) {
-        GimmeThatGimmickMain.LOGGER.info("checked default?");
-        return this.canUseOnPokemon(pokemon);
     }
 }

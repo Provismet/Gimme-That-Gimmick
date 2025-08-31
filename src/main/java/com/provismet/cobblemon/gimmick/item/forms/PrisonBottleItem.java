@@ -29,7 +29,7 @@ public class PrisonBottleItem extends PolymerPokemonSelectingItem implements For
     @Override
     public void applySpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "unbound").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.unbound", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.unbound", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("prison_bottle_apply"));
@@ -39,7 +39,7 @@ public class PrisonBottleItem extends PolymerPokemonSelectingItem implements For
     @Override
     public void removeSpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "confined").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.confined", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.prison.confined", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("prison_bottle_remove"));
@@ -47,7 +47,7 @@ public class PrisonBottleItem extends PolymerPokemonSelectingItem implements For
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getResourceIdentifier().toString().equals("cobblemon:hoopa");
     }
 

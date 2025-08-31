@@ -55,15 +55,10 @@ public class DataDrivenFusionItem extends AbstractDataDrivenFormItem implements 
     }
 
     @Override
-    public boolean canUseOnPokemon (ItemStack stack, Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         Fusion fusionData = stack.get(GTGItemDataComponents.FUSION);
 
         if (fusionData == null) return false;
         return fusionData.recipient().matches(pokemon);
-    }
-
-    @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
-        return false;
     }
 }

@@ -5,15 +5,14 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
-import com.cobblemon.mod.common.api.events.battles.BattleStartedPostEvent;
-import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
+import com.cobblemon.mod.common.api.events.battles.BattleStartedEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.FormeChangeEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.MegaEvolutionEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.TerastallizationEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.ZMoveUsedEvent;
 import com.cobblemon.mod.common.api.events.pokemon.HeldItemEvent;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonCapturedEvent;
-import com.cobblemon.mod.common.api.events.pokemon.PokemonSentPostEvent;
+import com.cobblemon.mod.common.api.events.pokemon.PokemonSentEvent;
 import com.cobblemon.mod.common.api.events.pokemon.healing.PokemonHealedEvent;
 import com.cobblemon.mod.common.api.item.HealingSource;
 import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeature;
@@ -168,7 +167,7 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
+    private static Unit battleStarted (BattleStartedEvent.Pre battleEvent) {
         for (BattleActor actor : battleEvent.getBattle().getActors()) {
             if (!(actor instanceof PlayerBattleActor)) continue;
             actor.getPokemonList().forEach(battlePokemon -> CobblemonEventHandler.resetBattleForms(battlePokemon.getEffectedPokemon()));
@@ -219,7 +218,7 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit battleEndHandler(BattleStartedPostEvent battleStartedPostEvent) {
+    private static Unit battleEndHandler(BattleStartedEvent.Post battleStartedPostEvent) {
         battleStartedPostEvent.getBattle().getOnEndHandlers().add(battle -> {
             battle.getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
             return Unit.INSTANCE;
@@ -423,7 +422,7 @@ public abstract class CobblemonEventHandler {
 
         pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect")); // Ogerpon
         pokemon.updateAspects();
-        pokemon.getAnyChangeObservable().emit(pokemon);
+        pokemon.onChange(null);
     }
 
     public static void updatePokemonPackets (PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
@@ -526,7 +525,7 @@ public abstract class CobblemonEventHandler {
         return Unit.INSTANCE;
     }
 
-    private static Unit pokemonSentOut (PokemonSentPostEvent event) {
+    private static Unit pokemonSentOut (PokemonSentEvent.Post event) {
         if (Options.shouldApplyBasicTeraGlow() && event.getPokemon().getPersistentData().contains("is_tera")) {
             GlowHandler.applyTeraGlow(event.getPokemonEntity());
         }

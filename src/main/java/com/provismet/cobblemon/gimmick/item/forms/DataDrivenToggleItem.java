@@ -8,6 +8,7 @@ import eu.pb4.polymer.resourcepack.api.PolymerModelData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class DataDrivenToggleItem extends AbstractDataDrivenFormItem implements FormChangeToggleItem {
     public DataDrivenToggleItem (Settings settings, Item baseVanillaItem, PolymerModelData modelData) {
@@ -48,7 +49,7 @@ public class DataDrivenToggleItem extends AbstractDataDrivenFormItem implements 
     }
 
     @Override
-    public boolean canUseOnPokemon (ItemStack stack, Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         FormToggle toggle = stack.get(GTGItemDataComponents.FORM_TOGGLE);
         if (toggle != null) {
             return toggle.validPokemon().matches(pokemon);

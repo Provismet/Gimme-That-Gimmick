@@ -27,7 +27,7 @@ public class PolymerBlockItemTextured extends PolymerBlockItem {
     @Override
     public ActionResult useOnBlock (ItemUsageContext context) {
         ActionResult superResult = super.useOnBlock(context);
-        if (superResult == ActionResult.CONSUME) {
+        if (superResult == ActionResult.CONSUME && context.getPlayer() != null) {
             context.getWorld().playSound(
                 null,
                 context.getBlockPos().getX(),

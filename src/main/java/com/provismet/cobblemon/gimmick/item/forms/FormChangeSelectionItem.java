@@ -51,6 +51,6 @@ public interface FormChangeSelectionItem extends FormChangeItem {
     void applyForm (ServerPlayerEntity player, Pokemon pokemon, FormData form);
 
     default void postFormChange (ServerPlayerEntity player, ItemStack stack, Pokemon pokemon) {
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.form", pokemon.getDisplayName(), pokemon.getForm().getName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.form", pokemon.getDisplayName(false), pokemon.getForm().getName()), true);
     }
 }

@@ -27,7 +27,7 @@ public class GracideaFlowerItem extends PolymerPokemonSelectingItem implements F
     @Override
     public void applySpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "sky").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.gracidea.sky", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.gracidea.sky", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("gracidea_flower_apply"));
@@ -37,7 +37,7 @@ public class GracideaFlowerItem extends PolymerPokemonSelectingItem implements F
     @Override
     public void removeSpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "land").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.gracidea.land", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.gracidea.land", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("gracidea_flower_remove"));
@@ -45,7 +45,7 @@ public class GracideaFlowerItem extends PolymerPokemonSelectingItem implements F
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getResourceIdentifier().toString().equals("cobblemon:shaymin");
     }
 }

@@ -27,7 +27,7 @@ public class MeteoriteBlock extends GenericPolymerTexturedBlock {
             PartySelectCallbacks.INSTANCE.createFromPokemon(
                 serverPlayer,
                 PlayerExtensionsKt.party(serverPlayer).toGappyList().stream().filter(Objects::nonNull).toList(),
-                GTGItems.METEORITE::canUseOnPokemon,
+                pokemon -> GTGItems.METEORITE.canUseOnPokemon(GTGItems.METEORITE.getDefaultStack(), pokemon),
                 pokemon -> {
                     GTGItems.METEORITE.applyToPokemon(serverPlayer, GTGItems.METEORITE.getDefaultStack(), pokemon);
                     return Unit.INSTANCE;

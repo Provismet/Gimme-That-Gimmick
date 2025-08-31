@@ -72,7 +72,7 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
     }
 
     @Override
-    public boolean canUseOnBattlePokemon (@NotNull BattlePokemon battlePokemon) {
+    public boolean canUseOnBattlePokemon (@NotNull ItemStack stack, @NotNull BattlePokemon battlePokemon) {
         return false;
     }
 
