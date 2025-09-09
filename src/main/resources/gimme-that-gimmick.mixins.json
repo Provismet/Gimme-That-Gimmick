@@ -3,10 +3,8 @@
     "package": "com.provismet.cobblemon.gimmick.mixin",
     "compatibilityLevel": "JAVA_21",
     "server": [
-        "CobblemonNetworkMixin",
         "GraalShowdownUnbundlerMixin",
         "MoveActionResponseMixin",
-        "PokemonBattleMixin",
         "PokemonMixin",
         "ShowdownActionRequestMixin",
         "ShowdownInterpreterMixin",
