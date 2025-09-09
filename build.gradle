@@ -5,7 +5,7 @@ plugins {
 	id 'me.modmuss50.mod-publish-plugin' version '0.6.3'
 }
 
-version = project.mod_version
+version = project.mod_version + "+" + project.minecraft_version + (project.snapshot == "true" ? "-SNAPSHOT" : "")
 group = project.maven_group
 
 base {
@@ -150,7 +150,7 @@ publishMods {
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
-			version = project.mod_version + "-mc" + project.minecraft_version
+			version = project.mod_version + "-mc" + project.minecraft_version + (project.snapshot == "true" ? "-SNAPSHOT" : "")
 			artifactId = project.archives_base_name
 			from components.java
 		}
