@@ -571,7 +571,8 @@ class Pokemon {
     return false;
   }
   ignoringItem() {
-    return !!(this.itemState.knockedOff || this.battle.gen >= 5 && !this.isActive || !this.getItem().ignoreKlutz && this.hasAbility("klutz") || this.volatiles["embargo"] || this.battle.field.pseudoWeather["magicroom"]);
+    return !!(this.itemState.knockedOff || // Gen 3-4
+    this.battle.gen >= 5 && !this.isActive || !this.getItem().ignoreKlutz && this.hasAbility("klutz") || this.volatiles["embargo"] || this.battle.field.pseudoWeather["magicroom"]);
   }
   deductPP(move, amount, target) {
     const gen = this.battle.gen;

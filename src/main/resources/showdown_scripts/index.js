@@ -6,82 +6,101 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-// eslint-disable-next-line strict
+/*-----------------------------------------------------------------------------------------------------------------
+NOTE: The functions in this file are used by GraalShowdownService, the default Showdown environment for Cobblemon.
+For the corresponding SocketShowdownService methods, see cobbled-debug-server.ts. For where the interface is 
+defined and configured, See ShowdownService.kt on the  main Cobblemon repo .
+-----------------------------------------------------------------------------------------------------------------*/
 
-const BS = require("./sim/battle-stream");
-const Dex = require("./sim/dex").Dex;
+// eslint-disable-next-line strict
+const BS = require('./sim/battle-stream');
+const Cobblemon = require('./sim/cobblemon/cobblemon').Cobblemon
+const Dex = require('./sim/dex').Dex;
 
 const battleMap = new Map();
-const cobbledModId = "cobblemon";
-const CobblemonCache = require("./sim/cobblemon-cache");
-const BagItems = require("./sim/bag-items");
+const toID = Dex.toID;
 
 const moves = require("./data/moves");
 const abilities = require("./data/abilities");
 
 function startBattle(graalShowdown, battleId, requestMessages) {
-  const battleStream = new BS.BattleStream();
-  battleMap.set(battleId, battleStream);
+    const battleStream = new BS.BattleStream();
+    battleMap.set(battleId, battleStream);
 
-  // Join messages with new line
-  try {
-    for (const element of requestMessages) {
-      battleStream.write(element);
+    // Join messages with new line
+    try {
+        for (const element of requestMessages) {
+            battleStream.write(element);
+        }
+    } catch (err) {
+        graalShowdown.log(err.stack);
     }
-  } catch (err) {
-    graalShowdown.log(err.stack);
-  }
 
-  // Any battle output then gets written to the execution helper logging mechanism
-  (async () => {
-    for await (const output of battleStream) {
-      graalShowdown.sendFromShowdown(battleId, output);
-    }
-  })();
+    // Any battle output then gets written to the execution helper logging mechanism
+    (async () => {
+        for await (const output of battleStream) {
+            graalShowdown.sendFromShowdown(battleId, output);
+        }
+    })();
 }
 
 function sendBattleMessage(battleId, messages) {
-  const battleStream = battleMap.get(battleId);
-  for (const element of messages) {
-    battleStream.write(element);
+    const battleStream = battleMap.get(battleId);
+    for (const element of messages) {
+        battleStream.write(element);
+    }
+}
+
+function getTypeChart() {
+    return JSON.stringify(Dex.data.TypeChart);
+}
+
+function resetData(type) {
+    const registry = Cobblemon.getRegistry(type);
+    registry.reset();
+}
+
+function resetAll() {
+    for (const key of Cobblemon.registryKeys) {
+        Cobblemon.registries[key].reset();
+    }
+}
+
+function receiveData(data, type) {
+  const registry = Cobblemon.getRegistry(type);
+  const obj = () => { 
+    try {
+        // at the moment we only (re)serialize Species on the mod side, but prefer neat JSON first
+        return JSON.parse(data);
+    } catch {
+        // loose unstructured JS objects with embedded functions and stuff (abilities, moves, bag items, etc.)
+        return eval(`(${data})`);
+    }}
+  for (const [key, value] of Object.entries(obj())) {
+    registry.register(value, toID(key));
   }
+  registry.invalidate();
 }
 
-function getCobbledMoves() {
-  return JSON.stringify(Dex.mod(cobbledModId).moves.all());
+function receiveEntry(data, type) {
+    const registry = Cobblemon.getRegistry(type);
+    registry.register(data, toID(key));
+    registry.invalidate();
 }
 
-function getCobbledAbilityIds() {
-  return JSON.stringify(
-    Dex.mod(cobbledModId)
-      .abilities.all()
-      .map((ability) => ability.id)
-  );
+function invalidate(type) {
+    const registry = Cobblemon.getRegistry(type);
+    registry.invalidate();
 }
 
-function getCobbledItemIds() {
-  return JSON.stringify(
-    Dex.mod(cobbledModId)
-      .items.all()
-      .map((item) => item.id)
-  );
+function getData(type) {
+    const registry = Cobblemon.getRegistry(type);
+    return JSON.stringify(registry.all());
 }
 
-function receiveSpeciesData(speciesArray) {
-  CobblemonCache.resetSpecies();
-  speciesArray.forEach((speciesJson) => {
-    const speciesData = JSON.parse(speciesJson);
-    CobblemonCache.registerSpecies(speciesData);
-  });
-}
-
-function afterCobbledSpeciesInit() {
-  Dex.modsLoaded = false;
-  Dex.includeMods();
-}
-
-function receiveBagItemData(itemId, bagItem) {
-  BagItems.set(itemId, eval(`(${bagItem})`));
+function afterSpeciesInit() {
+    Dex.modsLoaded = false;
+    Dex.includeMods();
 }
 
 moves.Moves["terablast"] = {
