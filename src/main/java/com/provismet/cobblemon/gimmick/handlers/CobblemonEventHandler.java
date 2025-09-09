@@ -67,6 +67,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -138,7 +139,10 @@ public abstract class CobblemonEventHandler {
         if (pokemonEntity != null) {
             if (Options.shouldApplyBasicZGlow()) GlowHandler.applyZGlow(pokemonEntity);
 
-            String type = (zMoveUsedEvent.getPokemon().getEffectedPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal ? crystal.type.getName() : zMoveUsedEvent.getPokemon().getEffectedPokemon().getPrimaryType().getName());
+            String type = (zMoveUsedEvent.getPokemon().getEffectedPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal ?
+                crystal.type.getName() :
+                zMoveUsedEvent.getPokemon().getEffectedPokemon().getPrimaryType().getName())
+                    .toLowerCase(Locale.ROOT);
             String species = zMoveUsedEvent.getPokemon().getEffectedPokemon().getSpecies().showdownId();
             List<String> prioritisedEffects = List.of(
                 "z_move_" + species + "_" + type,
@@ -256,7 +260,7 @@ public abstract class CobblemonEventHandler {
         Pokemon pokemon = megaEvent.getPokemon().getEffectedPokemon();
         if (pokemon.getEntity() != null) {
             List<String> prioritisedEffects = List.of(
-                "mega_evolution_" + megaEvent.getPokemon().getEffectedPokemon().showdownId(),
+                "mega_evolution_" + megaEvent.getPokemon().getEffectedPokemon().showdownId().toLowerCase(Locale.ROOT),
                 "mega_evolution"
             );
 
@@ -334,9 +338,9 @@ public abstract class CobblemonEventHandler {
             });
 
             List<String> prioritisedEffects = List.of(
-                "terastallization_" + pokemon.getSpecies().showdownId() + "_" + pokemon.getTeraType().showdownId(),
-                "terastallization_" + pokemon.getSpecies().showdownId(),
-                "terastallization_" + pokemon.getTeraType().showdownId(),
+                "terastallization_" + pokemon.getSpecies().showdownId().toLowerCase(Locale.ROOT) + "_" + pokemon.getTeraType().showdownId().toLowerCase(Locale.ROOT),
+                "terastallization_" + pokemon.getSpecies().showdownId().toLowerCase(Locale.ROOT),
+                "terastallization_" + pokemon.getTeraType().showdownId().toLowerCase(Locale.ROOT),
                 "terastallization"
             );
 
@@ -495,7 +499,14 @@ public abstract class CobblemonEventHandler {
             World world = pokemon.getEntity().getWorld();
             world.getRegistryManager().getOptionalWrapper(GTGDynamicRegistryKeys.BATTLE_FORM)
                 .flatMap(registry -> registry.getOptional(BattleForm.key(pokemon)))
-                .ifPresent(battleForm -> battleForm.value().applyForm(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), formeChangeEvent.getFormeName()));
+                .ifPresent(battleForm -> battleForm.value()
+                    .applyForm(
+                        pokemon.getEntity(),
+                        other.orElse(null),
+                        formeChangeEvent.getBattle(),
+                        formeChangeEvent.getFormeName()
+                    )
+                );
         }
 
         return Unit.INSTANCE;
