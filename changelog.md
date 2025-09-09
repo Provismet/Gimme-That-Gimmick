@@ -1,7 +1,7 @@
-## Additions
-- Added default effect IDs to all built-in in-battle form changes.
-- Add extra effect ids for form changes in Rotom Catalogue and Meteorite.
-- Add extra effect ids for tera and z-moves.
+Updating to Cobblemon 1.7.0!
+
+## Changes
+- The Dynamax global species feature is now hardcoded instead of being in the internal datapack.
 
 ## Bugfixes
-- Ash Greninja's state now correctly reverts at the end of battle.
+- The Dynamax global species feature now respects the maximum Dynamax Level set in the Cobblemon config.
