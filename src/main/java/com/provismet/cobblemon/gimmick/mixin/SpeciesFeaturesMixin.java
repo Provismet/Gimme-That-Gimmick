@@ -1,6 +1,5 @@
 package com.provismet.cobblemon.gimmick.mixin;
 
-import com.cobblemon.mod.common.api.pokemon.feature.GlobalSpeciesFeatures;
 import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeature;
 import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeatureProvider;
 import com.cobblemon.mod.common.api.pokemon.feature.SpeciesFeatures;
@@ -14,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class SpeciesFeaturesMixin {
     @Inject(method = "getFeature", at = @At("TAIL"), cancellable = true)
     private void addGlobals (String name, CallbackInfoReturnable<SpeciesFeatureProvider<? extends SpeciesFeature>> cir) {
-        if (cir.getReturnValue() == null && name.equals("dynamax_level") && Options.shouldShowDynamaxLevel()) {
-            cir.setReturnValue(GlobalSpeciesFeatures.INSTANCE.getFeature(name));
+        if (name.equals("dynamax_level") && !Options.shouldShowDynamaxLevel()) {
+            cir.setReturnValue(null);
         }
     }
 }
