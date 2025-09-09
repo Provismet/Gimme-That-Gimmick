@@ -1,6 +1,8 @@
 package com.provismet.cobblemon.gimmick;
 
 import com.provismet.cobblemon.gimmick.commands.GTGCommands;
+import com.provismet.cobblemon.gimmick.config.Options;
+import com.provismet.cobblemon.gimmick.features.DynamaxLevelFeature;
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.UltraBurstEventHandler;
@@ -21,6 +23,9 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer () {
+        Options.load();
+        DynamaxLevelFeature.register();
+
         PolymerResourcePackUtils.markAsRequired();
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 

@@ -30,10 +30,6 @@ public abstract class Options {
     private static boolean showDynamaxLevel = true;
     private static boolean allowMultipleMega = false;
 
-    static {
-        load();
-    }
-
     public static boolean shouldOverrideShowdown () {
         return overrideShowdown;
     }

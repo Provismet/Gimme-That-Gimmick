@@ -9,7 +9,6 @@
         "ShowdownActionRequestMixin",
         "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",
-        "SpeciesFeaturesMixin",
         "instructions.EndInstructionMixin",
         "instructions.StartInstructionMixin"
     ],
