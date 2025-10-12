@@ -33,6 +33,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.properties.AspectPropertyType;
 import com.cobblemon.mod.common.pokemon.properties.UnaspectPropertyType;
 import com.cobblemon.mod.common.util.MiscUtilsKt;
+import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
@@ -95,6 +96,10 @@ public abstract class CobblemonEventHandler {
         if (player.isSneaking() || !(entity instanceof PokemonEntity pokemonEntity) || !GimmickCheck.isUnenchantedKeyStone(player.getStackInHand(hand))) return ActionResult.PASS;
         if (pokemonEntity.getOwner() != player) {
             player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_not_yours").formatted(Formatting.RED), true);
+            return ActionResult.FAIL;
+        }
+        if (pokemonEntity.isBattling() || (player instanceof ServerPlayerEntity serverPlayer && PlayerExtensionsKt.isInBattle(serverPlayer))) {
+            player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_in_battle").formatted(Formatting.RED), true);
             return ActionResult.FAIL;
         }
 
