@@ -21,7 +21,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 public class GimmeThatGimmickServer implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer () {
-        PolymerResourcePackUtils.markAsRequired();
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 
         GTGDynamicRegistryKeys.register();
