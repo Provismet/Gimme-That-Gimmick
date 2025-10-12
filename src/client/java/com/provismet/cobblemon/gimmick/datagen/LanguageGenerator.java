@@ -77,6 +77,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
 
         translationBuilder.add("message.overlay.gimme-that-gimmick.mega_exists", "You already have a Mega Pokémon.");
         translationBuilder.add("message.overlay.gimme-that-gimmick.no_stone", "Your Pokémon is not holding its Mega Stone.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.mega_not_yours", "This is not your Pokémon.");
         addItemWithTooltip(translationBuilder, GTGItems.ABOMASITE, "Abomasite", megaTooltip.apply("Abomasnow"));
         addItemWithTooltip(translationBuilder, GTGItems.ABSOLITE, "Absolite", megaTooltip.apply("Absol"));
         addItemWithTooltip(translationBuilder, GTGItems.AERODACTYLITE, "Aerodactylite", megaTooltip.apply("Aerodactyl"));

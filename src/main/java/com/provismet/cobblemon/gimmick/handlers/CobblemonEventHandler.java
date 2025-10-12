@@ -92,46 +92,49 @@ public abstract class CobblemonEventHandler {
     }
 
     private static ActionResult megaEvolveOutside (PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
-        if (GimmickCheck.isUnenchantedKeyStone(player.getStackInHand(hand)) && entity instanceof PokemonEntity pokemonEntity && !player.isSneaking()) {
-            Pokemon pokemon = pokemonEntity.getPokemon();
-            if (pokemon.getPersistentData().contains("last_mega", NbtElement.LONG_TYPE) && Math.abs(world.getTime() - pokemon.getPersistentData().getLong("last_mega")) < 20) {
-                return ActionResult.FAIL;
+        if (player.isSneaking() || !(entity instanceof PokemonEntity pokemonEntity) || !GimmickCheck.isUnenchantedKeyStone(player.getStackInHand(hand))) return ActionResult.PASS;
+        if (pokemonEntity.getOwner() != player) {
+            player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_not_yours").formatted(Formatting.RED), true);
+            return ActionResult.FAIL;
+        }
+
+        Pokemon pokemon = pokemonEntity.getPokemon();
+        if (pokemon.getPersistentData().contains("last_mega", NbtElement.LONG_TYPE) && Math.abs(world.getTime() - pokemon.getPersistentData().getLong("last_mega")) < 20) {
+            return ActionResult.FAIL;
+        }
+
+        player.swingHand(hand, true);
+        if (!MegaHelper.hasMegaAspect(pokemon)) {
+            if (!Options.shouldAllowMultipleOutOfCombatMegas() && MegaHelper.checkForMega((ServerPlayerEntity) player)) {
+                player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_exists").formatted(Formatting.RED), true);
+                return ActionResult.SUCCESS;
             }
 
-            player.swingHand(hand, true);
-            if (!MegaHelper.hasMegaAspect(pokemon)) {
-                if (!Options.shouldAllowMultipleOutOfCombatMegas() && MegaHelper.checkForMega((ServerPlayerEntity) player)) {
-                    player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_exists").formatted(Formatting.RED), true);
-                    return ActionResult.SUCCESS;
-                }
+            if (MegaHelper.megaEvolve(pokemon, false)) {
+                List<String> prioritisedEffects = List.of(
+                    "mega_evolution_outside" + pokemon.showdownId(),
+                    "mega_evolution_outside"
+                );
 
-                if (MegaHelper.megaEvolve(pokemon, false)) {
-                    List<String> prioritisedEffects = List.of(
-                        "mega_evolution_outside" + pokemon.showdownId(),
-                        "mega_evolution_outside"
-                    );
-
-                    for (String id : prioritisedEffects) {
-                        Optional<RegistryEntry.Reference<EffectsData>> effectsData = EffectsData.get(pokemonEntity.getRegistryManager(), GimmeThatGimmickMain.identifier(id));
-                        if (effectsData.isPresent()) {
-                            effectsData.get().value().run(pokemonEntity);
-                            break;
-                        }
+                for (String id : prioritisedEffects) {
+                    Optional<RegistryEntry.Reference<EffectsData>> effectsData = EffectsData.get(pokemonEntity.getRegistryManager(), GimmeThatGimmickMain.identifier(id));
+                    if (effectsData.isPresent()) {
+                        effectsData.get().value().run(pokemonEntity);
+                        break;
                     }
-                }
-                else {
-                    player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.no_stone").formatted(Formatting.RED), true);
-                    return ActionResult.FAIL;
                 }
             }
             else {
-                MegaHelper.megaDevolve(pokemon);
+                player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.no_stone").formatted(Formatting.RED), true);
+                return ActionResult.FAIL;
             }
-            // This event triggers twice each time? Just adding a delay.
-            pokemon.getPersistentData().putLong("last_mega", world.getTime());
-            return ActionResult.SUCCESS;
         }
-        return ActionResult.PASS;
+        else {
+            MegaHelper.megaDevolve(pokemon);
+        }
+        // This event triggers twice each time? Just adding a delay.
+        pokemon.getPersistentData().putLong("last_mega", world.getTime());
+        return ActionResult.SUCCESS;
     }
 
     private static Unit zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
