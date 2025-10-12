@@ -1,7 +1,6 @@
-## Additions
-- Added default effect IDs to all built-in in-battle form changes.
-- Add extra effect ids for form changes in Rotom Catalogue and Meteorite.
-- Add extra effect ids for tera and z-moves.
+## Changes
+- No longer forces the resource pack to be required for players.
 
 ## Bugfixes
-- Ash Greninja's state now correctly reverts at the end of battle.
+- Fixed players being able to mega evolve each other's pokemon.
+- Fixed players being able to use mega bracelets on battling pokemon.
