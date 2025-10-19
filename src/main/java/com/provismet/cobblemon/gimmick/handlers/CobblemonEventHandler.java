@@ -511,6 +511,12 @@ public abstract class CobblemonEventHandler {
     }
 
     private static Unit heldItemFormChange (HeldItemEvent.Pre heldItemEvent) {
+        if (MegaHelper.hasMegaAspect(heldItemEvent.getPokemon())
+            && !ItemStack.areItemsEqual(heldItemEvent.getReceiving(), heldItemEvent.getReturning())
+            && (heldItemEvent.getPokemon().getEntity() == null || !heldItemEvent.getPokemon().getEntity().isBattling())
+        ) {
+            MegaHelper.megaDevolve(heldItemEvent.getPokemon());
+        }
         if (heldItemEvent.getReturning().getItem() instanceof GenericFormChangeHeldItem formChanger) {
             formChanger.removeFromPokemon(heldItemEvent.getPokemon());
         }
