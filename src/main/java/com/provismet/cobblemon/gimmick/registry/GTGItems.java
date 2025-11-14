@@ -25,6 +25,7 @@ import com.provismet.cobblemon.gimmick.item.forms.MeteoriteItem;
 import com.provismet.cobblemon.gimmick.item.forms.MoveChangingFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.forms.NLunarizerItem;
 import com.provismet.cobblemon.gimmick.item.forms.NSolarizerItem;
+import com.provismet.cobblemon.gimmick.item.forms.OgerponMaskItem;
 import com.provismet.cobblemon.gimmick.item.forms.PrisonBottleItem;
 import com.provismet.cobblemon.gimmick.item.forms.ReinsOfUnityItem;
 import com.provismet.cobblemon.gimmick.item.forms.RevealGlassItem;
@@ -239,9 +240,9 @@ public abstract class GTGItems {
     public static final GenericFormChangeHeldItem SHOCK_DRIVE = registerGenesect("shock", "electric");
 
     // Ogerpon Masks
-    public static final GenericFormChangeHeldItem WELLSPRING_MASK = registerOgerpon("wellspring");
-    public static final GenericFormChangeHeldItem HEARTHFLAME_MASK = registerOgerpon("hearthflame");
-    public static final GenericFormChangeHeldItem CORNERSTONE_MASK = registerOgerpon("cornerstone");
+    public static final GenericFormChangeHeldItem WELLSPRING_MASK = registerOgerpon("wellspring", TeraTypes.getWATER());
+    public static final GenericFormChangeHeldItem HEARTHFLAME_MASK = registerOgerpon("hearthflame", TeraTypes.getFIRE());
+    public static final GenericFormChangeHeldItem CORNERSTONE_MASK = registerOgerpon("cornerstone", TeraTypes.getROCK());
 
     // Data-Driven Items
     public static final DataDrivenFusionItem DATA_DRIVEN_FUSION = register("data_driven_fusion", DataDrivenFusionItem::new);
@@ -284,8 +285,8 @@ public abstract class GTGItems {
         return item;
     }
 
-    private static GenericFormChangeHeldItem registerOgerpon (String mask) {
-        return registerFormChangeChoice(mask + "mask", "ogerpon", "ogre_mask", mask, "teal", 1);
+    private static GenericFormChangeHeldItem registerOgerpon (String mask, TeraType teraType) {
+        return registerShowdownItem(mask + "mask", (settings, vanillaBaseItem, modelData) -> new OgerponMaskItem(settings, vanillaBaseItem, modelData, mask, teraType));
     }
 
     private static GenericFormChangeHeldItem registerGenesect (String driveName, String type) {
