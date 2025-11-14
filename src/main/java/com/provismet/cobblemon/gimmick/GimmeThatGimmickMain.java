@@ -1,7 +1,6 @@
 package com.provismet.cobblemon.gimmick;
 
 import com.provismet.cobblemon.gimmick.commands.GTGCommands;
-import com.provismet.cobblemon.gimmick.handlers.BattleEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.UltraBurstEventHandler;
@@ -47,7 +46,6 @@ public class GimmeThatGimmickMain implements ModInitializer {
         CobblemonEventHandler.register();
         UltraBurstEventHandler.register();
         DynamaxEventHandler.register();
-        BattleEventHandler.register();
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> GTGDynamicRegistries.loadRegistries(server.getRegistryManager()));
         ServerTickEvents.START_SERVER_TICK.register(server -> DelayedTicker.runAll());

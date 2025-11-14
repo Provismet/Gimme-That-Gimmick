@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.storage.player.GeneralPlayerData;
 import com.cobblemon.mod.common.battles.ShowdownActionRequest;
 import com.cobblemon.mod.common.battles.ShowdownMoveset;
+import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
 import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,8 +24,13 @@ import java.util.List;
 public class ShowdownActionRequestMixin {
     @Shadow private List<ShowdownMoveset> active;
 
+    @Inject(method = "sanitize", at = @At("HEAD"), remap = false)
+    private void beforeSanitize (PokemonBattle battle, BattleActor battleActor, CallbackInfo ci) {
+        battle.getPlayers().forEach(GimmickCheck::applyGimmicks);
+    }
+
     @Inject(method = "sanitize", at = @At("TAIL"), remap = false)
-    private void afterSanitize(PokemonBattle battle, BattleActor battleActor, CallbackInfo info) {
+    private void afterSanitize (PokemonBattle battle, BattleActor battleActor, CallbackInfo info) {
         for (ServerPlayerEntity player : battle.getPlayers()) {
             GeneralPlayerData data = Cobblemon.INSTANCE.getPlayerDataManager().getGenericData(player);
             boolean hasBand = data.getKeyItems().contains(Gimmicks.DYNAMAX_BAND);

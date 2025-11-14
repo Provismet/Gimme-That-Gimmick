@@ -19,7 +19,6 @@ import com.cobblemon.mod.common.api.item.HealingSource;
 import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeature;
 import com.cobblemon.mod.common.api.pokemon.feature.StringSpeciesFeature;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
-import com.cobblemon.mod.common.api.storage.player.GeneralPlayerData;
 import com.cobblemon.mod.common.api.types.tera.TeraTypes;
 import com.cobblemon.mod.common.battles.ActiveBattlePokemon;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
@@ -39,7 +38,6 @@ import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
-import com.provismet.cobblemon.gimmick.api.gimmick.Gimmicks;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.zmove.TypedZCrystalItem;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
@@ -47,7 +45,6 @@ import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistryKeys;
 import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
 import com.provismet.cobblemon.gimmick.util.GlowHandler;
 import com.provismet.cobblemon.gimmick.util.MegaHelper;
-import com.provismet.cobblemon.gimmick.util.tag.GTGBlockTags;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import kotlin.Unit;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -58,14 +55,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -92,13 +87,15 @@ public abstract class CobblemonEventHandler {
         UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
     }
 
-    private static ActionResult megaEvolveOutside (PlayerEntity player, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
+    private static ActionResult megaEvolveOutside (PlayerEntity abstractPlayer, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
+        if (!(abstractPlayer instanceof ServerPlayerEntity player)) return ActionResult.PASS;
+
         if (player.isSneaking() || !(entity instanceof PokemonEntity pokemonEntity) || !GimmickCheck.isUnenchantedKeyStone(player.getStackInHand(hand))) return ActionResult.PASS;
         if (pokemonEntity.getOwner() != player) {
             player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_not_yours").formatted(Formatting.RED), true);
             return ActionResult.FAIL;
         }
-        if (pokemonEntity.isBattling() || (player instanceof ServerPlayerEntity serverPlayer && PlayerExtensionsKt.isInBattle(serverPlayer))) {
+        if (pokemonEntity.isBattling() || PlayerExtensionsKt.isInBattle(player)) {
             player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_in_battle").formatted(Formatting.RED), true);
             return ActionResult.FAIL;
         }
@@ -110,7 +107,7 @@ public abstract class CobblemonEventHandler {
 
         player.swingHand(hand, true);
         if (!MegaHelper.hasMegaAspect(pokemon)) {
-            if (!Options.shouldAllowMultipleOutOfCombatMegas() && MegaHelper.checkForMega((ServerPlayerEntity) player)) {
+            if (!Options.shouldAllowMultipleOutOfCombatMegas() && MegaHelper.checkForMega(player)) {
                 player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mega_exists").formatted(Formatting.RED), true);
                 return ActionResult.SUCCESS;
             }
@@ -184,44 +181,7 @@ public abstract class CobblemonEventHandler {
 
         for (ServerPlayerEntity player : battleEvent.getBattle().getPlayers()) {
             CobblemonEventHandler.resetBattlePokemon(player);
-            GeneralPlayerData data = Cobblemon.INSTANCE.getPlayerDataManager().getGenericData(player);
-
-            boolean hasKeyStone = false;
-            boolean hasZRing = false;
-            boolean hasDynamax = false;
-            boolean hasTeraOrb = false;
-            ItemStack teraOrb = null;
-            for (ItemStack item : player.getEquippedItems()) {
-                if (Options.enabledMegaEvolution() && GimmickCheck.isKeyStone(item)) hasKeyStone = true;
-                if (Options.enabledZMoves() && GimmickCheck.isZRing(item)) hasZRing = true;
-                if (Options.enabledDynamax() && GimmickCheck.isDynamaxBand(item)) hasDynamax = true;
-                if (Options.enabledTerastal() && GimmickCheck.isTeraOrb(item)) {
-                    hasTeraOrb = true;
-                    teraOrb = item;
-                }
-            }
-            if (hasTeraOrb) {
-                PlayerPartyStore playerPartyStore = Cobblemon.INSTANCE.getStorage().getParty(player);
-                for (Pokemon partyMons: playerPartyStore) {
-                    if (partyMons.getSpecies().getName().equals("Terapagos")) {
-                        teraOrb.setDamage(0);
-                        break;
-                    }
-                }
-            }
-
-            if (hasKeyStone) data.getKeyItems().add(Gimmicks.KEY_STONE);
-            else data.getKeyItems().remove(Gimmicks.KEY_STONE);
-
-            if (hasZRing) data.getKeyItems().add(Gimmicks.Z_RING);
-            else data.getKeyItems().remove(Gimmicks.Z_RING);
-
-            hasDynamax = hasDynamax && (!Options.isPowerSpotRequired() || isPowerSpotNearby(player, Options.getPowerSpotRange()));
-            if (hasDynamax && !hasTeraOrb) data.getKeyItems().add(Gimmicks.DYNAMAX_BAND);
-            else data.getKeyItems().remove(Gimmicks.DYNAMAX_BAND);
-
-            if (hasTeraOrb) data.getKeyItems().add(Gimmicks.TERA_ORB);
-            else data.getKeyItems().remove(Gimmicks.TERA_ORB);
+            GimmickCheck.applyGimmicks(player);
         }
 
         return Unit.INSTANCE;
@@ -233,24 +193,6 @@ public abstract class CobblemonEventHandler {
             return Unit.INSTANCE;
         });
         return Unit.INSTANCE;
-    }
-
-    private static boolean isPowerSpotNearby (ServerPlayerEntity player, int radius) {
-        BlockPos playerPos = player.getBlockPos();
-        ServerWorld world = player.getServerWorld();
-
-        for (int dx = -radius; dx <= radius; dx++) {
-            for (int dy = -radius; dy <= radius; dy++) {
-                for (int dz = -radius; dz <= radius; dz++) {
-                    BlockPos checkPos = playerPos.add(dx, dy, dz);
-                    if (world.getBlockState(checkPos).isIn(GTGBlockTags.POWER_SPOTS)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false; // Not found
     }
 
     private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
