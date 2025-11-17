@@ -27,12 +27,6 @@
 		"main": [
 			"com.provismet.cobblemon.gimmick.GimmeThatGimmickMain"
 		],
-		"server": [
-			"com.provismet.cobblemon.gimmick.GimmeThatGimmickServer"
-		],
-		"client": [
-			"com.provismet.cobblemon.gimmick.GimmeThatGimmickClient"
-		],
 		"fabric-datagen": [
             "com.provismet.cobblemon.gimmick.datagen.GimmeThatGimmickDataGenerator"
 		]
