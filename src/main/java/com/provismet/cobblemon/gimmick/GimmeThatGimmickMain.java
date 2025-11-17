@@ -1,6 +1,7 @@
 package com.provismet.cobblemon.gimmick;
 
 import com.provismet.cobblemon.gimmick.commands.GTGCommands;
+import com.provismet.cobblemon.gimmick.features.DynamaxLevelFeature;
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.UltraBurstEventHandler;
@@ -17,6 +18,7 @@ import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +31,17 @@ public class GimmeThatGimmickMain implements ModInitializer {
         return Identifier.of(MODID, path);
     }
 
+    public static boolean isSnapshot () {
+        return FabricLoader.getInstance()
+            .getModContainer(GimmeThatGimmickMain.MODID)
+            .stream()
+            .anyMatch(container -> container.getMetadata().getVersion().getFriendlyString().contains("-SNAPSHOT"));
+    }
+
     @Override
     public void onInitialize () {
+        DynamaxLevelFeature.register();
+
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 
         GTGDynamicRegistryKeys.register();

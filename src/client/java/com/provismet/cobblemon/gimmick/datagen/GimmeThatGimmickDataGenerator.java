@@ -1,5 +1,6 @@
 package com.provismet.cobblemon.gimmick.datagen;
 
+import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugEffectsGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugEnchantmentGenerator;
 import com.provismet.cobblemon.gimmick.datagen.debug.DebugFormToggleGenerator;
@@ -28,7 +29,9 @@ public class GimmeThatGimmickDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(BattleFormGenerator::new);
 
 		// Debug Only - disable when making a proper build
-		//this.debugProviders(pack);
+        if (GimmeThatGimmickMain.isSnapshot()) {
+            this.debugProviders(pack);
+        }
 	}
 
 	@Override

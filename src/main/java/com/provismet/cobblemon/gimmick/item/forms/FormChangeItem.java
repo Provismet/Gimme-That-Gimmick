@@ -30,7 +30,7 @@ public interface FormChangeItem extends PokemonSelectingItem {
             pokemon -> {
                 if (ItemStackExtensionsKt.isHeld(itemStack, player)) {
                     this.applyToPokemon(player, itemStack, pokemon);
-                    CobblemonCriteria.INSTANCE.getPOKEMON_INTERACT().trigger(player, new PokemonInteractContext(pokemon.getSpecies().resourceIdentifier, Registries.ITEM.getId(itemStack.getItem())));
+                    CobblemonCriteria.POKEMON_INTERACT.trigger(player, new PokemonInteractContext(pokemon.getSpecies().resourceIdentifier, Registries.ITEM.getId(itemStack.getItem())));
                 }
                 return Unit.INSTANCE;
             }

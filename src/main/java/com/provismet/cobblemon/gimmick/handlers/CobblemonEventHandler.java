@@ -139,7 +139,7 @@ public abstract class CobblemonEventHandler {
         return ActionResult.SUCCESS;
     }
 
-    private static Unit zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
+    private static void zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
         PokemonEntity pokemonEntity = zMoveUsedEvent.getPokemon().getEntity();
         if (pokemonEntity != null) {
             if (Options.shouldApplyBasicZGlow()) GlowHandler.applyZGlow(pokemonEntity);
@@ -173,10 +173,9 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-        return Unit.INSTANCE;
     }
 
-    private static Unit battleStarted (BattleStartedEvent.Pre battleEvent) {
+    private static void battleStarted (BattleStartedEvent.Pre battleEvent) {
         for (BattleActor actor : battleEvent.getBattle().getActors()) {
             if (!(actor instanceof PlayerBattleActor)) continue;
             actor.getPokemonList().forEach(battlePokemon -> CobblemonEventHandler.resetBattleForms(battlePokemon.getEffectedPokemon()));
@@ -186,19 +185,16 @@ public abstract class CobblemonEventHandler {
             CobblemonEventHandler.resetBattlePokemon(player);
             GimmickCheck.applyGimmicks(player);
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit battleEndHandler(BattleStartedEvent.Post battleStartedPostEvent) {
+    private static void battleEndHandler(BattleStartedEvent.Post battleStartedPostEvent) {
         battleStartedPostEvent.getBattle().getOnEndHandlers().add(battle -> {
             battle.getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
             return Unit.INSTANCE;
         });
-        return Unit.INSTANCE;
     }
 
-    private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
+    private static void megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
         megaEvent.getBattle().dispatchToFront(() -> {
             MegaHelper.megaEvolve(megaEvent.getPokemon().getEffectedPokemon(), true);
             megaEvent.getPokemon().sendUpdate();
@@ -231,11 +227,9 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit terrastallizationUsed (TerastallizationEvent terastallizationEvent) {
+    private static void terrastallizationUsed (TerastallizationEvent terastallizationEvent) {
         Pokemon pokemon = terastallizationEvent.getPokemon().getEffectedPokemon();
         ServerPlayerEntity player = pokemon.getOwnerPlayer();
 
@@ -311,10 +305,9 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-        return Unit.INSTANCE;
     }
 
-    public static Unit fixTeraTyping (PokemonCapturedEvent pokemonCapturedEvent) {
+    public static void fixTeraTyping (PokemonCapturedEvent pokemonCapturedEvent) {
         Pokemon pokemon = pokemonCapturedEvent.getPokemon();
 
         if (pokemon.getSpecies().getName().equals("Ogerpon")) {
@@ -323,8 +316,6 @@ public abstract class CobblemonEventHandler {
         else if (pokemon.getSpecies().getName().equals("Terapagos")) {
             pokemon.setTeraType(TeraTypes.getSTELLAR());
         }
-
-        return Unit.INSTANCE;
     }
 
     public static void resetBattlePokemon (ServerPlayerEntity player) {
@@ -400,12 +391,12 @@ public abstract class CobblemonEventHandler {
         }
     }
 
-    public static Unit formeChanges (FormeChangeEvent formeChangeEvent) {
+    public static void formeChanges (FormeChangeEvent formeChangeEvent) {
         if (formeChangeEvent.getFormeName().equals("x")
             || formeChangeEvent.getFormeName().equals("y")
             || formeChangeEvent.getFormeName().equals("mega")
             || formeChangeEvent.getFormeName().equals("tera")) {
-            return Unit.INSTANCE;
+            return;
         }
 
         Optional<PokemonEntity> other = StreamSupport.stream(formeChangeEvent.getBattle().getActivePokemon().spliterator(), false)
@@ -431,7 +422,7 @@ public abstract class CobblemonEventHandler {
             if (pokemon.getEntity() != null) {
                 EffectsData.run(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), MiscUtilsKt.cobblemonResource("zygarde_complete"));
             }
-            return Unit.INSTANCE;
+            return;
         }
         if (pokemon.getSpecies().showdownId().equalsIgnoreCase("greninja") && formeChangeEvent.getFormeName().equalsIgnoreCase("ash")) {
             formeChangeEvent.getBattle().dispatchToFront(() -> {
@@ -442,7 +433,7 @@ public abstract class CobblemonEventHandler {
             if (pokemon.getEntity() != null) {
                 EffectsData.run(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), MiscUtilsKt.cobblemonResource("greninja_ash"));
             }
-            return Unit.INSTANCE;
+            return;
         }
 
         if (pokemon.getEntity() != null) {
@@ -458,11 +449,9 @@ public abstract class CobblemonEventHandler {
                     )
                 );
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit heldItemFormChange (HeldItemEvent.Pre heldItemEvent) {
+    private static void heldItemFormChange (HeldItemEvent.Pre heldItemEvent) {
         if (MegaHelper.hasMegaAspect(heldItemEvent.getPokemon())
             && !ItemStack.areItemsEqual(heldItemEvent.getReceiving(), heldItemEvent.getReturning())
             && (heldItemEvent.getPokemon().getEntity() == null || !heldItemEvent.getPokemon().getEntity().isBattling())
@@ -475,11 +464,9 @@ public abstract class CobblemonEventHandler {
         if (heldItemEvent.getReceiving().getItem() instanceof GenericFormChangeHeldItem formChanger) {
             formChanger.giveToPokemon(heldItemEvent.getPokemon());
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit pokemonHealed (PokemonHealedEvent pokemonHealedEvent) {
+    private static void pokemonHealed (PokemonHealedEvent pokemonHealedEvent) {
         ServerPlayerEntity player = pokemonHealedEvent.getPokemon().getOwnerPlayer();
         if (player != null && pokemonHealedEvent.getSource() == HealingSource.Force.INSTANCE) {
             for (ItemStack item : player.getEquippedItems()) {
@@ -489,13 +476,11 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-        return Unit.INSTANCE;
     }
 
-    private static Unit pokemonSentOut (PokemonSentEvent.Post event) {
+    private static void pokemonSentOut (PokemonSentEvent.Post event) {
         if (Options.shouldApplyBasicTeraGlow() && event.getPokemon().getPersistentData().contains("is_tera")) {
             GlowHandler.applyTeraGlow(event.getPokemonEntity());
         }
-        return Unit.INSTANCE;
     }
 }

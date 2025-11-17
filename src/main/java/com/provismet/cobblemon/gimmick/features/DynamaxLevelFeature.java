@@ -35,7 +35,7 @@ public class DynamaxLevelFeature {
     }
 
     public static void register () {
-        GlobalSpeciesFeatures.INSTANCE.register(KEY, DynamaxLevel);
+        GlobalSpeciesFeatures.register(KEY, DynamaxLevel);
     }
 
     public static void updateForPokemon (Pokemon pokemon) {

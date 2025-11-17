@@ -52,7 +52,7 @@ public class MoveChangingFormChangeHeldItem extends GenericFormChangeHeldItem {
 
     private void swapMoves (Pokemon pokemon, List<String> gainedMoves, List<String> lostMoves) {
         for (String move : lostMoves) {
-            MoveTemplate template = Moves.INSTANCE.getByName(move);
+            MoveTemplate template = Moves.getByName(move);
             if (template != null) {
                 for (int i = 0; i < pokemon.getMoveSet().getMovesWithNulls().size(); ++i) {
                     Move currentMove = pokemon.getMoveSet().get(i);
@@ -74,7 +74,7 @@ public class MoveChangingFormChangeHeldItem extends GenericFormChangeHeldItem {
         }
 
         for (String move : gainedMoves) {
-            MoveTemplate template = Moves.INSTANCE.getByName(move);
+            MoveTemplate template = Moves.getByName(move);
             if (template != null) {
                 if (pokemon.getMoveSet().hasSpace()) pokemon.getMoveSet().add(template.create());
                 else pokemon.getBenchedMoves().add(new BenchedMove(template, 0));
