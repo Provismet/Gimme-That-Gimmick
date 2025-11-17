@@ -1,6 +1,7 @@
 package com.provismet.cobblemon.gimmick;
 
 import com.provismet.cobblemon.gimmick.commands.GTGCommands;
+import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.features.DynamaxLevelFeature;
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
@@ -40,6 +41,7 @@ public class GimmeThatGimmickMain implements ModInitializer {
 
     @Override
     public void onInitialize () {
+        Options.load();
         DynamaxLevelFeature.register();
 
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
