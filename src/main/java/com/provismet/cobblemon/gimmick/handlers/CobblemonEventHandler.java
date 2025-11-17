@@ -37,6 +37,7 @@ import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
+import com.provismet.cobblemon.gimmick.features.DynamaxLevelFeature;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.zmove.TypedZCrystalItem;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
@@ -85,6 +86,16 @@ public abstract class CobblemonEventHandler {
 
         CobblemonEvents.FORME_CHANGE.subscribe(Priority.NORMAL, CobblemonEventHandler::formeChanges);
         UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
+    }
+
+    // This method seems dumb until you consider that the property event is literally only fired ONCE in the Cobblemon INITIALISER!!!
+    // Why are they like this?
+    public static void registerEarly () {
+        CobblemonEvents.POKEMON_PROPERTY_INITIALISED.subscribe(Priority.NORMAL, CobblemonEventHandler::initialiseProperties);
+    }
+
+    private static void initialiseProperties (Unit unit) {
+        DynamaxLevelFeature.register();
     }
 
     private static ActionResult megaEvolveOutside (PlayerEntity abstractPlayer, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {

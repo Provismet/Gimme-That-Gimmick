@@ -41,9 +41,6 @@ public class GimmeThatGimmickMain implements ModInitializer {
 
     @Override
     public void onInitialize () {
-        Options.load();
-        DynamaxLevelFeature.register();
-
         PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 
         GTGDynamicRegistryKeys.register();
