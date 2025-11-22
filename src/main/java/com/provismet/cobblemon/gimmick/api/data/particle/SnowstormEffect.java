@@ -39,6 +39,6 @@ public record SnowstormEffect (Identifier id, List<String> sourceLocators, Optio
             target == null ? null : target.getId(),
             target == null || this.targetLocators.isEmpty() ? null : this.targetLocators.get()
         );
-        CobblemonNetwork.INSTANCE.sendToAllPlayers(packet);
+        CobblemonNetwork.sendToAllPlayers(packet);
     }
 }

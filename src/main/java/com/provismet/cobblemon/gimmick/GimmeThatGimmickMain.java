@@ -17,6 +17,7 @@ import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,13 @@ public class GimmeThatGimmickMain implements ModInitializer {
 
     public static Identifier identifier(String path) {
         return Identifier.of(MODID, path);
+    }
+
+    public static boolean isSnapshot () {
+        return FabricLoader.getInstance()
+            .getModContainer(GimmeThatGimmickMain.MODID)
+            .stream()
+            .anyMatch(container -> container.getMetadata().getVersion().getFriendlyString().contains("-SNAPSHOT"));
     }
 
     @Override

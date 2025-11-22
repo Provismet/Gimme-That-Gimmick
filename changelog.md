@@ -1,7 +1,7 @@
-Last update before Cobblemon 1.7 release.
+Updating to Cobblemon 1.7.0!
 
-## Additions
-- Available gimmicks are now recalculated every turn.
+## Changes
+- The Dynamax global species feature is now hardcoded instead of being in the internal datapack.
 
 ## Bugfixes
-- Ogerpon masks now correctly change its Tera Type.
+- The Dynamax global species feature now respects the maximum Dynamax Level set in the Cobblemon config.

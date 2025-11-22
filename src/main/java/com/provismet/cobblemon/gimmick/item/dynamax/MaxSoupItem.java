@@ -20,12 +20,12 @@ public class MaxSoupItem extends PolymerPokemonSelectingItem {
     @Nullable
     @Override
     public TypedActionResult<ItemStack> applyToPokemon (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack, @NotNull Pokemon pokemon) {
-        if (!this.canUseOnPokemon(pokemon)) return TypedActionResult.fail(itemStack);
+        if (!this.canUseOnPokemon(itemStack, pokemon)) return TypedActionResult.fail(itemStack);
         if (pokemon.getEntity() != null) pokemon.getEntity().playSound(CobblemonSounds.MEDICINE_LIQUID_USE, 1f, 1f);
 
         pokemon.setGmaxFactor(!pokemon.getGmaxFactor());
-        if (pokemon.getGmaxFactor()) player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.soup.yes", pokemon.getDisplayName()), true);
-        else player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.soup.no", pokemon.getDisplayName()), true);
+        if (pokemon.getGmaxFactor()) player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.soup.yes", pokemon.getDisplayName(false)), true);
+        else player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.dynamax.soup.no", pokemon.getDisplayName(false)), true);
 
         itemStack.decrementUnlessCreative(1, player);
         pokemon.updateAspects();
@@ -33,7 +33,7 @@ public class MaxSoupItem extends PolymerPokemonSelectingItem {
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getForms().stream().anyMatch(formData -> formData.getLabels().contains("gmax"));
     }
 }

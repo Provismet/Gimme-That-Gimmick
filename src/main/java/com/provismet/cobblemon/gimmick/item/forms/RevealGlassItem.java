@@ -28,7 +28,7 @@ public class RevealGlassItem extends PolymerPokemonSelectingItem implements Form
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         return ALLOWED.contains(pokemon.getSpecies().getResourceIdentifier().toString());
     }
 
@@ -40,7 +40,7 @@ public class RevealGlassItem extends PolymerPokemonSelectingItem implements Form
     @Override
     public void applySpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "therian").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mirror.therian", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mirror.therian", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("reveal_glass_apply"));
@@ -50,7 +50,7 @@ public class RevealGlassItem extends PolymerPokemonSelectingItem implements Form
     @Override
     public void removeSpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature(FEATURE, "incarnate").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mirror.incarnate", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.mirror.incarnate", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("reveal_glass_remove"));

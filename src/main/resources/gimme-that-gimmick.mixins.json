@@ -3,15 +3,13 @@
     "package": "com.provismet.cobblemon.gimmick.mixin",
     "compatibilityLevel": "JAVA_21",
     "mixins": [
-        "CobblemonNetworkMixin",
+        "CobblemonInitialiserMixin",
         "GraalShowdownUnbundlerMixin",
         "MoveActionResponseMixin",
-        "PokemonBattleMixin",
         "PokemonMixin",
         "ShowdownActionRequestMixin",
         "ShowdownInterpreterMixin",
         "ShowdownSpeciesMixin",
-        "SpeciesFeaturesMixin",
         "instructions.EndInstructionMixin",
         "instructions.StartInstructionMixin"
     ],

@@ -24,24 +24,12 @@ public abstract class PolymerPokemonSelectingItem extends PolymerHeldItem implem
         super(settings, baseVanillaItem, modelData, tooltipLines);
     }
 
-    @NotNull
-    @Override
-    public TypedActionResult<ItemStack> use (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
-        return PokemonSelectingItem.DefaultImpls.use(this, player, itemStack);
-    }
-
     @Override
     public TypedActionResult<ItemStack> use (World world, PlayerEntity user, Hand hand) {
         if (user instanceof ServerPlayerEntity serverPlayer) {
             return this.use(serverPlayer, serverPlayer.getStackInHand(hand));
         }
         return TypedActionResult.success(user.getStackInHand(hand));
-    }
-
-    @NotNull
-    @Override
-    public TypedActionResult<ItemStack> interactGeneral (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
-        return PokemonSelectingItem.DefaultImpls.interactGeneral(this, player, itemStack);
     }
 
     @Nullable
@@ -51,7 +39,7 @@ public abstract class PolymerPokemonSelectingItem extends PolymerHeldItem implem
     }
 
     @Override
-    public boolean canUseOnBattlePokemon (@NotNull BattlePokemon battlePokemon) {
+    public boolean canUseOnBattlePokemon (@NotNull ItemStack stack, @NotNull BattlePokemon battlePokemon) {
         return false;
     }
 

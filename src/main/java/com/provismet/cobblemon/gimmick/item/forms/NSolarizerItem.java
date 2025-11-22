@@ -39,7 +39,7 @@ public class NSolarizerItem extends PolymerPokemonSelectingItem implements FormC
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         return pokemon.getSpecies().getResourceIdentifier().toString().equals("cobblemon:necrozma");
     }
 }

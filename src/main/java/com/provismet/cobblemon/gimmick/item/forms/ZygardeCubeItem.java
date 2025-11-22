@@ -25,7 +25,7 @@ public class ZygardeCubeItem extends PolymerPokemonSelectingItem implements Form
     @Override
     public void applySpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature("percent_cells", "50").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.zygarde.50", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.zygarde.50", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("zygarde_cube_apply"));
@@ -35,7 +35,7 @@ public class ZygardeCubeItem extends PolymerPokemonSelectingItem implements Form
     @Override
     public void removeSpecialForm (ItemStack stack, ServerPlayerEntity player, Pokemon pokemon) {
         new StringSpeciesFeature("percent_cells", "10").apply(pokemon);
-        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.zygarde.10", pokemon.getDisplayName()), true);
+        player.sendMessage(Text.translatable("message.overlay.gimme-that-gimmick.zygarde.10", pokemon.getDisplayName(false)), true);
 
         if (pokemon.getEntity() != null) {
             EffectsData.run(pokemon.getEntity(), GimmeThatGimmickMain.identifier("zygarde_cube_remove"));
@@ -43,7 +43,7 @@ public class ZygardeCubeItem extends PolymerPokemonSelectingItem implements Form
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         return pokemon.getSpecies().showdownId().equalsIgnoreCase("zygarde")
             && pokemon.getAbility().getName().equalsIgnoreCase("powerconstruct");
     }

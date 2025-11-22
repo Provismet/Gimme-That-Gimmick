@@ -91,24 +91,24 @@ public class GlowHandler {
     }
 
     private static Formatting getGlowForElemental(ElementalType type) {
-        if (type.equals(ElementalTypes.INSTANCE.getBUG())) return Formatting.DARK_GREEN;
-        if (type.equals(ElementalTypes.INSTANCE.getDARK())) return Formatting.BLACK;
-        if (type.equals(ElementalTypes.INSTANCE.getDRAGON())) return Formatting.DARK_BLUE;
-        if (type.equals(ElementalTypes.INSTANCE.getELECTRIC())) return Formatting.YELLOW;
-        if (type.equals(ElementalTypes.INSTANCE.getFAIRY())) return Formatting.LIGHT_PURPLE;
-        if (type.equals(ElementalTypes.INSTANCE.getFIGHTING())) return Formatting.DARK_RED;
-        if (type.equals(ElementalTypes.INSTANCE.getFIRE())) return Formatting.RED;
-        if (type.equals(ElementalTypes.INSTANCE.getFLYING())) return Formatting.GRAY;
-        if (type.equals(ElementalTypes.INSTANCE.getGHOST())) return Formatting.DARK_PURPLE;
-        if (type.equals(ElementalTypes.INSTANCE.getGRASS())) return Formatting.GREEN;
-        if (type.equals(ElementalTypes.INSTANCE.getGROUND())) return Formatting.DARK_RED;
-        if (type.equals(ElementalTypes.INSTANCE.getICE())) return Formatting.AQUA;
-        if (type.equals(ElementalTypes.INSTANCE.getNORMAL())) return Formatting.WHITE;
-        if (type.equals(ElementalTypes.INSTANCE.getPOISON())) return Formatting.DARK_PURPLE;
-        if (type.equals(ElementalTypes.INSTANCE.getPSYCHIC())) return Formatting.LIGHT_PURPLE;
-        if (type.equals(ElementalTypes.INSTANCE.getROCK())) return Formatting.DARK_GRAY;
-        if (type.equals(ElementalTypes.INSTANCE.getSTEEL())) return Formatting.GRAY;
-        if (type.equals(ElementalTypes.INSTANCE.getWATER())) return Formatting.BLUE;
+        if (type.equals(ElementalTypes.BUG)) return Formatting.DARK_GREEN;
+        if (type.equals(ElementalTypes.DARK)) return Formatting.BLACK;
+        if (type.equals(ElementalTypes.DRAGON)) return Formatting.DARK_BLUE;
+        if (type.equals(ElementalTypes.ELECTRIC)) return Formatting.YELLOW;
+        if (type.equals(ElementalTypes.FAIRY)) return Formatting.LIGHT_PURPLE;
+        if (type.equals(ElementalTypes.FIGHTING)) return Formatting.DARK_RED;
+        if (type.equals(ElementalTypes.FIRE)) return Formatting.RED;
+        if (type.equals(ElementalTypes.FLYING)) return Formatting.GRAY;
+        if (type.equals(ElementalTypes.GHOST)) return Formatting.DARK_PURPLE;
+        if (type.equals(ElementalTypes.GRASS)) return Formatting.GREEN;
+        if (type.equals(ElementalTypes.GROUND)) return Formatting.DARK_RED;
+        if (type.equals(ElementalTypes.ICE)) return Formatting.AQUA;
+        if (type.equals(ElementalTypes.NORMAL)) return Formatting.WHITE;
+        if (type.equals(ElementalTypes.POISON)) return Formatting.DARK_PURPLE;
+        if (type.equals(ElementalTypes.PSYCHIC)) return Formatting.LIGHT_PURPLE;
+        if (type.equals(ElementalTypes.ROCK)) return Formatting.DARK_GRAY;
+        if (type.equals(ElementalTypes.STEEL)) return Formatting.GRAY;
+        if (type.equals(ElementalTypes.WATER)) return Formatting.BLUE;
         return Formatting.WHITE;
     }
 }

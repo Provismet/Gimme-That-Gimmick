@@ -5,15 +5,14 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
-import com.cobblemon.mod.common.api.events.battles.BattleStartedPostEvent;
-import com.cobblemon.mod.common.api.events.battles.BattleStartedPreEvent;
+import com.cobblemon.mod.common.api.events.battles.BattleStartedEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.FormeChangeEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.MegaEvolutionEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.TerastallizationEvent;
 import com.cobblemon.mod.common.api.events.battles.instruction.ZMoveUsedEvent;
 import com.cobblemon.mod.common.api.events.pokemon.HeldItemEvent;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonCapturedEvent;
-import com.cobblemon.mod.common.api.events.pokemon.PokemonSentPostEvent;
+import com.cobblemon.mod.common.api.events.pokemon.PokemonSentEvent;
 import com.cobblemon.mod.common.api.events.pokemon.healing.PokemonHealedEvent;
 import com.cobblemon.mod.common.api.item.HealingSource;
 import com.cobblemon.mod.common.api.pokemon.feature.FlagSpeciesFeature;
@@ -38,6 +37,7 @@ import com.provismet.cobblemon.gimmick.api.data.registry.EffectsData;
 import com.provismet.cobblemon.gimmick.api.data.registry.form.BattleForm;
 import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.api.gimmick.GimmickCheck;
+import com.provismet.cobblemon.gimmick.features.DynamaxLevelFeature;
 import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
 import com.provismet.cobblemon.gimmick.item.zmove.TypedZCrystalItem;
 import com.provismet.cobblemon.gimmick.registry.GTGDynamicRegistries;
@@ -64,6 +64,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -85,6 +86,16 @@ public abstract class CobblemonEventHandler {
 
         CobblemonEvents.FORME_CHANGE.subscribe(Priority.NORMAL, CobblemonEventHandler::formeChanges);
         UseEntityCallback.EVENT.register(CobblemonEventHandler::megaEvolveOutside);
+    }
+
+    // This method seems dumb until you consider that the property event is literally only fired ONCE in the Cobblemon INITIALISER!!!
+    // Why are they like this?
+    public static void registerEarly () {
+        CobblemonEvents.POKEMON_PROPERTY_INITIALISED.subscribe(Priority.NORMAL, CobblemonEventHandler::initialiseProperties);
+    }
+
+    private static void initialiseProperties (Unit unit) {
+        DynamaxLevelFeature.register();
     }
 
     private static ActionResult megaEvolveOutside (PlayerEntity abstractPlayer, World world, Hand hand, Entity entity, EntityHitResult entityHitResult) {
@@ -139,12 +150,15 @@ public abstract class CobblemonEventHandler {
         return ActionResult.SUCCESS;
     }
 
-    private static Unit zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
+    private static void zmoveUsed (ZMoveUsedEvent zMoveUsedEvent) {
         PokemonEntity pokemonEntity = zMoveUsedEvent.getPokemon().getEntity();
         if (pokemonEntity != null) {
             if (Options.shouldApplyBasicZGlow()) GlowHandler.applyZGlow(pokemonEntity);
 
-            String type = (zMoveUsedEvent.getPokemon().getEffectedPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal ? crystal.type.getName() : zMoveUsedEvent.getPokemon().getEffectedPokemon().getPrimaryType().getName());
+            String type = (zMoveUsedEvent.getPokemon().getEffectedPokemon().heldItem().getItem() instanceof TypedZCrystalItem crystal ?
+                crystal.type.getName() :
+                zMoveUsedEvent.getPokemon().getEffectedPokemon().getPrimaryType().getName())
+                    .toLowerCase(Locale.ROOT);
             String species = zMoveUsedEvent.getPokemon().getEffectedPokemon().getSpecies().showdownId();
             List<String> prioritisedEffects = List.of(
                 "z_move_" + species + "_" + type,
@@ -170,10 +184,9 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-        return Unit.INSTANCE;
     }
 
-    private static Unit battleStarted (BattleStartedPreEvent battleEvent) {
+    private static void battleStarted (BattleStartedEvent.Pre battleEvent) {
         for (BattleActor actor : battleEvent.getBattle().getActors()) {
             if (!(actor instanceof PlayerBattleActor)) continue;
             actor.getPokemonList().forEach(battlePokemon -> CobblemonEventHandler.resetBattleForms(battlePokemon.getEffectedPokemon()));
@@ -183,19 +196,16 @@ public abstract class CobblemonEventHandler {
             CobblemonEventHandler.resetBattlePokemon(player);
             GimmickCheck.applyGimmicks(player);
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit battleEndHandler(BattleStartedPostEvent battleStartedPostEvent) {
+    private static void battleEndHandler(BattleStartedEvent.Post battleStartedPostEvent) {
         battleStartedPostEvent.getBattle().getOnEndHandlers().add(battle -> {
             battle.getPlayers().forEach(CobblemonEventHandler::resetBattlePokemon);
             return Unit.INSTANCE;
         });
-        return Unit.INSTANCE;
     }
 
-    private static Unit megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
+    private static void megaEvolutionUsed (MegaEvolutionEvent megaEvent) {
         megaEvent.getBattle().dispatchToFront(() -> {
             MegaHelper.megaEvolve(megaEvent.getPokemon().getEffectedPokemon(), true);
             megaEvent.getPokemon().sendUpdate();
@@ -207,7 +217,7 @@ public abstract class CobblemonEventHandler {
         Pokemon pokemon = megaEvent.getPokemon().getEffectedPokemon();
         if (pokemon.getEntity() != null) {
             List<String> prioritisedEffects = List.of(
-                "mega_evolution_" + megaEvent.getPokemon().getEffectedPokemon().showdownId(),
+                "mega_evolution_" + megaEvent.getPokemon().getEffectedPokemon().showdownId().toLowerCase(Locale.ROOT),
                 "mega_evolution"
             );
 
@@ -228,11 +238,9 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit terrastallizationUsed (TerastallizationEvent terastallizationEvent) {
+    private static void terrastallizationUsed (TerastallizationEvent terastallizationEvent) {
         Pokemon pokemon = terastallizationEvent.getPokemon().getEffectedPokemon();
         ServerPlayerEntity player = pokemon.getOwnerPlayer();
 
@@ -285,9 +293,9 @@ public abstract class CobblemonEventHandler {
             });
 
             List<String> prioritisedEffects = List.of(
-                "terastallization_" + pokemon.getSpecies().showdownId() + "_" + pokemon.getTeraType().showdownId(),
-                "terastallization_" + pokemon.getSpecies().showdownId(),
-                "terastallization_" + pokemon.getTeraType().showdownId(),
+                "terastallization_" + pokemon.getSpecies().showdownId().toLowerCase(Locale.ROOT) + "_" + pokemon.getTeraType().showdownId().toLowerCase(Locale.ROOT),
+                "terastallization_" + pokemon.getSpecies().showdownId().toLowerCase(Locale.ROOT),
+                "terastallization_" + pokemon.getTeraType().showdownId().toLowerCase(Locale.ROOT),
                 "terastallization"
             );
 
@@ -308,10 +316,9 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-        return Unit.INSTANCE;
     }
 
-    public static Unit fixTeraTyping (PokemonCapturedEvent pokemonCapturedEvent) {
+    public static void fixTeraTyping (PokemonCapturedEvent pokemonCapturedEvent) {
         Pokemon pokemon = pokemonCapturedEvent.getPokemon();
 
         if (pokemon.getSpecies().getName().equals("Ogerpon")) {
@@ -320,8 +327,6 @@ public abstract class CobblemonEventHandler {
         else if (pokemon.getSpecies().getName().equals("Terapagos")) {
             pokemon.setTeraType(TeraTypes.getSTELLAR());
         }
-
-        return Unit.INSTANCE;
     }
 
     public static void resetBattlePokemon (ServerPlayerEntity player) {
@@ -373,7 +378,7 @@ public abstract class CobblemonEventHandler {
 
         pokemon.getFeatures().removeIf(speciesFeature -> speciesFeature.getName().equalsIgnoreCase("embody_aspect")); // Ogerpon
         pokemon.updateAspects();
-        pokemon.getAnyChangeObservable().emit(pokemon);
+        pokemon.onChange(null);
     }
 
     public static void updatePokemonPackets (PokemonBattle battle, BattlePokemon battlePokemon, boolean abilities) {
@@ -397,12 +402,12 @@ public abstract class CobblemonEventHandler {
         }
     }
 
-    public static Unit formeChanges (FormeChangeEvent formeChangeEvent) {
+    public static void formeChanges (FormeChangeEvent formeChangeEvent) {
         if (formeChangeEvent.getFormeName().equals("x")
             || formeChangeEvent.getFormeName().equals("y")
             || formeChangeEvent.getFormeName().equals("mega")
             || formeChangeEvent.getFormeName().equals("tera")) {
-            return Unit.INSTANCE;
+            return;
         }
 
         Optional<PokemonEntity> other = StreamSupport.stream(formeChangeEvent.getBattle().getActivePokemon().spliterator(), false)
@@ -428,7 +433,7 @@ public abstract class CobblemonEventHandler {
             if (pokemon.getEntity() != null) {
                 EffectsData.run(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), MiscUtilsKt.cobblemonResource("zygarde_complete"));
             }
-            return Unit.INSTANCE;
+            return;
         }
         if (pokemon.getSpecies().showdownId().equalsIgnoreCase("greninja") && formeChangeEvent.getFormeName().equalsIgnoreCase("ash")) {
             formeChangeEvent.getBattle().dispatchToFront(() -> {
@@ -439,20 +444,25 @@ public abstract class CobblemonEventHandler {
             if (pokemon.getEntity() != null) {
                 EffectsData.run(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), MiscUtilsKt.cobblemonResource("greninja_ash"));
             }
-            return Unit.INSTANCE;
+            return;
         }
 
         if (pokemon.getEntity() != null) {
             World world = pokemon.getEntity().getWorld();
             world.getRegistryManager().getOptionalWrapper(GTGDynamicRegistryKeys.BATTLE_FORM)
                 .flatMap(registry -> registry.getOptional(BattleForm.key(pokemon)))
-                .ifPresent(battleForm -> battleForm.value().applyForm(pokemon.getEntity(), other.orElse(null), formeChangeEvent.getBattle(), formeChangeEvent.getFormeName()));
+                .ifPresent(battleForm -> battleForm.value()
+                    .applyForm(
+                        pokemon.getEntity(),
+                        other.orElse(null),
+                        formeChangeEvent.getBattle(),
+                        formeChangeEvent.getFormeName()
+                    )
+                );
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit heldItemFormChange (HeldItemEvent.Pre heldItemEvent) {
+    private static void heldItemFormChange (HeldItemEvent.Pre heldItemEvent) {
         if (MegaHelper.hasMegaAspect(heldItemEvent.getPokemon())
             && !ItemStack.areItemsEqual(heldItemEvent.getReceiving(), heldItemEvent.getReturning())
             && (heldItemEvent.getPokemon().getEntity() == null || !heldItemEvent.getPokemon().getEntity().isBattling())
@@ -465,11 +475,9 @@ public abstract class CobblemonEventHandler {
         if (heldItemEvent.getReceiving().getItem() instanceof GenericFormChangeHeldItem formChanger) {
             formChanger.giveToPokemon(heldItemEvent.getPokemon());
         }
-
-        return Unit.INSTANCE;
     }
 
-    private static Unit pokemonHealed (PokemonHealedEvent pokemonHealedEvent) {
+    private static void pokemonHealed (PokemonHealedEvent pokemonHealedEvent) {
         ServerPlayerEntity player = pokemonHealedEvent.getPokemon().getOwnerPlayer();
         if (player != null && pokemonHealedEvent.getSource() == HealingSource.Force.INSTANCE) {
             for (ItemStack item : player.getEquippedItems()) {
@@ -479,13 +487,11 @@ public abstract class CobblemonEventHandler {
                 }
             }
         }
-        return Unit.INSTANCE;
     }
 
-    private static Unit pokemonSentOut (PokemonSentPostEvent event) {
+    private static void pokemonSentOut (PokemonSentEvent.Post event) {
         if (Options.shouldApplyBasicTeraGlow() && event.getPokemon().getPersistentData().contains("is_tera")) {
             GlowHandler.applyTeraGlow(event.getPokemonEntity());
         }
-        return Unit.INSTANCE;
     }
 }

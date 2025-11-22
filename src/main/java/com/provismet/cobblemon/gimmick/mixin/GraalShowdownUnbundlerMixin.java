@@ -37,7 +37,7 @@ public abstract class GraalShowdownUnbundlerMixin {
 
                     yoink("/showdown_scripts/battle-actions.js", showdown_sim.resolve("battle-actions.js"));
                     yoink("/showdown_scripts/pokemon.js", showdown_sim.resolve("pokemon.js"));
-                    yoink("/showdown_scripts/conditions.js", showdown_sim.resolve("conditions.js"));
+                    yoink("/showdown_scripts/conditions.js", showdown_data.resolve("conditions.js"));
                     yoink("/showdown_scripts/index.js", showdown_dir.resolve("index.js"));
                     yoink("/showdown_scripts/side.js", showdown_sim.resolve("side.js"));
 

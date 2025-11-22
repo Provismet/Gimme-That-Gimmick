@@ -1,7 +1,5 @@
 package com.provismet.cobblemon.gimmick.util;
 
-import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
-
 import java.util.LinkedList;
 import java.util.List;
 

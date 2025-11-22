@@ -40,14 +40,14 @@ public class TeraShardItem extends PolymerPokemonSelectingItem {
         if (pokemon.getOwnerPlayer() == player) {
             if (itemStack.getCount() == 50) {
                 if (pokemon.getTeraType() == this.type) {
-                    player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.already_has", pokemon.getDisplayName()).formatted(Formatting.RED), true);
+                    player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.already_has", pokemon.getDisplayName(false)).formatted(Formatting.RED), true);
                     return TypedActionResult.fail(itemStack);
                 }
                 itemStack.decrementUnlessCreative(50, player);
                 pokemon.setTeraType(this.type);
                 pokemon.getEntity().playSound(CobblemonSounds.MEDICINE_PILLS_USE, 1f, 1f);
                 pokemon.updateAspects();
-                player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.set", pokemon.getDisplayName(), this.type.getDisplayName()), true);
+                player.sendMessage(Text.translatable("message.overlay.gimmethatgimmick.tera.set", pokemon.getDisplayName(false), this.type.getDisplayName()), true);
                 return TypedActionResult.success(itemStack);
             }
             else {
@@ -58,7 +58,7 @@ public class TeraShardItem extends PolymerPokemonSelectingItem {
     }
 
     @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
+    public boolean canUseOnPokemon (@NotNull ItemStack stack, @NotNull Pokemon pokemon) {
         return !BLACKLIST.contains(pokemon.getSpecies().getName());
     }
 }

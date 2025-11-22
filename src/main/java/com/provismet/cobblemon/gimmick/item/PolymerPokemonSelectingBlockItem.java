@@ -39,12 +39,6 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
         }
     }
 
-    @NotNull
-    @Override
-    public TypedActionResult<ItemStack> use (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
-        return PokemonSelectingItem.DefaultImpls.use(this, player, itemStack);
-    }
-
     @Override
     public TypedActionResult<ItemStack> use (World world, PlayerEntity user, Hand hand) {
         if (user instanceof ServerPlayerEntity serverPlayer) {
@@ -59,12 +53,6 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
         return ActionResult.PASS;
     }
 
-    @NotNull
-    @Override
-    public TypedActionResult<ItemStack> interactGeneral (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
-        return PokemonSelectingItem.DefaultImpls.interactGeneral(this, player, itemStack);
-    }
-
     @Nullable
     @Override
     public BagItem getBagItem () {
@@ -72,7 +60,7 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
     }
 
     @Override
-    public boolean canUseOnBattlePokemon (@NotNull BattlePokemon battlePokemon) {
+    public boolean canUseOnBattlePokemon (@NotNull ItemStack stack, @NotNull BattlePokemon battlePokemon) {
         return false;
     }
 

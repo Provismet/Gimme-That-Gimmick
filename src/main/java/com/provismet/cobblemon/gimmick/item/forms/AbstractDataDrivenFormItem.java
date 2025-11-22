@@ -1,6 +1,5 @@
 package com.provismet.cobblemon.gimmick.item.forms;
 
-import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.provismet.cobblemon.gimmick.api.data.component.DataItem;
 import com.provismet.cobblemon.gimmick.item.PolymerPokemonSelectingItem;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
@@ -29,11 +28,6 @@ public abstract class AbstractDataDrivenFormItem extends PolymerPokemonSelecting
     @Override
     public @NotNull TypedActionResult<ItemStack> interactGeneral (@NotNull ServerPlayerEntity player, @NotNull ItemStack itemStack) {
         return FormChangeItem.super.interactGeneral(player, itemStack);
-    }
-
-    @Override
-    public boolean canUseOnPokemon (@NotNull Pokemon pokemon) {
-        return false;
     }
 
     @Override
