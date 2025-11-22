@@ -7,7 +7,7 @@
 
 </div>
 
-Gimme That Gimmick is a fully server-sided mod that implements generational gimmicks and related items for Cobblemon.  
+Gimme That Gimmick is a fully server-sided mod that implements generational gimmicks, related items, and data-driven form changes for Cobblemon.  
 Note that the items are only implemented, GTG does not make any items obtainable through gameplay nor does it create the associated visuals.
 
 Gimme That Gimmick made specifically for Fabric servers and ports functionality from [Mega Showdown](https://github.com/yajatkaul/Mega_Showdown)
@@ -49,3 +49,7 @@ Dependent mods can mixin into these classes to apply custom functionality as req
 
 ### Tera Shards
 Tera shards are used in groups of 50 and change the tera type of a Pokemon. The type can be checked by using a Tera Orb on the Pokemon.
+
+### Forme Changes
+Unlike what the comments in the official 1.7 content creator preview would have you believe, Gimme That Gimmick _does_ have comprehensive
+and fully data-driven forme changes in battle. Check the [wiki](https://github.com/Provismet/Gimme-That-Gimmick/wiki/BattleForm) for a comprehensive guide.
