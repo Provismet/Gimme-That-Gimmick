@@ -23,23 +23,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GimmeThatGimmickMain implements ModInitializer {
-    public static final String MOD_ID = "gimme-that-gimmick";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final String MODID = "gimme-that-gimmick";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
     public static Identifier identifier(String path) {
-        return Identifier.of(MOD_ID, path);
+        return Identifier.of(MODID, path);
     }
 
     public static boolean isSnapshot () {
         return FabricLoader.getInstance()
-            .getModContainer(GimmeThatGimmickMain.MOD_ID)
+            .getModContainer(GimmeThatGimmickMain.MODID)
             .stream()
             .anyMatch(container -> container.getMetadata().getVersion().getFriendlyString().contains("-SNAPSHOT"));
     }
 
     @Override
     public void onInitialize () {
-        PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MOD_ID);
+        PolymerResourcePackUtils.addModAssets(GimmeThatGimmickMain.MODID);
 
         GTGDynamicRegistryKeys.register();
 
