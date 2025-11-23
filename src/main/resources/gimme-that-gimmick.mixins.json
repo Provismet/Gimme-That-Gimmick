@@ -1,19 +1,20 @@
 {
-    "required": true,
-    "package": "com.provismet.cobblemon.gimmick.mixin",
-    "compatibilityLevel": "JAVA_21",
-    "mixins": [
-        "CobblemonInitialiserMixin",
-        "GraalShowdownUnbundlerMixin",
-        "MoveActionResponseMixin",
-        "PokemonMixin",
-        "ShowdownActionRequestMixin",
-        "ShowdownInterpreterMixin",
-        "ShowdownSpeciesMixin",
-        "instructions.EndInstructionMixin",
-        "instructions.StartInstructionMixin"
-    ],
-    "injectors": {
-        "defaultRequire": 1
-    }
+  "required": true,
+  "package": "com.provismet.cobblemon.gimmick.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "CobblemonDataProviderMixin",
+    "CobblemonInitialiserMixin",
+    "GraalShowdownUnbundlerMixin",
+    "MoveActionResponseMixin",
+    "PokemonMixin",
+    "ShowdownActionRequestMixin",
+    "ShowdownInterpreterMixin",
+    "ShowdownSpeciesMixin",
+    "instructions.EndInstructionMixin",
+    "instructions.StartInstructionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
