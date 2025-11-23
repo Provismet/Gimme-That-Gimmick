@@ -30,10 +30,21 @@ public abstract class GraalShowdownUnbundlerMixin {
                 Path showdown_sim = Path.of("./showdown/sim");
                 Path showdown_data = Path.of("./showdown/data");
                 Path showdown_dir = Path.of("./showdown");
+                Path showdown_mod_data = Path.of("./showdown/data/mods/cobblemon");
 
                 try {
                     Files.createDirectories(showdown_sim);
                     Files.createDirectories(showdown_data);
+
+                    if (!Files.exists(showdown_mod_data.resolve("items.js"))) {
+                        yoink("/showdown_scripts/mods/items.js", showdown_mod_data.resolve("items.js"));
+                    }
+                    if (!Files.exists(showdown_mod_data.resolve("conditions.js"))) {
+                        yoink("/showdown_scripts/mods/conditions.js", showdown_mod_data.resolve("conditions.js"));
+                    }
+                    if (!Files.exists(showdown_mod_data.resolve("typechart.js"))) {
+                        yoink("/showdown_scripts/mods/typechart.js", showdown_mod_data.resolve("typechart.js"));
+                    }
 
                     yoink("/showdown_scripts/battle-actions.js", showdown_sim.resolve("battle-actions.js"));
                     yoink("/showdown_scripts/pokemon.js", showdown_sim.resolve("pokemon.js"));
