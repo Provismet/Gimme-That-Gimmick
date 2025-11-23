@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Conditions implements DataRegistry {
-    private static final Identifier ID = Identifier.of(GimmeThatGimmickMain.MOD_ID, "showdown/conditions");
+    private static final Identifier ID = GimmeThatGimmickMain.identifier("showdown/conditions");
     private static final SimpleObservable<Conditions> OBSERVABLE = new SimpleObservable<>();
     public static final Conditions INSTANCE = new Conditions();
     private final Map<String, String> conditionScripts = new HashMap<>();

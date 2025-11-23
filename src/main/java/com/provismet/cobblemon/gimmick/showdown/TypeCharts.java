@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TypeCharts implements DataRegistry {
-    private static final Identifier ID = Identifier.of(GimmeThatGimmickMain.MOD_ID, "showdown/typecharts");
+    private static final Identifier ID = GimmeThatGimmickMain.identifier("showdown/typecharts");
     private static final SimpleObservable<TypeCharts> OBSERVABLE = new SimpleObservable<>();
     public static final TypeCharts INSTANCE = new TypeCharts();
     private final Map<String, String> typeChartScripts = new HashMap<>();

@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Scripts implements DataRegistry {
-    private static final Identifier ID = Identifier.of(GimmeThatGimmickMain.MOD_ID, "showdown/scripts");
+    private static final Identifier ID = GimmeThatGimmickMain.identifier("showdown/scripts");
     private static final SimpleObservable<Scripts> OBSERVABLE = new SimpleObservable<>();
     public static final Scripts INSTANCE = new Scripts();
     private final Map<String, String> scripts = new HashMap<>();
