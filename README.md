@@ -19,7 +19,7 @@ Gimme That Gimmick relies on art assets, Showdown scripts, and mixins provided b
 Please support the original as Gimme That Gimmick would not exist without their efforts.
 
 ### Resource Authors from Mega Showdown
-- YajatKaul
+- YajatKaul (6'11, Non-chalant, feminist frfr ong)
   - Mixins
 - Treynami
   - Showdown scripts
