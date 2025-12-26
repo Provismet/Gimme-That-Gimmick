@@ -4,6 +4,7 @@ import com.provismet.cobblemon.gimmick.registry.GTGItems;
 import com.provismet.cobblemon.gimmick.util.tag.GTGItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -98,9 +99,44 @@ public class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
             .addOptionalTag(GTGItemTags.Z_CRYSTAL_TYPE)
             .addOptionalTag(GTGItemTags.Z_CRYSTAL_SPECIES);
 
-        this.getOrCreateTagBuilder(GTGItemTags.Z_CRYSTAL_TYPE);
+        this.getOrCreateTagBuilder(GTGItemTags.Z_CRYSTAL_TYPE)
+            .add(GTGItems.BUGINIUM_Z)
+            .add(GTGItems.DARKINIUM_Z)
+            .add(GTGItems.DRAGONIUM_Z)
+            .add(GTGItems.ELECTRIUM_Z)
+            .add(GTGItems.FAIRIUM_Z)
+            .add(GTGItems.FIGHTINIUM_Z)
+            .add(GTGItems.FIRIUM_Z)
+            .add(GTGItems.FLYINIUM_Z)
+            .add(GTGItems.GHOSTIUM_Z)
+            .add(GTGItems.GRASSIUM_Z)
+            .add(GTGItems.GROUNDIUM_Z)
+            .add(GTGItems.ICIUM_Z)
+            .add(GTGItems.NORMALIUM_Z)
+            .add(GTGItems.POISONIUM_Z)
+            .add(GTGItems.PSYCHIUM_Z)
+            .add(GTGItems.ROCKIUM_Z)
+            .add(GTGItems.STEELIUM_Z)
+            .add(GTGItems.WATERIUM_Z);
 
-        this.getOrCreateTagBuilder(GTGItemTags.Z_CRYSTAL_SPECIES);
+        this.getOrCreateTagBuilder(GTGItemTags.Z_CRYSTAL_SPECIES)
+            .add(GTGItems.ALORAICHIUM_Z)
+            .add(GTGItems.DECIDIUM_Z)
+            .add(GTGItems.EEVIUM_Z)
+            .add(GTGItems.INCINIUM_Z)
+            .add(GTGItems.KOMMONIUM_Z)
+            .add(GTGItems.LUNALIUM_Z)
+            .add(GTGItems.LYCANIUM_Z)
+            .add(GTGItems.MARSHADIUM_Z)
+            .add(GTGItems.MEWNIUM_Z)
+            .add(GTGItems.MIMIKIUM_Z)
+            .add(GTGItems.PIKANIUM_Z)
+            .add(GTGItems.PIKASHUNIUM_Z)
+            .add(GTGItems.PRIMARIUM_Z)
+            .add(GTGItems.SNORLIUM_Z)
+            .add(GTGItems.SOLGANIUM_Z)
+            .add(GTGItems.TAPUNIUM_Z)
+            .add(GTGItems.ULTRANECROZIUM_Z);
 
         this.getOrCreateTagBuilder(GTGItemTags.TERA_SHARDS)
             .add(GTGItems.BUG_TERA_SHARD)
@@ -122,5 +158,8 @@ public class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
             .add(GTGItems.STEEL_TERA_SHARD)
             .add(GTGItems.WATER_TERA_SHARD)
             .add(GTGItems.STELLAR_TERA_SHARD);
+
+        this.getOrCreateTagBuilder(ConventionalItemTags.MUSHROOMS)
+            .add(GTGItems.MAX_MUSHROOM);
     }
 }
