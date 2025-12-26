@@ -75,4 +75,14 @@ public class MaxMushroomBlock extends CropBlock implements PolymerTexturedBlock 
         if (age == 2) return this.model2;
         return this.model3;
     }
+
+    @Override
+    public int getAge (BlockState state) {
+        return state.get(AGE);
+    }
+
+    @Override
+    public int getMaxAge () {
+        return MAX_AGE;
+    }
 }
