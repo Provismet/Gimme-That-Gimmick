@@ -11,6 +11,7 @@ import com.provismet.cobblemon.gimmick.registry.GTGEnchantmentComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemGroup;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
+import com.provismet.cobblemon.gimmick.registry.GTGResourceConditions;
 import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
 import com.provismet.cobblemon.gimmick.util.DelayedTicker;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
@@ -50,6 +51,7 @@ public class GimmeThatGimmickMain implements ModInitializer {
         GTGStatusEffects.init();
         GTGItemGroup.register();
         GTGCommands.register();
+        GTGResourceConditions.register();
 
         CobblemonEventHandler.register();
         UltraBurstEventHandler.register();

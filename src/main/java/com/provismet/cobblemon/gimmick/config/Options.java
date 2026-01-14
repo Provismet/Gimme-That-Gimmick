@@ -29,6 +29,7 @@ public abstract class Options {
     private static boolean applyBasicTeraGlow = true;
     private static boolean showDynamaxLevel = true;
     private static boolean allowMultipleMega = false;
+    private static boolean gimmickEnchantments = true;
 
     static {
         load();
@@ -90,6 +91,10 @@ public abstract class Options {
         return allowMultipleMega;
     }
 
+    public static boolean includeGimmickEnchantments () {
+        return gimmickEnchantments;
+    }
+
     public static void save () {
         JsonObject json = new JsonBuilder()
             .append("override_showdown", overrideShowdown)
@@ -106,6 +111,7 @@ public abstract class Options {
             .append("use_default_tera_glow_visual", applyBasicTeraGlow)
             .append("show_dynamax_level", showDynamaxLevel)
             .append("allow_multiple_out_of_battle_megas", allowMultipleMega)
+            .append("enable_gimmick_enchantments", gimmickEnchantments)
             .getJson();
 
         try (FileWriter writer = new FileWriter(FILE.toFile())) {
@@ -134,6 +140,7 @@ public abstract class Options {
                 reader.getBoolean("use_default_tera_glow_visual").ifPresent(val -> applyBasicTeraGlow = val);
                 reader.getBoolean("show_dynamax_level").ifPresent(val -> showDynamaxLevel = val);
                 reader.getBoolean("allow_multiple_out_of_battle_megas").ifPresent(val -> allowMultipleMega = val);
+                reader.getBoolean("enable_gimmick_enchantments").ifPresent(val -> gimmickEnchantments = val);
             }
         }
         catch (FileNotFoundException e) {

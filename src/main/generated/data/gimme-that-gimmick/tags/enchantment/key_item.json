@@ -1,8 +1,20 @@
 {
   "values": [
-    "gimme-that-gimmick:key_stone",
-    "gimme-that-gimmick:z-power",
-    "gimme-that-gimmick:dynamax",
-    "gimme-that-gimmick:terastal"
+    {
+      "id": "gimme-that-gimmick:key_stone",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:z-power",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:dynamax",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:terastal",
+      "required": false
+    }
   ]
 }

@@ -16,9 +16,9 @@ public class EnchantmentTagGenerator extends FabricTagProvider.EnchantmentTagPro
     @Override
     protected void configure (RegistryWrapper.WrapperLookup wrapperLookup) {
         this.getOrCreateTagBuilder(GTGEnchantmentTags.KEY_ITEM)
-            .add(GTGEnchantments.KEY_STONE.getKey())
-            .add(GTGEnchantments.Z_RING.getKey())
-            .add(GTGEnchantments.DYNAMAX_BAND.getKey())
-            .add(GTGEnchantments.TERA_ORB.getKey());
+            .addOptional(GTGEnchantments.KEY_STONE.getKey())
+            .addOptional(GTGEnchantments.Z_RING.getKey())
+            .addOptional(GTGEnchantments.DYNAMAX_BAND.getKey())
+            .addOptional(GTGEnchantments.TERA_ORB.getKey());
     }
 }

@@ -1,4 +1,9 @@
 {
+  "fabric:load_conditions": [
+    {
+      "condition": "gimme-that-gimmick:gimmick_enchantments_enabled"
+    }
+  ],
   "anvil_cost": 7,
   "description": {
     "translate": "enchantment.gimme-that-gimmick.key_stone"
