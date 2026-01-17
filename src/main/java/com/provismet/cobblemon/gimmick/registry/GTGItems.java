@@ -16,21 +16,7 @@ import com.provismet.cobblemon.gimmick.item.PolymerHeldItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DMaxCandyItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.DynamaxBandItem;
 import com.provismet.cobblemon.gimmick.item.dynamax.MaxSoupItem;
-import com.provismet.cobblemon.gimmick.item.forms.DNASplicersItem;
-import com.provismet.cobblemon.gimmick.item.forms.DataDrivenFusionItem;
-import com.provismet.cobblemon.gimmick.item.forms.DataDrivenToggleItem;
-import com.provismet.cobblemon.gimmick.item.forms.GenericFormChangeHeldItem;
-import com.provismet.cobblemon.gimmick.item.forms.GracideaFlowerItem;
-import com.provismet.cobblemon.gimmick.item.forms.MeteoriteItem;
-import com.provismet.cobblemon.gimmick.item.forms.MoveChangingFormChangeHeldItem;
-import com.provismet.cobblemon.gimmick.item.forms.NLunarizerItem;
-import com.provismet.cobblemon.gimmick.item.forms.NSolarizerItem;
-import com.provismet.cobblemon.gimmick.item.forms.OgerponMaskItem;
-import com.provismet.cobblemon.gimmick.item.forms.PrisonBottleItem;
-import com.provismet.cobblemon.gimmick.item.forms.ReinsOfUnityItem;
-import com.provismet.cobblemon.gimmick.item.forms.RevealGlassItem;
-import com.provismet.cobblemon.gimmick.item.forms.RotomCatalogItem;
-import com.provismet.cobblemon.gimmick.item.forms.ZygardeCubeItem;
+import com.provismet.cobblemon.gimmick.item.forms.*;
 import com.provismet.cobblemon.gimmick.item.mega.MegaStoneItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraOrbItem;
 import com.provismet.cobblemon.gimmick.item.tera.TeraShardItem;
@@ -239,6 +225,12 @@ public abstract class GTGItems {
     public static final GenericFormChangeHeldItem DOUSE_DRIVE = registerGenesect("douse", "water");
     public static final GenericFormChangeHeldItem SHOCK_DRIVE = registerGenesect("shock", "electric");
 
+    // Oricorio Nectars
+    public static final NectarItem PINK_NECTAR = registerOricorio("pink", "pa'u");
+    public static final NectarItem PURPLE_NECTAR = registerOricorio("purple", "sensu");
+    public static final NectarItem RED_NECTAR = registerOricorio("red", "baile");
+    public static final NectarItem YELLOW_NECTAR = registerOricorio("yellow", "pom_pom");
+
     // Ogerpon Masks
     public static final GenericFormChangeHeldItem WELLSPRING_MASK = registerOgerpon("wellspring", TeraTypes.getWATER());
     public static final GenericFormChangeHeldItem HEARTHFLAME_MASK = registerOgerpon("hearthflame", TeraTypes.getFIRE());
@@ -295,6 +287,10 @@ public abstract class GTGItems {
 
     private static GenericFormChangeHeldItem registerSilvally (String type) {
         return registerFormChangeChoice(type + "memory", "silvally", "rks_memory", type, "normal", 1);
+    }
+
+    private static NectarItem registerOricorio(String color, String type) {
+        return register(color + "nectar", (settings, item, modelData) -> new NectarItem(settings, item, modelData, type));
     }
 
     private static GenericFormChangeHeldItem registerArceus (String name, String type) {

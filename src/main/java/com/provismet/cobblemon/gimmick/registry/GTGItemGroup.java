@@ -188,6 +188,10 @@ public abstract class GTGItemGroup {
             entries.add(GTGItems.WELLSPRING_MASK);
             entries.add(GTGItems.HEARTHFLAME_MASK);
             entries.add(GTGItems.CORNERSTONE_MASK);
+            entries.add(GTGItems.PINK_NECTAR);
+            entries.add(GTGItems.RED_NECTAR);
+            entries.add(GTGItems.PURPLE_NECTAR);
+            entries.add(GTGItems.YELLOW_NECTAR);
         })
         .build();
 

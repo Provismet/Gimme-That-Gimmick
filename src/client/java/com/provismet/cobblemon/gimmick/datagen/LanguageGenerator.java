@@ -480,6 +480,11 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.unbound", "Your %1$s has been released into its Unbound forme.");
         translationBuilder.add("message.overlay.gimme-that-gimmick.prison.confined", "Your %1$s has been restrained into its Confined forme.");
 
+        translationBuilder.add("message.overlay.gimme-that-gimmick.oricorio.pa'u", "Your %1$s has been transformed into its Pa'u forme.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.oricorio.sensu", "Your %1$s has been transformed into its Sensu forme.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.oricorio.baile", "Your %1$s has been transformed into its Baile forme.");
+        translationBuilder.add("message.overlay.gimme-that-gimmick.oricorio.pom_pom", "Your %1$s has been transformed into its Pom Pom forme.");
+
         translationBuilder.add("message.overlay.gimme-that-gimmick.zygarde.50", "Your %1$s has gained cells.");
         translationBuilder.add("message.overlay.gimme-that-gimmick.zygarde.10", "Your %1$s has lost cells.");
 
@@ -548,6 +553,11 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.REIGNS_OF_UNITY, "Reigns of Unity", "Used to unite Calyrex with its steed");
         addItemWithTooltip(translationBuilder, GTGItems.ROTOM_CATALOG, "Rotom Catalog", "A catalog of appliances for Rotom to possess");
         addItemWithTooltip(translationBuilder, GTGItems.ZYGARDE_CUBE, "Zygarde Cube", "Changes the amount of cells Zygarde has");
+
+        addItemWithTooltip(translationBuilder, GTGItems.PINK_NECTAR, "Pink Nectar", "Changes Oricorio to its Pa'u Style");
+        addItemWithTooltip(translationBuilder, GTGItems.YELLOW_NECTAR, "Yellow Nectar", "Changes Oricorio to its Pom-Pom Style");
+        addItemWithTooltip(translationBuilder, GTGItems.RED_NECTAR, "Red Nectar", "Changes Oricorio to its Baile Style");
+        addItemWithTooltip(translationBuilder, GTGItems.PURPLE_NECTAR, "Purple Nectar", "Changes Oricorio to its Sensu Style");
     }
 
     private void battleMessages (TranslationBuilder translationBuilder) {
