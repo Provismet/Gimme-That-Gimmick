@@ -119,8 +119,11 @@ class Side {
   canDynamaxNow() {
     if (this.battle.gen !== 9)
       return false;
-    if (this.battle.gameType === "multi")
+    if (this.battle.gameType === "multi" && this.battle.turn % 2 !== [1, 1, 0, 0][this.n])
       return false;
+    const active = this.active[0];
+    if (active && active.terastallized)
+		return false;
     return !this.dynamaxUsed;
   }
   getChoice() {
@@ -503,12 +506,6 @@ ${sideUpdate}`);
         return status;
       }
     }
-
-    // Ultra Burst button doesn't exist, hijack the mega button instead.
-    if (event === "mega" && pokemon.canUltraBurst) {
-      event = "ultra";
-    }
-
     const mega = event === "mega";
     if (mega && !pokemon.canMegaEvo) {
       return this.emitChoiceError(`Can't move: ${pokemon.name} can't mega evolve`);
