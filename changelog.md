@@ -1,10 +1,4 @@
-Feature update to add more functionality surrounding datapacks.
-
-## Additions
-- Added the ability to datapack conditions, typecharts, scripts and held items in data/gimme-that-gimmick/showdown.
-- Added Oricorio nectars.
-- Enchantments can now be disabled in the config.
+Updated to 1.7.2 and 1.7.3 Cobblemon.
 
 ## Bugfixes
-- Max Mushroom blocks now correctly output their age and max age for compatibility purposes.
-- Z-Crystals are now properly tagged.
+- Not fixed by GTG, but by Cobblemon itself. Gimmicks now work in double battles!
