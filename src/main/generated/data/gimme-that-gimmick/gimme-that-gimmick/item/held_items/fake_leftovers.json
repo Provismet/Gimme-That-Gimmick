@@ -1,0 +1,11 @@
+{
+  "item": {
+    "name": "Just An Apple",
+    "rarity": "uncommon",
+    "tooltip": [
+      "Maybe it'll leave some leftovers..."
+    ],
+    "vanillaItem": "minecraft:apple"
+  },
+  "showdownId": "leftovers"
+}

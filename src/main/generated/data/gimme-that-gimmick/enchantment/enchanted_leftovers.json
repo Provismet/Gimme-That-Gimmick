@@ -1,0 +1,23 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.gimme-that-gimmick.enchanted_leftovers"
+  },
+  "effects": {
+    "gimme-that-gimmick:showdown_id": "leftovers"
+  },
+  "max_cost": {
+    "base": 1,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 1,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "any"
+  ],
+  "supported_items": "#minecraft:cat_food",
+  "weight": 1
+}
