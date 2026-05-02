@@ -39,6 +39,7 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add(GTGItemTags.MEGA_STONES, "Mega Stones");
         translationBuilder.add(GTGItemTags.MEGA_STONES_X, "Mega Stones (X)");
         translationBuilder.add(GTGItemTags.MEGA_STONES_Y, "Mega Stones (Y)");
+        translationBuilder.add(GTGItemTags.MEGA_STONES_Z, "Mega Stones (Z)");
         translationBuilder.add(GTGItemTags.Z_CRYSTALS, "Z-Crystals");
         translationBuilder.add(GTGItemTags.Z_CRYSTAL_TYPE, "Elemental Z-Crystals");
         translationBuilder.add(GTGItemTags.Z_CRYSTAL_SPECIES, "Exclusive Z-Crystals");
@@ -136,6 +137,52 @@ public class LanguageGenerator extends LilyLanguageProvider {
         addItemWithTooltip(translationBuilder, GTGItems.SWAMPERTITE, "Swampertite", megaTooltip.apply("Swampert"));
         addItemWithTooltip(translationBuilder, GTGItems.TYRANITARITE, "Tyranitarite", megaTooltip.apply("Tyranitar"));
         addItemWithTooltip(translationBuilder, GTGItems.VENUSAURITE, "Venusaurite", megaTooltip.apply("Venusaur"));
+
+        addItemWithTooltip(translationBuilder, GTGItems.ABSOLITE_Z, "Absolite Z", megaTooltip.apply("Absol"));
+        addItemWithTooltip(translationBuilder, GTGItems.BARBARACITE, "Barbaracite", megaTooltip.apply("Barbaracle"));
+        addItemWithTooltip(translationBuilder, GTGItems.BAXCALIBRITE, "Baxcalibrite", megaTooltip.apply("Baxcalibur"));
+        addItemWithTooltip(translationBuilder, GTGItems.CHANDELURITE, "Chandelurite", megaTooltip.apply("Chandelure"));
+        addItemWithTooltip(translationBuilder, GTGItems.CHESNAUGHTITE, "Chesnaughtite", megaTooltip.apply("Chesnaught"));
+        addItemWithTooltip(translationBuilder, GTGItems.CHIMECHITE, "Chimechite", megaTooltip.apply("Chimecho"));
+        addItemWithTooltip(translationBuilder, GTGItems.CLEFABLITE, "Clefablite", megaTooltip.apply("Clefable"));
+        addItemWithTooltip(translationBuilder, GTGItems.CRABOMINITE, "Crabominite", megaTooltip.apply("Crabominable"));
+        addItemWithTooltip(translationBuilder, GTGItems.DARKRANITE, "Darkranite", megaTooltip.apply("Darkrai"));
+        addItemWithTooltip(translationBuilder, GTGItems.DELPHOXITE, "Delphoxite", megaTooltip.apply("Delphox"));
+        addItemWithTooltip(translationBuilder, GTGItems.DRAGALGITE, "Dragalgite", megaTooltip.apply("Dragalge"));
+        addItemWithTooltip(translationBuilder, GTGItems.DRAGONINITE, "Dragoninite", megaTooltip.apply("Dragonite"));
+        addItemWithTooltip(translationBuilder, GTGItems.DRAMPANITE, "Drampanite", megaTooltip.apply("Drampa"));
+        addItemWithTooltip(translationBuilder, GTGItems.EELEKTROSSITE, "Eelektrossite", megaTooltip.apply("Eelektross"));
+        addItemWithTooltip(translationBuilder, GTGItems.EMBOARITE, "Emboarite", megaTooltip.apply("Emboar"));
+        addItemWithTooltip(translationBuilder, GTGItems.EXCADRITE, "Excadrite", megaTooltip.apply("Excadrill"));
+        addItemWithTooltip(translationBuilder, GTGItems.FALINKSITE, "Falinksite", megaTooltip.apply("Falinks"));
+        addItemWithTooltip(translationBuilder, GTGItems.FERALIGITE, "Feraligite", megaTooltip.apply("Feraligatr"));
+        addItemWithTooltip(translationBuilder, GTGItems.FLOETTITE, "Floettite", megaTooltip.apply("Eternal Floette"));
+        addItemWithTooltip(translationBuilder, GTGItems.FROSLASSITE, "Frosslassite", megaTooltip.apply("Frosslass"));
+        addItemWithTooltip(translationBuilder, GTGItems.GARCHOMPITE_Z, "Garchompite Z", megaTooltip.apply("Garchomp"));
+        addItemWithTooltip(translationBuilder, GTGItems.GLIMMORANITE, "Glimmoranite", megaTooltip.apply("Glimmora"));
+        addItemWithTooltip(translationBuilder, GTGItems.GOLISOPITE, "Golisopite", megaTooltip.apply("Golisopod"));
+        addItemWithTooltip(translationBuilder, GTGItems.GOLURKITE, "Golurkite", megaTooltip.apply("Golurk"));
+        addItemWithTooltip(translationBuilder, GTGItems.GRENINJITE, "Greninjite", megaTooltip.apply("Greninja"));
+        addItemWithTooltip(translationBuilder, GTGItems.HAWLUCHANITE, "Hawluchanite", megaTooltip.apply("Hawlucha"));
+        addItemWithTooltip(translationBuilder, GTGItems.HEATRANITE, "Heatranite", megaTooltip.apply("Heatran"));
+        addItemWithTooltip(translationBuilder, GTGItems.LUCARIONITE_Z, "Lucarionite Z", megaTooltip.apply("Lucario"));
+        addItemWithTooltip(translationBuilder, GTGItems.MAGEARNITE, "Magearnite", megaTooltip.apply("Magearna"));
+        addItemWithTooltip(translationBuilder, GTGItems.MALAMARITE, "Malamarite", megaTooltip.apply("Malamar"));
+        addItemWithTooltip(translationBuilder, GTGItems.MEGANIUMITE, "Meganiumite", megaTooltip.apply("Meganium"));
+        addItemWithTooltip(translationBuilder, GTGItems.MEOWSTICITE, "Meowsticite", megaTooltip.apply("Meowstic"));
+        addItemWithTooltip(translationBuilder, GTGItems.PYROARITE, "Pyroarite", megaTooltip.apply("Pyroar"));
+        addItemWithTooltip(translationBuilder, GTGItems.RAICHUNITE_X, "Raichunite X", megaTooltip.apply("Raichu"));
+        addItemWithTooltip(translationBuilder, GTGItems.RAICHUNITE_Y, "Raichunite Y", megaTooltip.apply("Raichu"));
+        addItemWithTooltip(translationBuilder, GTGItems.SCOLIPITE, "Scolipite", megaTooltip.apply("Scolipede"));
+        addItemWithTooltip(translationBuilder, GTGItems.SCOVILLAINITE, "Scovillainite", megaTooltip.apply("Scovillain"));
+        addItemWithTooltip(translationBuilder, GTGItems.SCRAFTINITE, "Scraftinite", megaTooltip.apply("Scrafty"));
+        addItemWithTooltip(translationBuilder, GTGItems.SKARMORITE, "Skarmorite", megaTooltip.apply("Skarmory"));
+        addItemWithTooltip(translationBuilder, GTGItems.STARAPTITE, "Staraptite", megaTooltip.apply("Staraptor"));
+        addItemWithTooltip(translationBuilder, GTGItems.STARMINITE, "Starminite", megaTooltip.apply("Starmie"));
+        addItemWithTooltip(translationBuilder, GTGItems.TATSUGIRINITE, "Tatsugirinite", megaTooltip.apply("Tatsugiri"));
+        addItemWithTooltip(translationBuilder, GTGItems.VICTREEBELITE, "Victreebelite", megaTooltip.apply("Victreebel"));
+        addItemWithTooltip(translationBuilder, GTGItems.ZERAORITE, "Zeraorite", megaTooltip.apply("Zeraora"));
+        addItemWithTooltip(translationBuilder, GTGItems.ZYGARDITE, "Zygardite", megaTooltip.apply("Zygarde"));
     }
 
     private void zCrystals (TranslationBuilder translationBuilder) {

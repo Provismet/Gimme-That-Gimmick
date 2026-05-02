@@ -1,0 +1,14 @@
+{
+  "animation": "cry",
+  "formDelaySeconds": 2.0,
+  "particles": {
+    "type": "snowstorm",
+    "particleId": "cobblemon:fake_snowstorm",
+    "sourceLocators": [
+      "target"
+    ]
+  },
+  "sound": {
+    "sound_id": "minecraft:block.amethyst_block.chime"
+  }
+}

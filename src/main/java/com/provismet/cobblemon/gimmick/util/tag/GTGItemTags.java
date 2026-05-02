@@ -9,6 +9,7 @@ public abstract class GTGItemTags {
     public static final TagKey<Item> MEGA_STONES = GTGItemTags.of("mega_stones");
     public static final TagKey<Item> MEGA_STONES_X = GTGItemTags.of("mega_stones_x");
     public static final TagKey<Item> MEGA_STONES_Y = GTGItemTags.of("mega_stones_y");
+    public static final TagKey<Item> MEGA_STONES_Z = GTGItemTags.of("mega_stones_z");
 
     public static final TagKey<Item> Z_CRYSTALS = GTGItemTags.of("z-crystal");
     public static final TagKey<Item> Z_CRYSTAL_TYPE = GTGItemTags.of("typed_z-crystal");

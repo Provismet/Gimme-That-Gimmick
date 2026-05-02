@@ -88,6 +88,52 @@ public class ModelGenerator extends FabricModelProvider {
         register.accept(GTGItems.SWAMPERTITE);
         register.accept(GTGItems.TYRANITARITE);
         register.accept(GTGItems.VENUSAURITE);
+
+        register.accept(GTGItems.ABSOLITE_Z);
+        register.accept(GTGItems.BARBARACITE);
+        register.accept(GTGItems.BAXCALIBRITE);
+        register.accept(GTGItems.CHANDELURITE);
+        register.accept(GTGItems.CHESNAUGHTITE);
+        register.accept(GTGItems.CHIMECHITE);
+        register.accept(GTGItems.CLEFABLITE);
+        register.accept(GTGItems.CRABOMINITE);
+        register.accept(GTGItems.DARKRANITE);
+        register.accept(GTGItems.DELPHOXITE);
+        register.accept(GTGItems.DRAGALGITE);
+        register.accept(GTGItems.DRAGONINITE);
+        register.accept(GTGItems.DRAMPANITE);
+        register.accept(GTGItems.EELEKTROSSITE);
+        register.accept(GTGItems.EMBOARITE);
+        register.accept(GTGItems.EXCADRITE);
+        register.accept(GTGItems.FALINKSITE);
+        register.accept(GTGItems.FERALIGITE);
+        register.accept(GTGItems.FLOETTITE);
+        register.accept(GTGItems.FROSLASSITE);
+        register.accept(GTGItems.GARCHOMPITE_Z);
+        register.accept(GTGItems.GLIMMORANITE);
+        register.accept(GTGItems.GOLISOPITE);
+        register.accept(GTGItems.GOLURKITE);
+        register.accept(GTGItems.GRENINJITE);
+        register.accept(GTGItems.HAWLUCHANITE);
+        register.accept(GTGItems.HEATRANITE);
+        register.accept(GTGItems.LUCARIONITE_Z);
+        register.accept(GTGItems.MAGEARNITE);
+        register.accept(GTGItems.MALAMARITE);
+        register.accept(GTGItems.MEGANIUMITE);
+        register.accept(GTGItems.MEOWSTICITE);
+        register.accept(GTGItems.PYROARITE);
+        register.accept(GTGItems.RAICHUNITE_X);
+        register.accept(GTGItems.RAICHUNITE_Y);
+        register.accept(GTGItems.SCOLIPITE);
+        register.accept(GTGItems.SCOVILLAINITE);
+        register.accept(GTGItems.SCRAFTINITE);
+        register.accept(GTGItems.SKARMORITE);
+        register.accept(GTGItems.STARAPTITE);
+        register.accept(GTGItems.STARMINITE);
+        register.accept(GTGItems.TATSUGIRINITE);
+        register.accept(GTGItems.VICTREEBELITE);
+        register.accept(GTGItems.ZERAORITE);
+        register.accept(GTGItems.ZYGARDITE);
     }
 
     private void createZCrystals (Consumer<Item> register) {
