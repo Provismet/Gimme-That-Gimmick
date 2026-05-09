@@ -128,7 +128,7 @@ public abstract class GTGItems {
     public static final MegaStoneItem MAGEARNITE = registerMegaStone("magearnite", "magearna");
     public static final MegaStoneItem MALAMARITE = registerMegaStone("malamarite", "malamar");
     public static final MegaStoneItem MEGANIUMITE = registerMegaStone("meganiumite", "meganium");
-    public static final MegaStoneItem MEOWSTICITE = registerMegaStone("meowsticite", "meowstic");
+    public static final MegaStoneItem MEOWSTICITE = registerMegaStone("meowsticite", new MegaEvolution(PokemonRequirements.species("meowstic"), PokemonFeatures.single("mega_evolution", "mega"), PokemonFeatures.single("mega_evolution", "none")));
     public static final MegaStoneItem PYROARITE = registerMegaStone("pyroarite", "pyroar");
     public static final MegaStoneItem RAICHUNITE_X = registerMegaStone("raichunitex", "raichu", "mega_x");
     public static final MegaStoneItem RAICHUNITE_Y = registerMegaStone("raichunitey", "raichu", "mega_y");
