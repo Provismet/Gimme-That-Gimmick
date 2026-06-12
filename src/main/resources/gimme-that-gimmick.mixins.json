@@ -11,6 +11,7 @@
     "ShowdownActionRequestMixin",
     "ShowdownInterpreterMixin",
     "ShowdownSpeciesMixin",
+    "TamableEntityMixin",
     "instructions.EndInstructionMixin",
     "instructions.StartInstructionMixin"
   ],

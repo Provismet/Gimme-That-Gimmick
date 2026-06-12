@@ -15,7 +15,7 @@ import java.nio.file.Path;
 public abstract class Options {
     private static final Path FILE = FabricLoader.getInstance().getConfigDir().resolve("gimme-that-gimmick.json");
 
-    private static boolean overrideShowdown = true;
+    private static boolean autoUpdateShowdown = true;
     private static boolean megaEvolution = true;
     private static boolean zMoves = true;
     private static boolean dynamax = true;
@@ -35,8 +35,8 @@ public abstract class Options {
         load();
     }
 
-    public static boolean shouldOverrideShowdown () {
-        return overrideShowdown;
+    public static boolean shouldAutoUpdateShowdown () {
+        return autoUpdateShowdown;
     }
 
     public static boolean enabledMegaEvolution () {
@@ -97,7 +97,7 @@ public abstract class Options {
 
     public static void save () {
         JsonObject json = new JsonBuilder()
-            .append("override_showdown", overrideShowdown)
+            .append("auto_update_showdown", autoUpdateShowdown)
             .append("enable_mega_evolution", megaEvolution)
             .append("enable_z-moves", zMoves)
             .append("enable_dynamax", dynamax)
@@ -126,7 +126,7 @@ public abstract class Options {
         try {
             JsonReader reader = JsonReader.file(FILE.toFile());
             if (reader != null) {
-                reader.getBoolean("override_showdown").ifPresent(val -> overrideShowdown = val);
+                reader.getBoolean("override_showdown").ifPresent(val -> autoUpdateShowdown = val);
                 reader.getBoolean("enable_mega_evolution").ifPresent(val -> megaEvolution = val);
                 reader.getBoolean("enable_z-moves").ifPresent(val -> zMoves = val);
                 reader.getBoolean("enable_dynamax").ifPresent(val -> dynamax = val);
