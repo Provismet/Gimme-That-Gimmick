@@ -42,7 +42,7 @@ public abstract class PolymerPokemonSelectingBlockItem extends PolymerBlockItemT
     @Override
     public TypedActionResult<ItemStack> use (World world, PlayerEntity user, Hand hand) {
         if (user instanceof ServerPlayerEntity serverPlayer) {
-            return this.use(serverPlayer, serverPlayer.getStackInHand(hand));
+            return this.use(serverPlayer, serverPlayer.getStackInHand(hand), false);
         }
         return TypedActionResult.success(user.getStackInHand(hand));
     }

@@ -5,13 +5,13 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.data.DataRegistry;
 import com.cobblemon.mod.common.api.reactive.SimpleObservable;
 import com.cobblemon.mod.common.battles.runner.graal.GraalShowdownService;
-import com.cobblemon.mod.relocations.graalvm.polyglot.Value;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import kotlin.Unit;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import org.graalvm.polyglot.Value;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
