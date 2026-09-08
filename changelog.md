@@ -1,10 +1,5 @@
-## Additions
-- Mega Stones can now be configured (in Showdown) to allow multiple valid users.
-  - If the `megaEvolves` field is a `"string"`, then it takes only that Pokemon.
-  - If the `megaEvolves` field is a `["list", "of", "names"]`, then it takes any Pokemon in the list.
-- Added item tags for form change items.
+Minor patch that updates the mod to Cobblemon 1.8.0.
 
 ## Bugfixes
-- Regional forms can no longer use non-regional megastones (again).
-  - This fix got reverted with the 1.7 update.
-- Fixed rare Showdown crash.
+- Fixed weirdness for the glow colours for Tera, Z-Moves, and Dynamax.
+- Fixed Showdown caching weirdness.
