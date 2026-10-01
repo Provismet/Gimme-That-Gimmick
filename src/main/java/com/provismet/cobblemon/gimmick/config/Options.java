@@ -3,7 +3,7 @@ package com.provismet.cobblemon.gimmick.config;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
-import com.provismet.lilylib.util.json.JsonBuilder;
+import com.provismet.lilylib.util.json.JsonConfig;
 import com.provismet.lilylib.util.json.JsonReader;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -30,6 +30,23 @@ public abstract class Options {
     private static boolean showDynamaxLevel = true;
     private static boolean allowMultipleMega = false;
     private static boolean gimmickEnchantments = true;
+
+    private static final JsonConfig CONFIG = new JsonConfig()
+        .addBoolean("auto_update_showdown", Options::shouldAutoUpdateShowdown, val -> autoUpdateShowdown = val)
+        .addBoolean("enable_mega_evolution", Options::enabledMegaEvolution, val -> megaEvolution = val)
+        .addBoolean("enable_z-moves", Options::enabledZMoves, val -> zMoves = val)
+        .addBoolean("enable_dynamax", Options::enabledDynamax, val -> dynamax = val)
+        .addBoolean("enable_terastallization", Options::enabledTerastal, val -> terastal = val)
+        .addInteger("dynamax_power_spot_range", Options::getPowerSpotRange, val -> powerSpotRange = val)
+        .addBoolean("dynamax_power_spot_required", Options::isPowerSpotRequired, val -> powerSpotRequired = val)
+        .addFloat("dynamax_scale_factor", () -> dynamaxScaleFactor, val -> dynamaxScaleFactor = val)
+        .addBoolean("breakable_tera_orbs", Options::canBreakTeraOrb, val -> breakableTeraOrbs = val)
+        .addBoolean("use_default_z_glow_visual", Options::shouldApplyBasicZGlow, val -> applyBasicZGlow = val)
+        .addBoolean("use_default_dynamax_glow_visual", Options::shouldApplyBasicDynamaxGlow, val -> applyBasicDynamaxGlow = val)
+        .addBoolean("use_default_tera_glow_visual", Options::shouldApplyBasicTeraGlow, val -> applyBasicTeraGlow = val)
+        .addBoolean("show_dynamax_level", Options::shouldShowDynamaxLevel, val -> showDynamaxLevel = val)
+        .addBoolean("allow_multiple_out_of_battle_megas", Options::shouldAllowMultipleOutOfCombatMegas, val -> allowMultipleMega = val)
+        .addBoolean("enable_gimmick_enchantments", Options::includeGimmickEnchantments, val -> gimmickEnchantments = val);
 
     static {
         load();
@@ -96,23 +113,7 @@ public abstract class Options {
     }
 
     public static void save () {
-        JsonObject json = new JsonBuilder()
-            .append("auto_update_showdown", autoUpdateShowdown)
-            .append("enable_mega_evolution", megaEvolution)
-            .append("enable_z-moves", zMoves)
-            .append("enable_dynamax", dynamax)
-            .append("enable_terastallization", terastal)
-            .append("dynamax_power_spot_range", powerSpotRange)
-            .append("dynamax_power_spot_required", powerSpotRequired)
-            .append("dynamax_scale_factor", dynamaxScaleFactor)
-            .append("breakable_tera_orbs", breakableTeraOrbs)
-            .append("use_default_z_glow_visual", applyBasicZGlow)
-            .append("use_default_dynamax_glow_visual", applyBasicDynamaxGlow)
-            .append("use_default_tera_glow_visual", applyBasicTeraGlow)
-            .append("show_dynamax_level", showDynamaxLevel)
-            .append("allow_multiple_out_of_battle_megas", allowMultipleMega)
-            .append("enable_gimmick_enchantments", gimmickEnchantments)
-            .getJson();
+        JsonObject json = CONFIG.createJson();
 
         try (FileWriter writer = new FileWriter(FILE.toFile())) {
             writer.write(new GsonBuilder().setPrettyPrinting().create().toJson(json));
@@ -126,21 +127,7 @@ public abstract class Options {
         try {
             JsonReader reader = JsonReader.file(FILE.toFile());
             if (reader != null) {
-                reader.getBoolean("override_showdown").ifPresent(val -> autoUpdateShowdown = val);
-                reader.getBoolean("enable_mega_evolution").ifPresent(val -> megaEvolution = val);
-                reader.getBoolean("enable_z-moves").ifPresent(val -> zMoves = val);
-                reader.getBoolean("enable_dynamax").ifPresent(val -> dynamax = val);
-                reader.getBoolean("enable_terastallization").ifPresent(val -> terastal = val);
-                reader.getInteger("dynamax_power_spot_range").ifPresent(val -> powerSpotRange = val);
-                reader.getBoolean("dynamax_power_spot_required").ifPresent(val -> powerSpotRequired = val);
-                reader.getFloat("dynamax_scale_factor").ifPresent(val -> dynamaxScaleFactor = val);
-                reader.getBoolean("breakable_tera_orbs").ifPresent(val -> breakableTeraOrbs = val);
-                reader.getBoolean("use_default_z_glow_visual").ifPresent(val -> applyBasicZGlow = val);
-                reader.getBoolean("use_default_dynamax_glow_visual").ifPresent(val -> applyBasicDynamaxGlow = val);
-                reader.getBoolean("use_default_tera_glow_visual").ifPresent(val -> applyBasicTeraGlow = val);
-                reader.getBoolean("show_dynamax_level").ifPresent(val -> showDynamaxLevel = val);
-                reader.getBoolean("allow_multiple_out_of_battle_megas").ifPresent(val -> allowMultipleMega = val);
-                reader.getBoolean("enable_gimmick_enchantments").ifPresent(val -> gimmickEnchantments = val);
+                CONFIG.loadFromJson(reader);
             }
         }
         catch (FileNotFoundException e) {
