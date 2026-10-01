@@ -192,6 +192,7 @@ class Pokemon {
     this.baseStoredStats = null;
     this.storedStats = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
     this.boosts = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0, accuracy: 0, evasion: 0 };
+    this.alphaBoosts = { atk: 0, def: 0, spa: 0, spd: 0, spe: 0, accuracy: 0, evasion: 0 };
     this.baseAbility = (0, import_dex.toID)(set.ability);
     this.ability = this.baseAbility;
     this.abilityState = { id: this.ability };
@@ -213,7 +214,7 @@ class Pokemon {
     this.addedType = "";
     this.knownType = true;
     this.apparentType = this.baseSpecies.types.join("/");
-	this.teraType = this.set.teraType || this.types[0];
+    this.teraType = this.set.teraType || this.types[0];
     this.switchFlag = false;
     this.forceSwitchFlag = false;
     this.skipBeforeSwitchOutEventFlag = false;
@@ -330,6 +331,10 @@ class Pokemon {
     if (statName === "hp")
       throw new Error("Please read `maxhp` directly");
     let stat = this.storedStats[statName];
+    if (this.alphaBoosts[statName] > 0) {
+      const alphaBoostTable = [1, 1.5, 2, 2.5, 3, 3.5, 4];
+      stat = Math.floor(stat * alphaBoostTable[this.alphaBoosts[statName]]);
+    }
     if (unmodified && "wonderroom" in this.battle.field.pseudoWeather) {
       if (statName === "def") {
         statName = "spd";
@@ -572,7 +577,7 @@ class Pokemon {
   }
   ignoringItem() {
     return !!(this.itemState.knockedOff || // Gen 3-4
-    this.battle.gen >= 5 && !this.isActive || !this.getItem().ignoreKlutz && this.hasAbility("klutz") || this.volatiles["embargo"] || this.battle.field.pseudoWeather["magicroom"]);
+        this.battle.gen >= 5 && !this.isActive || !this.getItem().ignoreKlutz && this.hasAbility("klutz") || this.volatiles["embargo"] || this.battle.field.pseudoWeather["magicroom"]);
   }
   deductPP(move, amount, target) {
     const gen = this.battle.gen;
@@ -704,13 +709,13 @@ class Pokemon {
       return true;
     return !!(baseMove.category === "Status" && (this.hasItem("assaultvest") || this.volatiles["taunt"]));
   }
-  getDynamaxRequest(skipChecks) {  
+  getDynamaxRequest(skipChecks) {
     if (!skipChecks) {
       if (!this.side.canDynamaxNow())
         return;
-		if (this.species.isMega || this.species.isPrimal || this.species.forme === "Ultra" || this.getItem().zMove || this.terastallized || (this.canMegaEvo && this.species.baseSpecies !== "Rayquaza")) {
+      if (this.species.isMega || this.species.isPrimal || this.species.forme === "Ultra" || this.getItem().zMove || this.terastallized || (this.canMegaEvo && this.species.baseSpecies !== "Rayquaza")) {
         return;
-	  } 
+      }
       if (this.species.cannotDynamax || this.illusion?.species.cannotDynamax)
         return;
     }

@@ -811,7 +811,7 @@ ${sideUpdate}`);
   choose(input) {
     if (!this.requestState) {
       return this.emitChoiceError(
-        this.battle.ended ? `Can't do anything: The game is over` : `Can't do anything: It's not your turn`
+          this.battle.ended ? `Can't do anything: The game is over` : `Can't do anything: It's not your turn`
       );
     }
     if (this.choice.cantUndo) {
@@ -821,7 +821,7 @@ ${sideUpdate}`);
     const choiceStrings = input.startsWith("team ") ? [input] : input.split(",");
     if (choiceStrings.length > this.active.length) {
       return this.emitChoiceError(
-        `Can't make choices: You sent choices for ${choiceStrings.length} Pok\xE9mon, but this is a ${this.battle.gameType} game!`
+          `Can't make choices: You sent choices for ${choiceStrings.length} Pok\xE9mon, but this is a ${this.battle.gameType} game!`
       );
     }
     for (const choiceString of choiceStrings) {
