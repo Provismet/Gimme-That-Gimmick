@@ -4,14 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.provismet.cobblemon.gimmick.GimmeThatGimmickMain;
 import com.provismet.cobblemon.gimmick.config.Options;
+import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 
 public class ShowdownPatcher {
-    private static final String SHOWDOWN_VERSION = "1.0.0";
+    private static final String SHOWDOWN_VERSION = FabricLoader.getInstance()
+        .getModContainer(GimmeThatGimmickMain.MODID)
+        .map(container -> container.getMetadata().getVersion().getFriendlyString())
+        .orElse("1.0.0");
     private static final Gson GSON = new Gson();
 
     public static void patch() {
@@ -30,6 +35,7 @@ public class ShowdownPatcher {
                     GimmeThatGimmickMain.LOGGER.info("Showdown files are up to date (v{}).", SHOWDOWN_VERSION);
                     return;
                 }
+                GimmeThatGimmickMain.LOGGER.info("Showdown files may be out of date, patching...");
 
                 if (!Files.exists(showdown_mod_data.resolve("items.js"))) {
                     yoink("/showdown_scripts/mods/items.js", showdown_mod_data.resolve("items.js"));
@@ -59,7 +65,7 @@ public class ShowdownPatcher {
         if (!Files.exists(versionFile)) return false;
         try (Reader reader = Files.newBufferedReader(versionFile)) {
             JsonObject json = GSON.fromJson(reader, JsonObject.class);
-            return json != null && SHOWDOWN_VERSION.equals(json.get("version").getAsString());
+            return json != null && Objects.equals(SHOWDOWN_VERSION, json.get("version").getAsString());
         } catch (Exception e) {
             return false;
         }
