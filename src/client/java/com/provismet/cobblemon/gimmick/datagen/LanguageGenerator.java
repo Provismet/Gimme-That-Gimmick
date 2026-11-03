@@ -60,7 +60,11 @@ public class LanguageGenerator extends LilyLanguageProvider {
         translationBuilder.add("message.overlay.gimmethatgimmick.yes", "Yes");
         translationBuilder.add("message.overlay.gimmethatgimmick.no", "No");
 
-        translationBuilder.add("gimmethatgimmick.itemGroup.name", "Gimme That Gimmick");
+        translationBuilder.add("gimmethatgimmick.itemGroup.mega", "Gimme That Gimmick: Mega");
+        translationBuilder.add("gimmethatgimmick.itemGroup.z_crystals", "Gimme That Gimmick: Z Moves");
+        translationBuilder.add("gimmethatgimmick.itemGroup.dynamax", "Gimme That Gimmick: Dynamax");
+        translationBuilder.add("gimmethatgimmick.itemGroup.tera", "Gimme That Gimmick: Tera");
+        translationBuilder.add("gimmethatgimmick.itemGroup.form", "Gimme That Gimmick: Forms");
         translationBuilder.add("command.gimme-that-gimmick.reload.success", "Reloaded Gimme That Gimmick config.");
     }
 
