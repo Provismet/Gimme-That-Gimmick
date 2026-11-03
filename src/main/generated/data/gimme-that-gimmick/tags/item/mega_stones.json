@@ -55,45 +55,165 @@
     "gimme-that-gimmick:swampertite",
     "gimme-that-gimmick:tyranitarite",
     "gimme-that-gimmick:venusaurite",
-    "gimme-that-gimmick:barbaracite",
-    "gimme-that-gimmick:baxcalibrite",
-    "gimme-that-gimmick:chandelurite",
-    "gimme-that-gimmick:chesnaughtite",
-    "gimme-that-gimmick:chimechite",
-    "gimme-that-gimmick:clefablite",
-    "gimme-that-gimmick:crabominite",
-    "gimme-that-gimmick:darkranite",
-    "gimme-that-gimmick:delphoxite",
-    "gimme-that-gimmick:dragalgite",
-    "gimme-that-gimmick:dragoninite",
-    "gimme-that-gimmick:drampanite",
-    "gimme-that-gimmick:eelektrossite",
-    "gimme-that-gimmick:emboarite",
-    "gimme-that-gimmick:excadrite",
-    "gimme-that-gimmick:falinksite",
-    "gimme-that-gimmick:feraligite",
-    "gimme-that-gimmick:floettite",
-    "gimme-that-gimmick:froslassite",
-    "gimme-that-gimmick:glimmoranite",
-    "gimme-that-gimmick:golisopite",
-    "gimme-that-gimmick:golurkite",
-    "gimme-that-gimmick:greninjite",
-    "gimme-that-gimmick:hawluchanite",
-    "gimme-that-gimmick:heatranite",
-    "gimme-that-gimmick:magearnite",
-    "gimme-that-gimmick:malamarite",
-    "gimme-that-gimmick:meganiumite",
-    "gimme-that-gimmick:meowsticite",
-    "gimme-that-gimmick:pyroarite",
-    "gimme-that-gimmick:scolipite",
-    "gimme-that-gimmick:scovillainite",
-    "gimme-that-gimmick:scraftinite",
-    "gimme-that-gimmick:skarmorite",
-    "gimme-that-gimmick:staraptite",
-    "gimme-that-gimmick:starminite",
-    "gimme-that-gimmick:tatsugirinite",
-    "gimme-that-gimmick:victreebelite",
-    "gimme-that-gimmick:zeraorite",
-    "gimme-that-gimmick:zygardite"
+    {
+      "id": "gimme-that-gimmick:barbaracite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:baxcalibrite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:chandelurite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:chesnaughtite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:chimechite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:clefablite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:crabominite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:darkranite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:delphoxite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:dragalgite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:dragoninite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:drampanite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:eelektrossite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:emboarite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:excadrite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:falinksite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:feraligite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:floettite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:froslassite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:glimmoranite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:golisopite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:golurkite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:greninjite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:hawluchanite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:heatranite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:magearnite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:malamarite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:meganiumite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:meowsticite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:pyroarite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:scolipite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:scovillainite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:scraftinite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:skarmorite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:staraptite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:starminite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:tatsugirinite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:victreebelite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:zeraorite",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:zygardite",
+      "required": false
+    }
   ]
 }

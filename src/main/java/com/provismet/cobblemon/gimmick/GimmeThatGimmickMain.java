@@ -1,6 +1,7 @@
 package com.provismet.cobblemon.gimmick;
 
 import com.provismet.cobblemon.gimmick.commands.GTGCommands;
+import com.provismet.cobblemon.gimmick.config.Options;
 import com.provismet.cobblemon.gimmick.handlers.CobblemonEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.DynamaxEventHandler;
 import com.provismet.cobblemon.gimmick.handlers.UltraBurstEventHandler;
@@ -11,6 +12,7 @@ import com.provismet.cobblemon.gimmick.registry.GTGEnchantmentComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemDataComponents;
 import com.provismet.cobblemon.gimmick.registry.GTGItemGroup;
 import com.provismet.cobblemon.gimmick.registry.GTGItems;
+import com.provismet.cobblemon.gimmick.registry.GTGMegaStonesZA;
 import com.provismet.cobblemon.gimmick.registry.GTGResourceConditions;
 import com.provismet.cobblemon.gimmick.registry.GTGStatusEffects;
 import com.provismet.cobblemon.gimmick.util.DelayedTicker;
@@ -45,6 +47,10 @@ public class GimmeThatGimmickMain implements ModInitializer {
         GTGDynamicRegistryKeys.register();
 
         GTGItems.init();
+        if (FabricLoader.getInstance().isDevelopmentEnvironment() || Options.includeZAMegas()) {
+            GTGMegaStonesZA.init();
+        }
+
         GTGBlocks.init();
         GTGItemDataComponents.init();
         GTGEnchantmentComponents.init();

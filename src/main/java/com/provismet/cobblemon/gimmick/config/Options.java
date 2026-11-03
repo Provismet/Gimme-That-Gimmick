@@ -30,6 +30,7 @@ public abstract class Options {
     private static boolean showDynamaxLevel = true;
     private static boolean allowMultipleMega = false;
     private static boolean gimmickEnchantments = true;
+    private static boolean zaMegas = false;
 
     private static final JsonConfig CONFIG = new JsonConfig()
         .addBoolean("auto_update_showdown", Options::shouldAutoUpdateShowdown, val -> autoUpdateShowdown = val)
@@ -46,7 +47,8 @@ public abstract class Options {
         .addBoolean("use_default_tera_glow_visual", Options::shouldApplyBasicTeraGlow, val -> applyBasicTeraGlow = val)
         .addBoolean("show_dynamax_level", Options::shouldShowDynamaxLevel, val -> showDynamaxLevel = val)
         .addBoolean("allow_multiple_out_of_battle_megas", Options::shouldAllowMultipleOutOfCombatMegas, val -> allowMultipleMega = val)
-        .addBoolean("enable_gimmick_enchantments", Options::includeGimmickEnchantments, val -> gimmickEnchantments = val);
+        .addBoolean("enable_gimmick_enchantments", Options::includeGimmickEnchantments, val -> gimmickEnchantments = val)
+        .addBoolean("include_za_megas", Options::includeZAMegas, val -> zaMegas = val);
 
     static {
         load();
@@ -110,6 +112,10 @@ public abstract class Options {
 
     public static boolean includeGimmickEnchantments () {
         return gimmickEnchantments;
+    }
+
+    public static boolean includeZAMegas () {
+        return zaMegas;
     }
 
     public static void save () {

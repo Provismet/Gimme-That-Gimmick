@@ -1,7 +1,16 @@
 {
   "values": [
-    "gimme-that-gimmick:absolitez",
-    "gimme-that-gimmick:garchompitez",
-    "gimme-that-gimmick:lucarionitez"
+    {
+      "id": "gimme-that-gimmick:absolitez",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:garchompitez",
+      "required": false
+    },
+    {
+      "id": "gimme-that-gimmick:lucarionitez",
+      "required": false
+    }
   ]
 }
